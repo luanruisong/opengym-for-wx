@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "动作库",
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "toast-x": "/components/toast/index",
+    "rest-timer": "/components/rest-timer/index"
+  }
+}

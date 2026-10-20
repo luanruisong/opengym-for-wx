@@ -1,0 +1,1 @@
+<view wx:if="{{ok}}" class="icx {{cls}}" style="{{st}}"></view>

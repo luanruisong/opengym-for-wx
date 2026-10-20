@@ -1,0 +1,5 @@
+<view class="page sheet-page" style="{{theme}}">
+  <input class="field" type="text" maxlength="60" value="{{name}}" placeholder="训练标题" placeholder-class="ph" focus confirm-type="done" bindinput="onInput" bindconfirm="onSave" />
+  <view class="btn primary mt24 {{canSave ? '' : 'disabled'}}" hover-class="hv" bindtap="onSave"><text>保存</text></view>
+  <toast-x />
+</view>

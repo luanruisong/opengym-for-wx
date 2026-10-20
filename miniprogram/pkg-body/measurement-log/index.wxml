@@ -1,0 +1,24 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">只填今天量过的部位，留空的字段保持为空。</view>
+  <picker mode="date" value="{{date}}" end="{{today}}" bindchange="onDate">
+    <view class="ml-date">
+      <text>日期</text>
+      <view class="field ml-date-v">{{date}}</view>
+    </view>
+  </picker>
+  <view wx:if="{{fields.length}}" class="measure-form">
+    <view wx:for="{{fields}}" wx:key="key" class="measure-field">
+      <text class="label-t">{{item.label}}</text>
+      <view class="measure-input">
+        <input class="num" type="digit" value="{{item.shown}}" data-key="{{item.key}}" confirm-type="done" bindinput="onValue" />
+        <text class="u">{{item.unit}}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty small">请先选择至少一个测量项。</view>
+  <view class="gap14"></view>
+  <view class="btn primary {{fields.length ? '' : 'disabled'}}" hover-class="hv" bindtap="onSave"><text>保存</text></view>
+  <view class="gap8"></view>
+  <view class="btn ghost dim" hover-class="hv" bindtap="onCancel"><text>取消</text></view>
+  <toast-x />
+</view>

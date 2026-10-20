@@ -1,0 +1,20 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb16">{{intro}}</view>
+  <view wx:if="{{hasList}}" class="chips-wrap mb12">
+    <view wx:for="{{list}}" wx:key="w" class="chip on nocap" hover-class="hv" data-w="{{item.w}}" bindtap="onRemove">
+      <text>{{item.label}}</text>
+      <icon-x name="xmark" />
+    </view>
+  </view>
+  <view wx:else class="small dim mb12">{{emptyL}}</view>
+  <view class="db-add mb12">
+    <view class="db-f">
+      <num-field cls="field" value="{{draft}}" decimal nullable placeholder="{{ph}}" bind:change="onDraft" />
+    </view>
+    <view class="btn db-addb" hover-class="hv" bindtap="onAdd"><icon-x name="plus" /><text>{{addL}}</text></view>
+  </view>
+  <view class="btn mb8" hover-class="hv" bindtap="onFill">{{fillL}}</view>
+  <view wx:if="{{hasList}}" class="btn danger mb8" hover-class="hv" bindtap="onClear">{{clearL}}</view>
+  <view class="btn primary" hover-class="hv" bindtap="onDone">{{doneL}}</view>
+  <toast-x />
+</view>

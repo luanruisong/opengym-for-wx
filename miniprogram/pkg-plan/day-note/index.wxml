@@ -1,0 +1,18 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">生活总有意外。给自己留个备注，错过训练的提醒就会放过这一天。</view>
+  <scroll-view scroll-x class="chips dn-chips" enhanced show-scrollbar="{{false}}">
+    <view class="chips-in">
+      <view wx:for="{{tags}}" wx:key="k" class="chip nocap {{tag === item.k ? 'on' : ''}}" hover-class="hv" data-k="{{item.k}}" bindtap="onTag">
+        <icon-x name="{{item.icon}}" /><text>{{item.label}}</text>
+      </view>
+    </view>
+  </scroll-view>
+  <textarea class="field area" maxlength="{{noteMax}}" value="{{text}}" placeholder="还有别的吗？（可选）" placeholder-class="ph" disable-default-padding="{{true}}" bindinput="onText" />
+  <view style="height:18px"></view>
+  <view class="btn primary" hover-class="hv" bindtap="onSave"><text>保存</text></view>
+  <block wx:if="{{had}}">
+    <view style="height:10px"></view>
+    <view class="btn ghost" hover-class="hv" bindtap="onRemove"><icon-x name="trash" /><text>删除备注</text></view>
+  </block>
+  <toast-x />
+</view>

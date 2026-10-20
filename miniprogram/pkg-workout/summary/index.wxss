@@ -1,0 +1,6 @@
+.sum-ico{font-size:44px;display:flex;justify-content:center;color:var(--acc);margin:8px 0 14px}
+.sum-v{font-size:18px}
+.sum-pr{font-size:20px}
+.sum-line{margin-bottom:4px}
+.sum-line>.icx{font-size:13px;margin-right:5px}
+.item.sum-item{display:block}

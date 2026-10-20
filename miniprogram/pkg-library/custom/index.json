@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "创建自己的动作",
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "toast-x": "/components/toast/index",
+    "row": "/components/row/index",
+    "sheet": "/components/sheet/index"
+  }
+}

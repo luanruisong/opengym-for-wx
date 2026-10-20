@@ -1,0 +1,22 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">训练时长保持不变。个人记录会按新的顺序重新计算。</view>
+  <view class="sect-b">
+    <picker mode="date" value="{{date}}" end="{{today}}" bindchange="onDate">
+      <view class="lrow has-i tap" hover-class="hv">
+        <view class="lrow-i"><icon-x name="calendar" /></view>
+        <view class="lrow-m"><text class="lrow-t">日期</text></view>
+        <view class="timef">{{dateText}}</view>
+      </view>
+    </picker>
+    <picker mode="time" value="{{time}}" bindchange="onTime">
+      <view class="lrow has-i tap wd-sep" hover-class="hv">
+        <view class="lrow-i"><icon-x name="clock" /></view>
+        <view class="lrow-m"><text class="lrow-t">开始时间</text></view>
+        <view class="timef">{{time}}</view>
+      </view>
+    </picker>
+  </view>
+  <view class="gap16" />
+  <view class="btn primary" hover-class="hv" bindtap="onSave"><text>保存</text></view>
+  <toast-x />
+</view>

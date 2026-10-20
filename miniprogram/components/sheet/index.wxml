@@ -1,0 +1,11 @@
+<view wx:if="{{mounted}}" class="sh-root {{open ? 'open' : ''}} {{center ? 'is-center' : ''}}">
+  <view class="sh-mask" bindtap="onMask" catchtouchmove="noop"></view>
+  <view class="sh-panel" style="max-height:{{maxH}}">
+    <view wx:if="{{!center}}" class="grab"></view>
+    <scroll-view scroll-y class="sh-scroll" style="max-height:calc({{maxH}} - 40px)" enhanced show-scrollbar="{{false}}">
+      <view wx:if="{{title}}" class="h3">{{title}}</view>
+      <slot></slot>
+      <view class="sh-foot"></view>
+    </scroll-view>
+  </view>
+</view>

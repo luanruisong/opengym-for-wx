@@ -1,0 +1,19 @@
+<view class="page sheet-page {{resting ? 'resting' : ''}}" style="{{theme}}">
+  <view class="h3 {{cap ? 'capitalize' : ''}}">{{title}}</view>
+  <view class="muted small mb12">选一个训练日。组数、次数和重量接下来再设。</view>
+  <view class="list">
+    <view wx:for="{{routines}}" wx:key="id" class="item" hover-class="hv" data-id="{{item.id}}" bindtap="onPick">
+      <view class="lrow-i"><icon-x name="{{item.icon}}" /></view>
+      <view class="grow"><view class="tt">{{item.name}}</view><view class="ss">{{item.count}}</view></view>
+      <view wx:if="{{item.has}}" class="tag">已包含</view>
+      <icon-x name="plus" cls="chev" />
+    </view>
+    <view class="item" hover-class="hv" bindtap="onNew">
+      <view class="lrow-i atr-new"><icon-x name="plusCircle" /></view>
+      <view class="grow"><view class="tt">新训练日</view><view class="ss">新建一个并从这个动作开始</view></view>
+      <icon-x name="plus" cls="chev" />
+    </view>
+  </view>
+  <rest-timer place="float" />
+  <toast-x />
+</view>

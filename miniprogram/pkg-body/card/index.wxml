@@ -1,0 +1,12 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">用相机扫描或导入照片。</view>
+  <view class="row cd-btns">
+    <view class="btn tinted sm {{busy ? 'disabled' : ''}}" hover-class="hv" bindtap="onScan"><icon-x name="camera" /><text>{{editing ? '重新扫描' : '扫描'}}</text></view>
+    <view class="btn tinted sm {{busy ? 'disabled' : ''}}" hover-class="hv" bindtap="onImport"><icon-x name="image" /><text>导入照片</text></view>
+  </view>
+  <text class="sect-t">名称</text>
+  <input class="field mb16" value="{{label}}" placeholder="例如 FitZone 市中心店" placeholder-class="ph" bindinput="onLabel" />
+  <view wx:if="{{value}}" class="cd-qr"><view class="ci-qr-plate"><qr-code value="{{value}}" size="{{150}}" /></view></view>
+  <view class="btn primary {{busy || !value ? 'disabled' : ''}}" hover-class="hv" bindtap="onSave"><text>保存卡片</text></view>
+  <toast-x />
+</view>

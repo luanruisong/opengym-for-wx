@@ -1,0 +1,3 @@
+.wi-chips{display:flex;justify-content:center;margin:8px 0}
+.wi-chips>.chip+.chip{margin-left:7px}
+.wi-slider{margin:6px 4px}

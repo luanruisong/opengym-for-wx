@@ -1,0 +1,60 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">起个名字，选个身体部位。用起来和其他动作一模一样。</view>
+  <input class="field" value="{{n}}" placeholder="动作名称" placeholder-class="ph" maxlength="80" bindinput="onName" />
+
+  <view class="chips-wrap cx-chips">
+    <view wx:for="{{bpChips}}" wx:key="v" class="chip {{bp === item.v ? 'on' : ''}}" hover-class="hv" data-v="{{item.v}}" bindtap="onBp">{{item.label}}</view>
+  </view>
+  <view class="chips-wrap cx-chips">
+    <view wx:for="{{eqChips}}" wx:key="v" class="chip {{eq === item.v ? 'on' : ''}}" hover-class="hv" data-v="{{item.v}}" bindtap="onEq">{{item.label}}</view>
+  </view>
+
+  <view wx:if="{{showMuscles}}" class="sect-b cx-ms">
+    <row wx:if="{{showPrimary}}" title="主要肌群" value="{{primarySum}}" accessory="chevron" tap bind:tap="onPrimary" />
+    <row title="其他肌群" value="{{secondarySum}}" accessory="chevron" tap bind:tap="onSecondary" />
+  </view>
+  <view wx:if="{{cardio}}" class="small dim row cx-cardio"><icon-x name="figureRun" cls="cx-ci" /><text>有氧动作记录时间 + 速度，而不是重量 × 次数。</text></view>
+
+  <textarea class="field area cx-desc" value="{{desc}}" maxlength="1000" auto-height placeholder="描述（可选）：设置、要点，任何你想记住的内容" placeholder-class="ph" bindinput="onDesc" />
+
+  <!-- photo, GIF or video (CustomMediaField) -->
+  <view class="sect-b cx-media">
+    <view class="lrow has-i">
+      <view class="lrow-i cx-mi"><icon-x name="image" /></view>
+      <view class="lrow-m">
+        <text class="lrow-t">照片、GIF 或视频</text>
+        <view class="lrow-s row"><icon-x wx:if="{{mHas}}" name="{{mKindIcon}}" cls="cx-ki" /><text>{{mSub}}</text></view>
+      </view>
+      <view class="row cx-act">
+        <image wx:if="{{mThumb}}" class="cx-thumb" src="{{mThumb}}" mode="aspectFill" bindtap="onPreview" />
+        <view class="btn sm tinted {{busy ? 'disabled' : ''}}" hover-class="hv" bindtap="onPickMedia">
+          <icon-x wx:if="{{!busy}}" name="image" /><text>{{busy ? '加载中…' : (mHas ? '更换' : '添加')}}</text>
+        </view>
+        <view wx:if="{{mHas}}" class="btn sm ghost cx-rm {{busy ? 'disabled' : ''}}" hover-class="hv" bindtap="onRemoveMedia"><icon-x name="xmark" /></view>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{warning}}" class="small dim cx-note">{{warning}}</view>
+  <view class="small dim cx-note">仅保存在此设备上。“连同照片和视频导出”可以保留一份副本。</view>
+  <input class="field cx-link" type="text" value="{{url}}" placeholder="视频或教程链接（可选）" placeholder-class="ph" bindinput="onUrl" />
+
+  <view class="gap16"></view>
+  <view class="btn primary" hover-class="hv" bindtap="onSave"><text>{{editing ? '保存' : '创建动作'}}</text></view>
+  <block wx:if="{{editing}}">
+    <view class="gap8"></view>
+    <view class="btn danger" hover-class="hv" bindtap="onDelete"><icon-x name="trash" /><text>删除动作</text></view>
+  </block>
+
+  <sheet show="{{msOpen}}" title="{{msTitle}}" bind:close="onMsClose">
+    <view class="sect-b">
+      <view wx:for="{{msOpts}}" wx:key="v" class="lrow tap {{item.on ? 'on' : ''}}" hover-class="hv" data-v="{{item.v}}" bindtap="onMsToggle">
+        <view class="lrow-m"><text class="lrow-t">{{item.label}}</text></view>
+        <icon-x wx:if="{{item.on}}" name="check" stroke="2.4" cls="lrow-k" />
+      </view>
+    </view>
+    <view class="gap8"></view>
+    <view class="btn primary" hover-class="hv" bindtap="onMsClose"><text>完成</text></view>
+  </sheet>
+
+  <toast-x />
+</view>

@@ -1,0 +1,32 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="row between cal-top">
+    <view class="iconbtn" hover-class="hv" bindtap="onPrev" aria-label="上个月"><icon-x name="chevronLeft" /></view>
+    <view class="h3 cal-title">{{title}}</view>
+    <view class="iconbtn" hover-class="hv" bindtap="onNext" aria-label="下个月"><icon-x name="chevronRight" /></view>
+  </view>
+  <view class="small muted center-t">{{summary}}</view>
+  <view class="cal-grid">
+    <view wx:for="{{heads}}" wx:key="k" class="cal-h">{{item.label}}</view>
+    <block wx:for="{{cells}}" wx:key="k">
+      <view wx:if="{{item.blank}}" class="cal-d blank" />
+      <view wx:else class="cal-d{{item.cls}}" hover-class="hv" data-iso="{{item.iso}}" bindtap="onDay">
+        <text>{{item.d}}</text>
+        <view class="dot {{item.dot}}" />
+      </view>
+    </block>
+  </view>
+  <view class="cal-legend">
+    <view><view class="dot cal-l-done" />已训练</view>
+    <view><view class="dot cal-l-plan" />已计划</view>
+    <view><view class="dot cal-l-ovr" />已改期</view>
+    <view wx:if="{{showNoteLegend}}"><view class="dot cal-l-note" />当日备注</view>
+  </view>
+  <view class="small dim center-t cal-hint">点按已训练的日期查看详情 · 点按其他日期安排训练</view>
+
+  <sheet show="{{pick}}" title="{{pickTitle}}" bind:close="onPickClose">
+    <view class="list">
+      <workout-row wx:for="{{pickRows}}" wx:key="key" row="{{item}}" bind:open="onPickOpen" />
+    </view>
+  </sheet>
+  <toast-x />
+</view>

@@ -1,0 +1,20 @@
+/* Exercise picker: only what app.wxss does not have. */
+.pk-top{margin-bottom:10px}
+.pk-prof{margin:0 2px 10px}
+.pk-prof>.icx{font-size:13px}
+.pk-prof-t{margin-left:6px;min-width:0}
+.pk-prof-b{margin-left:8px;padding:3px 10px;font-size:12px}
+.pk-search{margin-bottom:10px}
+.pk-chips{margin-bottom:6px}
+.pk-list{margin-top:6px}
+.pk-map{margin-bottom:10px}
+.pk-mchips{margin-top:10px}
+.pk-n{margin-left:4px}
+.pk-mhead{margin:2px 0 10px}
+.pk-msec{margin:0}
+.pk-add{color:var(--acc);font-size:18px;margin:-8px -6px -8px 4px}
+.item>image+view{margin-left:12px}
+.ex-grid>.item>image+view{margin-left:0;margin-top:8px}
+.ex-grid>.pk-wide{width:100%}
+.ex-grid>.item>.tag{align-self:flex-start}
+.ex-grid>.item>.pk-add{align-self:flex-end;margin:0}

@@ -1,0 +1,4 @@
+.effpick .effpick-n{color:#fff;font-size:13px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.effpick .effpick-free{padding-right:8px}
+.effpick .effpick-stp{flex:none;width:148px;background:var(--surface-2)}
+.effpick .effpick-stp .num{font-size:17px;font-weight:600}

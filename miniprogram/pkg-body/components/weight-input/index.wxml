@@ -1,0 +1,15 @@
+<view class="bwstep">
+  <view class="bw-pm" hover-class="hv" data-d="-0.1" bindtap="onStep"><icon-x name="minus" /></view>
+  <view class="bw-read">
+    <num-field value="{{value}}" decimal fit bind:change="onType" />
+    <text class="u"> {{unit}}</text>
+  </view>
+  <view class="bw-pm" hover-class="hv" data-d="0.1" bindtap="onStep"><icon-x name="plus" /></view>
+</view>
+<view class="wi-chips">
+  <view class="chip" hover-class="hv" data-d="-1" bindtap="onStep">−1</view>
+  <view class="chip" hover-class="hv" data-d="-0.5" bindtap="onStep">−0.5</view>
+  <view class="chip" hover-class="hv" data-d="0.5" bindtap="onStep">+0.5</view>
+  <view class="chip" hover-class="hv" data-d="1" bindtap="onStep">+1</view>
+</view>
+<slider class="wi-slider" min="{{lo}}" max="{{hi}}" step="0.5" value="{{sv}}" activeColor="{{acc}}" backgroundColor="{{track}}" block-size="26" block-color="{{knob}}" bindchanging="onSlider" bindchange="onSlider" />

@@ -1,0 +1,57 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">在平时的训练界面记录，只是没有计时器。</view>
+  <view class="sect-b">
+    <picker mode="date" value="{{date}}" end="{{today}}" bindchange="onDate">
+      <view class="lrow has-i tap" hover-class="hv">
+        <view class="lrow-i"><icon-x name="calendar" /></view>
+        <view class="lrow-m"><text class="lrow-t">日期</text></view>
+        <view class="timef">{{dateText}}</view>
+      </view>
+    </picker>
+    <picker mode="time" value="{{time}}" bindchange="onTime">
+      <view class="lrow has-i tap lp-sep" hover-class="hv">
+        <view class="lrow-i"><icon-x name="clock" /></view>
+        <view class="lrow-m"><text class="lrow-t">开始时间</text></view>
+        <view class="timef">{{time}}</view>
+      </view>
+    </picker>
+  </view>
+  <view class="gap16" />
+  <stepper label="时长" unit="分钟" value="{{dur}}" step="{{5}}" min="{{0}}" decimal="{{false}}" invalid="{{durInvalid || durTooLong}}" bind:change="onDur" />
+  <view wx:if="{{durInvalid}}" class="small red mt8">请输入用时（至少 1 分钟）。</view>
+  <view wx:if="{{durTooLong}}" class="small red mt8">超过一天了。最多 24 小时。</view>
+  <view class="gap8" />
+  <view class="sect-b">
+    <view class="lrow has-i tap" hover-class="hv" bindtap="onRoutineOpen">
+      <view class="lrow-i"><icon-x name="dumbbell" /></view>
+      <view class="lrow-m"><text class="lrow-t">训练日</text></view>
+      <text class="lrow-v">{{routineLabel}}</text>
+      <icon-x name="chevronRight" stroke="2.4" cls="lrow-c" />
+    </view>
+  </view>
+  <view class="lp-gap" />
+  <view class="btn primary" hover-class="hv" bindtap="onSubmit"><text>继续</text></view>
+
+  <sheet show="{{pickRoutine}}" title="训练日" bind:close="onRoutineClose">
+    <view class="menu-list">
+      <view wx:for="{{options}}" wx:key="i" class="menu-item {{item.on ? 'on' : ''}}" hover-class="hv" data-i="{{item.i}}" bindtap="onRoutinePick">
+        <view class="grow"><view class="tt">{{item.label}}</view></view>
+        <view class="menu-on {{item.on ? 'is-on' : ''}}"><icon-x name="check" stroke="2.4" /></view>
+      </view>
+    </view>
+  </sheet>
+
+  <sheet show="{{same}}" center title="{{sameTitle}}" bind:close="onSameClose">
+    <view class="center-t lp-same">
+      <view class="muted lp-same-msg">那天已经有一次训练了。</view>
+      <view wx:for="{{sameRows}}" wx:key="i" class="mb8">
+        <view class="btn danger" hover-class="hv" data-i="{{item.i}}" bindtap="onReplace"><text>{{item.label}}</text></view>
+        <view wx:if="{{item.media}}" class="small dim mt4">{{item.media}}</view>
+      </view>
+      <view class="btn primary" hover-class="hv" bindtap="onAddSecond"><text>添加为第二次训练</text></view>
+      <view class="gap8" />
+      <view class="btn ghost dim" hover-class="hv" bindtap="onSameClose"><text>取消</text></view>
+    </view>
+  </sheet>
+  <toast-x />
+</view>

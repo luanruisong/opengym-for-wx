@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "统计",
+  "usingComponents": {
+    "heatmap": "/components/heatmap/index",
+    "body-map": "/components/body-map/index",
+    "bar-chart": "/components/bar-chart/index",
+    "line-chart": "/components/line-chart/index",
+    "workout-row": "./components/workout-row/index"
+  }
+}

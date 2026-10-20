@@ -1,0 +1,11 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small">目标会以一条线显示在体重图表中，增减会根据是否朝目标靠近来着色。</view>
+  <weight-input value="{{v}}" unit="{{unit}}" bind:change="onV" />
+  <view class="gap14"></view>
+  <view class="btn primary" hover-class="hv" bindtap="onSave"><text>保存目标</text></view>
+  <block wx:if="{{hasGoal}}">
+    <view class="gap8"></view>
+    <view class="btn danger" hover-class="hv" bindtap="onRemove"><text>移除目标</text></view>
+  </block>
+  <toast-x />
+</view>

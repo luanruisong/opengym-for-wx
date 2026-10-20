@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "stepper": "/components/stepper/index"
+  }
+}

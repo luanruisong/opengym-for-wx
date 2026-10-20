@@ -1,0 +1,10 @@
+<view class="bc">
+  <view wx:for="{{list}}" wx:key="k" class="mrow {{item.labelSub ? 'two' : ''}} {{tappable ? 'tap' : ''}}" data-i="{{index}}" bindtap="onTap">
+    <view class="nm">
+      <view class="nm-1"><text wx:if="{{item.bold}}" class="b">{{item.label}}</text><text wx:else>{{item.label}}</text><text wx:if="{{item.tag}}" class="dim nm-tag">{{item.tag}}</text></view>
+      <view wx:if="{{item.labelSub}}" class="small dim nm-2">{{item.labelSub}}</view>
+    </view>
+    <view class="bar" style="width:{{barWidth}}px"><view class="fill" style="{{item.fill}}"></view></view>
+    <view class="v"><text>{{item.value}}</text><text wx:if="{{item.valueDim}}" class="dim">{{item.valueDim}}</text><view wx:if="{{item.sub}}" class="dim small v-sub">{{item.sub}}</view></view>
+  </view>
+</view>

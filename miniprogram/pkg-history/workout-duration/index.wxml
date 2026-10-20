@@ -1,0 +1,9 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">忘了及时结束？设置本次训练的实际时长。开始时间和组数保持不变。</view>
+  <stepper label="时长" unit="分钟" value="{{dur}}" step="{{5}}" min="{{0}}" decimal="{{false}}" invalid="{{durInvalid || durTooLong}}" bind:change="onDur" />
+  <view wx:if="{{durInvalid}}" class="small red mt8">请输入用时（至少 1 分钟）。</view>
+  <view wx:if="{{durTooLong}}" class="small red mt8">超过一天了。最多 24 小时。</view>
+  <view class="gap16" />
+  <view class="btn primary" hover-class="hv" bindtap="onSave"><text>保存</text></view>
+  <toast-x />
+</view>

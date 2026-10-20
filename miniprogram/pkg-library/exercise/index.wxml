@@ -1,0 +1,75 @@
+<view class="page sheet-page {{resting ? 'resting' : ''}}" style="{{theme}}">
+  <block wx:if="{{ok}}">
+    <view class="row between top exd-head">
+      <view class="h3 exd-name {{cap ? 'capitalize' : ''}}">{{name}}</view>
+      <view class="iconbtn fav-btn {{fav ? 'on' : ''}}" hover-class="hv" bindtap="onFav"><icon-x name="{{fav ? 'starFill' : 'star'}}" /></view>
+    </view>
+
+    <!-- a custom exercise's own photo / GIF / video (the catalogue ships no media) -->
+    <view wx:if="{{media}}" class="exd-media">
+      <image wx:if="{{media.kind === 'image'}}" class="exd-img" src="{{media.src}}" mode="aspectFit" bindtap="onPreview" />
+      <video wx:else class="exd-img" src="{{media.src}}" poster="{{media.poster}}" loop muted autoplay="{{false}}" show-mute-btn object-fit="contain" />
+    </view>
+    <view wx:if="{{link}}" class="small dim row exd-link" hover-class="hv" bindtap="onCopyLink">
+      <icon-x name="link" /><text class="ellipsis grow exd-link-t">{{link}}</text><icon-x name="copy" />
+    </view>
+
+    <view class="row wrap exd-tags">
+      <view wx:for="{{tags}}" wx:key="key" class="tag exd-tag {{item.acc ? 'acc' : ''}}"><icon-x wx:if="{{item.icon}}" name="{{item.icon}}" cls="exd-ti" /><text>{{item.label}}</text></view>
+    </view>
+    <view wx:if="{{desc}}" class="exnote">{{desc}}</view>
+    <view wx:if="{{bestLine}}" class="small exd-best"><icon-x name="trophy" color="var(--yellow)" cls="exd-trophy" /><text>最佳：</text><text class="accent bold nowrap">{{bestVal}}</text><text>{{lastLine}}</text></view>
+
+    <view class="btn primary exd-add" hover-class="hv" bindtap="onAdd"><icon-x name="plus" /><text>加入我的计划</text></view>
+    <view wx:if="{{hasLast}}" class="btn mt4" hover-class="hv" bindtap="onHistory"><icon-x name="history" /><text>历史</text></view>
+    <view wx:if="{{custom}}" class="btns mt8">
+      <view class="btn grow" hover-class="hv" bindtap="onEdit"><icon-x name="pencil" /><text>编辑</text></view>
+      <view class="btn danger grow" hover-class="hv" bindtap="onDelete"><icon-x name="trash" /><text>删除</text></view>
+    </view>
+
+    <block wx:if="{{plates}}">
+      <view class="sec">配重</view>
+      <seg options="{{kindOpts}}" value="{{kind}}" inline bind:change="onKind" />
+      <view class="small dim exd-note">{{kindNote}}</view>
+      <block wx:if="{{kind !== 'none'}}">
+        <view wx:if="{{isBar}}" class="sect-b exd-nobar">
+          <row icon="barbell" title="无杠铃杆" subtitle="你记录的重量全部是杠铃片。"><switch-x checked="{{noBar}}" bind:change="onNoBar" /></row>
+        </view>
+        <view wx:if="{{!noBar}}" class="row cfgrow exd-base">
+          <stepper label="{{baseLabel}}" value="{{base}}" step="2.5" bind:change="onBase" />
+        </view>
+        <view class="small dim exd-note2">{{baseNote}}</view>
+      </block>
+    </block>
+
+    <block wx:if="{{bell}}">
+      <view class="sec">重量表示</view>
+      <seg options="{{dbOpts}}" value="{{dbLoad}}" inline bind:change="onDbLoad" />
+      <view class="small dim exd-note2">{{dbNote}}</view>
+    </block>
+
+    <block wx:if="{{orm}}">
+      <view class="sec">预估 1RM</view>
+      <view wx:if="{{ormFrom}}" class="small exd-from"><text>来自你的记录：</text><text class="accent bold">{{ormFrom}}</text><text class="dim">{{ormFromDim}}</text></view>
+      <view class="row cfgrow exd-orm">
+        <stepper label="{{wLabel}}" value="{{w}}" step="2.5" bind:change="onW" />
+        <stepper label="次数" value="{{r}}" step="1" decimal="{{false}}" bind:change="onR" />
+      </view>
+      <view class="row between exd-est">
+        <text class="muted small">预估</text>
+        <text class="accent bold exd-estv">{{est}}</text>
+      </view>
+      <view class="small dim">{{estNote}}</view>
+    </block>
+
+    <block wx:if="{{steps.length}}">
+      <view class="sec">动作要领<text wx:if="{{stepsNote}}" class="dim">{{stepsNote}}</text></view>
+      <view class="steps-list">
+        <view wx:for="{{steps}}" wx:key="i"><text class="si">{{item.n}}</text><text class="grow">{{item.s}}</text></view>
+      </view>
+    </block>
+  </block>
+
+  <rest-timer place="float" />
+  <toast-x />
+</view>

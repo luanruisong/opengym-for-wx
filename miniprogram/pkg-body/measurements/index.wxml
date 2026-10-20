@@ -1,0 +1,55 @@
+<view class="page" style="{{theme}}">
+  <view class="hdr">
+    <view class="hdr-m"><view class="sub">围度与体成分</view></view>
+    <view class="iconbtn" hover-class="hv" bindtap="onManage"><icon-x name="gear" /></view>
+  </view>
+
+  <view class="card">
+    <view class="row between mb12">
+      <view>
+        <view class="muted small">{{title}}</view>
+        <view class="big ms-big">{{latest}}<text wx:if="{{hasLatest}}" class="muted ms-u"> {{unit}}</text></view>
+        <view wx:if="{{delta}}" class="small ms-delta">{{delta}}</view>
+      </view>
+      <view class="btn sm" hover-class="hv" bindtap="onLog"><icon-x name="plus" /><text>记录</text></view>
+    </view>
+    <picker wx:if="{{has}}" mode="selector" range="{{optLabels}}" value="{{selIdx}}" bindchange="onPick">
+      <view class="sect-b ms-select">
+        <view class="lrow tap" hover-class="hv">
+          <view class="lrow-m"><text class="lrow-t">测量项</text></view>
+          <text class="lrow-v">{{selLabel}}</text>
+          <icon-x name="chevronRight" cls="chev" />
+        </view>
+      </view>
+    </picker>
+    <seg cls="seg-range" options="{{ranges}}" value="{{range}}" bind:change="onRange" />
+    <view class="chart"><line-chart points="{{points}}" h="{{170}}" unit="{{unit}}" color="var(--teal)" /></view>
+  </view>
+
+  <view wx:if="{{!has}}" class="card">
+    <view class="muted small">选择你想跟踪的测量项，然后记录第一次测量。</view>
+    <view class="gap10"></view>
+    <view class="btn" hover-class="hv" bindtap="onManage"><text>选择测量项</text></view>
+  </view>
+
+  <view class="row between ms-hist-hd">
+    <view class="sec ms-sec">测量历史</view>
+    <view class="btn sm ghost" hover-class="hv" bindtap="onManage"><icon-x name="gear" /><text>字段</text></view>
+  </view>
+  <view wx:if="{{recent.length}}" class="list ms-list">
+    <view wx:for="{{recent}}" wx:for-item="e" wx:key="d" class="card measure-history">
+      <view class="row between">
+        <view><text class="bold">{{e.date}}</text><view class="small dim mt2">{{e.count}}</view></view>
+        <view class="row">
+          <view class="iconbtn" hover-class="hv" data-d="{{e.d}}" bindtap="onEdit"><icon-x name="pencil" /></view>
+          <view class="iconbtn ms-red" hover-class="hv" data-d="{{e.d}}" bindtap="onDelete"><icon-x name="trash" /></view>
+        </view>
+      </view>
+      <view wx:if="{{e.preview.length}}" class="measure-preview">
+        <text wx:for="{{e.preview}}" wx:for-item="p" wx:key="key" class="ms-pv">{{p.label}} <text class="bold">{{p.v}}</text></text>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty small">还没有测量</view>
+  <toast-x />
+</view>

@@ -1,0 +1,15 @@
+/* Custom exercise form: only what app.wxss does not have. */
+.cx-chips{margin:12px 0}
+.cx-ms{margin-bottom:12px}
+.cx-cardio{margin-bottom:10px}
+.cx-ci{font-size:13px;margin-right:5px}
+.cx-desc{margin-bottom:12px}
+.cx-media{margin-bottom:6px}
+.cx-mi{background:var(--blue)}
+.cx-ki{margin-right:4px}
+.cx-act{flex:none}
+.cx-act>view+view,.cx-act>image+view{margin-left:6px}
+.cx-thumb{width:40px;height:40px;border-radius:8px;background:var(--surface-2)}
+.cx-rm{padding:8px 10px}
+.cx-note{margin:6px 2px}
+.cx-link{margin-top:8px}

@@ -1,0 +1,13 @@
+.ms-big{margin-top:3px}
+.ms-u{font-size:16px;font-weight:400}
+.ms-delta{margin-top:3px;color:var(--label-2)}
+.ms-select{margin-bottom:10px}
+.gap10{height:10px}
+.ms-hist-hd{margin:18px 2px 10px}
+.ms-sec{margin:0;padding:0}
+.ms-list>.card{margin-bottom:0}
+.ms-list>.card+.card{margin-top:10px}
+.mt2{margin-top:2px}
+.ms-red{color:var(--red)}
+.measure-preview .ms-pv{margin-right:12px}
+.row>.iconbtn+.iconbtn{margin-left:4px}

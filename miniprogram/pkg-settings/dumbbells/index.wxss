@@ -1,0 +1,4 @@
+.db-add{display:flex;align-items:center}
+.db-f{flex:1;min-width:0}
+.db-f .field{text-align:left}
+.db-addb{flex:none;width:auto;margin-left:8px}

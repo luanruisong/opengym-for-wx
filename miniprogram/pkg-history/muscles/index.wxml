@@ -1,0 +1,70 @@
+<view class="page" style="{{theme}}">
+  <view class="muted small mb12">选择一块肌肉以查看训练它的动作。</view>
+
+  <view wx:if="{{hasProfile}}" class="small dim row mx-prof">
+    <icon-x name="kettlebell" />
+    <text class="grow mx-prof-t">{{profileLine}}</text>
+    <view class="chip nocap mx-prof-b" hover-class="hv" bindtap="onToggleAll">{{profileBtn}}</view>
+  </view>
+
+  <view class="card">
+    <body-map body="{{body}}" selected="{{selected}}" tappable bind:pick="onMap" />
+    <scroll-view scroll-x class="chips mt12" enhanced show-scrollbar="{{false}}">
+      <view class="chips-in">
+        <view wx:for="{{muscleChips}}" wx:key="m" class="chip {{item.on ? 'on' : ''}}" hover-class="hv" data-m="{{item.m}}" bindtap="onMuscle">
+          <text>{{item.label}} </text><text class="dim">{{item.n}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <block wx:if="{{selected}}">
+    <view class="row between mx-head">
+      <view class="sec mx-sec">{{selTitle}}</view>
+      <view class="btn sm ghost" hover-class="hv" bindtap="onClearSel"><text>清除选择</text></view>
+    </view>
+
+    <view class="search-row mb12">
+      <view class="searchf {{narrowed ? 'has-count' : ''}}">
+        <icon-x name="magnifier" cls="lead" />
+        <input class="field" placeholder="搜索…" placeholder-class="ph" value="{{q}}" bindinput="onQ" confirm-type="search" />
+        <view wx:if="{{narrowed}}" class="search-count" aria-label="{{countLabel}}">{{countText}}</view>
+        <view wx:if="{{q}}" class="clear" hover-class="hv" bindtap="onClearQ"><icon-x name="xmark" stroke="2.4" /></view>
+      </view>
+      <view class="ex-view-btn {{cards ? 'on' : ''}}" hover-class="hv" bindtap="onView"><icon-x name="grid" /></view>
+    </view>
+
+    <scroll-view scroll-x class="chips {{showEq ? 'mb8' : 'mb12'}}" enhanced show-scrollbar="{{false}}">
+      <view class="chips-in">
+        <view class="chip nocap {{bpAll ? 'on' : ''}}" hover-class="hv" bindtap="onBpAll">全部</view>
+        <view wx:for="{{bpChips}}" wx:key="b" class="chip {{item.on ? 'on' : ''}}" hover-class="hv" data-b="{{item.b}}" bindtap="onBp">{{item.label}}</view>
+      </view>
+    </scroll-view>
+    <scroll-view wx:if="{{showEq}}" scroll-x class="chips mb12" enhanced show-scrollbar="{{false}}">
+      <view class="chips-in">
+        <view class="chip nocap {{eqAll ? 'on' : ''}}" hover-class="hv" bindtap="onEqAll">所有器械</view>
+        <view wx:for="{{eqChips}}" wx:key="x" class="chip {{item.on ? 'on' : ''}}" hover-class="hv" data-x="{{item.x}}" bindtap="onEq">{{item.label}}</view>
+      </view>
+    </scroll-view>
+
+    <view class="list {{cards ? 'ex-grid' : ''}}">
+      <block wx:for="{{batches}}" wx:for-item="batch" wx:for-index="bi" wx:key="index">
+        <view wx:for="{{batch}}" wx:key="id" class="item" hover-class="hv" data-id="{{item.id}}" bindtap="onDetail">
+          <view class="thumb thumb-t">{{item.initial}}</view>
+          <view class="grow">
+            <view class="tt"><icon-x wx:if="{{item.fav}}" name="starFill" cls="fav-star" />{{item.name}}</view>
+            <view class="ss">{{item.sub}}</view>
+          </view>
+          <view wx:if="{{item.best}}" class="tag acc">{{item.best}}</view>
+          <view class="btn sm tinted" hover-class="hv" data-id="{{item.id}}" catchtap="onPlan"><icon-x name="plus" /><text>计划</text></view>
+        </view>
+      </block>
+    </view>
+    <view wx:if="{{empty}}" class="empty"><view class="ico"><icon-x name="magnifier" /></view>没有匹配</view>
+    <block wx:if="{{more}}">
+      <view class="gap8"></view>
+      <view class="btn" hover-class="hv" bindtap="onMore"><text>显示更多</text></view>
+    </block>
+  </block>
+  <toast-x />
+</view>

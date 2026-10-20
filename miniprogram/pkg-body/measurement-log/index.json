@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "记录测量",
+  "usingComponents": {
+    "toast-x": "/components/toast/index"
+  }
+}

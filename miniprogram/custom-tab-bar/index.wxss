@@ -1,0 +1,38 @@
+/* frontend/src/index.css #tabbar. Self-contained: the tab bar is not inside a page's .page root,
+   so it carries the theme variables itself (style="{{theme}}" from connectComponent). */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  display:flex;justify-content:space-around;align-items:flex-end;
+  padding:7px 6px calc(6px + env(safe-area-inset-bottom));
+  background:var(--tabbar-bg,rgba(14,14,16,.94));
+  -webkit-backdrop-filter:saturate(180%) blur(10px);backdrop-filter:saturate(180%) blur(10px);
+  border-top:.5px solid var(--sep-op,rgba(84,84,88,.34));
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue',sans-serif;
+}
+.tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  color:var(--label-3,rgba(235,235,245,.32));font-size:10px;font-weight:500;letter-spacing:.005em;padding-top:3px;
+  transition:color 140ms;
+}
+.tab-ic{position:relative;display:inline-flex;color:var(--label,#fff);opacity:.32}
+.tab-l{margin-top:3px;line-height:1.2}
+.tab.on{color:var(--acc,#30d158)}
+.tab.on .tab-ic{color:inherit;opacity:1}
+.tab.start{margin-top:-24px}
+.tab.start .cir{
+  width:52px;height:52px;border-radius:50%;background:var(--acc,#30d158);color:var(--on-acc,#000);
+  display:flex;align-items:center;justify-content:center;position:relative;
+  box-shadow:0 6px 18px -4px var(--acc-shadow,rgba(48,209,88,.55));
+  transition:transform 140ms cubic-bezier(.32,.72,0,1);
+}
+.tab.start.hv .cir{transform:scale(.93)}
+.tab.start .tab-l{color:var(--acc,#30d158);font-weight:600}
+.tab.start .tab-time{font-variant-numeric:tabular-nums}
+.tab.start.rec .cir{background:var(--orange,#ff9f0a);color:#000;box-shadow:0 6px 18px -4px var(--orange-shadow,rgba(255,159,10,.55))}
+.tab.start.rec .tab-l{color:var(--orange,#ff9f0a)}
+.tab.start.rec .cir::after{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:50%;
+  border:2px solid var(--orange,#ff9f0a);animation:ping 1.9s cubic-bezier(.32,.72,0,1) infinite;
+}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.45);opacity:0}}

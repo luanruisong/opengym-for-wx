@@ -1,0 +1,20 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view wx:if="{{subtitle}}" class="muted small mb12">{{subtitle}}</view>
+  <view class="menu-group">
+    <view class="menu-list">
+      <view class="menu-item accent" hover-class="hv" bindtap="onFinish">
+        <view class="lrow-i"><icon-x name="flag" /></view>
+        <view class="grow"><view class="tt">结束并保存</view></view>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{canDiscard}}" class="menu-group">
+    <view class="menu-list">
+      <view class="menu-item danger" hover-class="hv" bindtap="onDiscard">
+        <view class="lrow-i"><icon-x name="trash" /></view>
+        <view class="grow"><view class="tt">放弃训练</view></view>
+      </view>
+    </view>
+  </view>
+  <toast-x />
+</view>

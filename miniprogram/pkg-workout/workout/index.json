@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "训练",
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "rest-timer": "/components/rest-timer/index",
+    "timer-flash": "/components/timer-flash/index",
+    "toast-x": "/components/toast/index",
+    "ex-block": "../components/ex-block/index",
+    "focus-view": "../components/focus-view/index"
+  }
+}

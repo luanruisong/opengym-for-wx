@@ -1,0 +1,16 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">{{name}}</view>
+  <seg options="{{kindOpts}}" value="{{kind}}" bind:change="onKind" />
+  <view class="small dim kind-note">{{kindNote}}</view>
+  <block wx:if="{{kind !== 'none'}}">
+    <view wx:if="{{bar}}" class="sect-b mb8">
+      <row icon="barbell" title="无杠铃杆" subtitle="你记录的重量全部是杠铃片。"><switch-x checked="{{noBar}}" bind:change="onNoBar" /></row>
+    </view>
+    <view wx:if="{{!noBar}}" class="cfgrow mb8">
+      <view><stepper label="{{baseLabel}}" value="{{base}}" step="2.5" bind:change="onBar" /></view>
+    </view>
+    <view class="small dim plate-foot">{{foot}}</view>
+  </block>
+  <view class="btn primary" hover-class="hv" bindtap="onDone"><text>完成</text></view>
+  <toast-x />
+</view>

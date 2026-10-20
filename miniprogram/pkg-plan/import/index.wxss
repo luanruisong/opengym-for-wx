@@ -1,0 +1,6 @@
+.imp-line{margin-bottom:14px}
+.imp-lh{line-height:1.4}
+.imp-sched{padding:10px 2px;border-top:1px solid var(--sep);border-bottom:1px solid var(--sep);margin-bottom:16px}
+.imp-sched>.grow{margin-right:12px}
+.imp-sched-t{font-size:15px}
+.btn.ghost.dim{color:var(--label-3)}

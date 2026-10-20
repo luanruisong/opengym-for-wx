@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "历史",
+  "onReachBottomDistance": 300,
+  "usingComponents": {
+    "workout-row": "/pkg-history/components/workout-row/index",
+    "day-note-row": "/pkg-history/components/day-note-row/index"
+  }
+}

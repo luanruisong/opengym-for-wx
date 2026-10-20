@@ -1,0 +1,4 @@
+.lp-sep::before{content:'';position:absolute;left:55px;right:0;top:0;height:var(--hair);background:var(--sep)}
+.lp-gap{height:18px}
+.lp-same{padding:4px 0}
+.lp-same-msg{margin-bottom:18px;line-height:1.5}

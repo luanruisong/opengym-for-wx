@@ -1,0 +1,1 @@
+<input class="num {{cls}}" style="{{st}}" type="{{decimal ? 'digit' : 'number'}}" value="{{shown}}" placeholder="{{ph}}" placeholder-class="ph" disabled="{{disabled}}" focus="{{focus}}" confirm-type="done" bindfocus="onFocus" bindinput="onInput" bindblur="onBlur" />

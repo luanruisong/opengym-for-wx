@@ -1,0 +1,17 @@
+/* Stats tab: only what app.wxss does not have. */
+.m0{margin:0}
+.mb2{margin-bottom:2px}
+.ml8{margin-left:8px}
+.btn.is-y{color:var(--yellow)}
+.tile .v.bw-v{font-size:22px}
+.iconbtn.sm{width:30px;height:30px;font-size:15px}
+.week-nav{margin:10px 0 6px}
+.mrow.sel-row{border-top:var(--hair) solid var(--sep);margin-top:4px;padding-top:10px}
+.link-card{align-items:center}
+.link-card>.btn{margin-left:12px}
+.eff-top{align-items:flex-end}
+.set-legend{margin-top:6px}
+.set-key{margin-right:12px;margin-bottom:2px}
+.set-dot{width:8px;height:8px;border-radius:4px;margin-right:5px;flex:none}
+.ex-sess{padding:6px 0;border-bottom:var(--hair) solid var(--sep);align-items:flex-start}
+.ex-sets{text-align:right;margin-left:12px;word-break:break-word}

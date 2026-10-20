@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "身体围度",
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "toast-x": "/components/toast/index",
+    "seg": "/components/seg/index",
+    "line-chart": "/components/line-chart/index"
+  }
+}

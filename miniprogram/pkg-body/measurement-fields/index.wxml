@@ -1,0 +1,19 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">让表单只保留你真正跟踪的测量项。</view>
+  <view wx:for="{{groups}}" wx:for-item="g" wx:key="group" class="sect">
+    <text class="sect-t">{{g.title}}</text>
+    <view class="sect-b">
+      <view wx:for="{{g.rows}}" wx:for-item="r" wx:key="id" class="lrow tap" hover-class="hv" data-id="{{r.id}}" data-on="{{r.on}}" bindtap="onToggle">
+        <view class="lrow-m"><text class="lrow-t">{{r.title}}</text><text wx:if="{{r.sub}}" class="lrow-s">{{r.sub}}</text></view>
+        <view class="sw {{r.on ? 'on' : ''}}"><view class="knob"></view></view>
+      </view>
+    </view>
+  </view>
+  <view class="row mf-add">
+    <input class="field grow" value="{{name}}" maxlength="60" placeholder="自定义测量项" placeholder-class="ph" confirm-type="done" bindinput="onName" bindconfirm="onAdd" />
+    <view class="btn mf-btn {{name ? '' : 'disabled'}}" hover-class="hv" bindtap="onAdd"><icon-x name="plus" /><text>添加</text></view>
+  </view>
+  <view class="gap14"></view>
+  <view class="btn primary" hover-class="hv" bindtap="onDone"><text>完成</text></view>
+  <toast-x />
+</view>

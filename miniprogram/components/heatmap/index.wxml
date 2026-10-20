@@ -1,0 +1,28 @@
+<view class="hm" wx:if="{{hm}}">
+  <view class="hm-seg">
+    <view class="hm-seg-b {{hm.metric === 'time' ? 'on' : ''}}" data-m="time" bindtap="onMetric">时间</view>
+    <view class="hm-seg-b {{hm.metric === 'vol' ? 'on' : ''}}" data-m="vol" bindtap="onMetric">总量</view>
+  </view>
+  <scroll-view class="hm-wrap" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}" scroll-into-view="{{lastCol}}" scroll-with-animation="{{false}}">
+    <view class="hm-inner">
+      <view class="hm-months">
+        <view wx:for="{{hm.months}}" wx:key="k" class="hm-mo">{{item.txt}}</view>
+      </view>
+      <view class="hm-body">
+        <view class="hm-days">
+          <view wx:for="{{hm.days}}" wx:key="k" class="hm-dl">{{item.txt}}</view>
+        </view>
+        <view class="hm-grid">
+          <view wx:for="{{hm.cols}}" wx:key="k" wx:for-item="col" wx:for-index="ci" id="hmw{{ci}}" class="hm-col">
+            <view wx:for="{{col.cells}}" wx:key="k" wx:for-item="cell" class="hm-c {{cell.c}}" data-iso="{{cell.k}}" data-on="{{cell.on}}" bindtap="onCell"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="hm-legend">
+    <text>{{hm.lo}}</text>
+    <view class="hm-c l0"></view><view class="hm-c l1"></view><view class="hm-c l2"></view><view class="hm-c l3"></view><view class="hm-c l4"></view>
+    <text class="hm-hi">{{hm.hi}}</text>
+  </view>
+</view>

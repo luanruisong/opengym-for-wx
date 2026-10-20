@@ -1,0 +1,107 @@
+<view wx:if="{{fv}}" class="focus-view">
+  <view class="focus-card">
+    <view wx:if="{{fv.ss}}" class="focus-ss">
+      <icon-x name="reset" />
+      <text class="bold focus-ss-n">{{fv.ss.names}}</text>
+      <text class="focus-ss-w">{{fv.ss.where}}</text>
+      <view class="btn xs ghost" hover-class="hv" bindtap="onUnpair"><icon-x name="link" /><text>取消组合</text></view>
+      <view class="focus-ss-nav">
+        <view class="iconbtn {{fv.ss.prevDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onSeqPrev"><icon-x name="chevronLeft" /></view>
+        <view class="iconbtn {{fv.ss.nextDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onSeqNext"><icon-x name="chevronRight" /></view>
+      </view>
+    </view>
+
+    <view class="focus-hd">
+      <view class="h2 focus-name">{{fv.name}}</view>
+      <view class="iconbtn plain" hover-class="hv" bindtap="onDetails"><icon-x name="info" /></view>
+      <text wx:if="{{fv.warm}}" class="focus-warmup">🔥</text>
+      <text wx:if="{{fv.fail}}" class="focus-failure">F</text>
+      <view class="iconbtn plain" hover-class="hv" bindtap="onExMenu"><icon-x name="more" /></view>
+    </view>
+
+    <view class="focus-context">
+      <view wx:if="{{fv.tags.length}}" class="row wrap focus-tags">
+        <view wx:for="{{fv.tags}}" wx:for-item="tg" wx:key="k" class="tag {{tg.acc ? 'acc' : ''}}">{{tg.text}}</view>
+      </view>
+      <view wx:if="{{fv.targetNote}}" class="focus-note">{{fv.targetNote}}</view>
+      <view wx:if="{{fv.pinned}}" class="focus-note pinned"><icon-x name="flag" /><text>{{fv.pinned}}</text></view>
+      <view wx:if="{{fv.note}}" class="focus-note">{{fv.note}}</view>
+      <view wx:if="{{fv.last}}" class="small dim">{{fv.last}}</view>
+      <view wx:if="{{fv.guidance}}" class="focus-guidance" hover-class="hv" bindtap="onGuidance"><icon-x name="lightbulb" /><text>{{fv.guidance}}</text></view>
+    </view>
+
+    <view class="focus-pres">
+      <text class="focus-badge focus-progress">{{fv.progress}}</text>
+      <text wx:for="{{fv.badges}}" wx:for-item="b" wx:key="k" class="focus-badge">{{b.text}}</text>
+      <text wx:if="{{fv.plan}}" class="focus-badge plan">{{fv.plan}}</text>
+      <view wx:if="{{fv.plate}}" class="focus-badge plate"><icon-x name="plate" /><text>{{fv.plate.text}}</text><text wx:if="{{fv.plate.short}}" class="short"> · {{fv.plate.short}}</text></view>
+      <view wx:if="{{fv.noProg}}" class="focus-badge warning"><icon-x name="pause" /><text>未计入进阶</text><text wx:if="{{fv.noProgUndo}}" class="focus-badge-action" bindtap="onNoProgUndo">撤销</text></view>
+    </view>
+    <view wx:if="{{fv.lockNote}}" class="focus-lock-note">{{fv.lockNote}}</view>
+
+    <view class="focus-set {{fv.done ? 'complete' : ''}} {{fv.locked ? 'locked' : ''}}">
+      <view wx:if="{{fv.side}}" class="focus-sides">
+        <view wx:for="{{fv.sides}}" wx:for-item="sd" wx:key="side" class="focus-side" mark:side="{{sd.side}}">
+          <view class="focus-side-hd">
+            <text class="bold">{{sd.label}}</text>
+            <view class="focus-side-check {{sd.done ? 'done' : ''}}" hover-class="hv" bindtap="onSideCheck"><icon-x name="check" /></view>
+          </view>
+          <stepper label="{{fv.loadLabel}}" value="{{sd.w}}" step="{{fv.loadStep}}" disabled="{{sd.dis}}" custom-step bind:change="onSideW" bind:step="onSideWStep" />
+          <stepper label="次数" value="{{sd.r}}" step="{{1}}" decimal="{{false}}" disabled="{{sd.dis}}" bind:change="onSideR" />
+          <view wx:for="{{sd.drops}}" wx:for-item="d" wx:key="k" class="focus-extra" mark:k="{{d.k}}">
+            <text>{{d.label}}</text>
+            <stepper label="负重" value="{{d.w}}" step="{{fv.loadStep}}" disabled="{{sd.dis}}" custom-step bind:change="onSideDropW" bind:step="onSideDropWStep" />
+            <stepper label="次数" value="{{d.r}}" step="{{1}}" decimal="{{false}}" disabled="{{sd.dis}}" bind:change="onSideDropR" />
+          </view>
+          <view wx:for="{{sd.bursts}}" wx:for-item="b" wx:key="k" class="focus-extra" mark:k="{{b.k}}">
+            <text>{{b.label}}</text>
+            <stepper label="次数" value="{{b.r}}" step="{{1}}" decimal="{{false}}" disabled="{{sd.dis}}" bind:change="onSideBurstR" />
+            <text class="dim small">{{b.rest}}</text>
+          </view>
+        </view>
+      </view>
+      <block wx:else>
+        <block wx:if="{{fv.cardio}}">
+          <stepper label="时长（分钟）" value="{{fv.min}}" step="{{1}}" decimal="{{false}}" disabled="{{fv.readOnly}}" bind:change="onMin" />
+          <stepper label="{{fv.speedLabel}}" value="{{fv.speed}}" step="{{0.5}}" disabled="{{fv.readOnly}}" bind:change="onSpeed" />
+          <stepper wx:if="{{fv.incline}}" label="坡度 (%)" value="{{fv.inclineV}}" step="{{fv.inclineStep}}" max="{{fv.inclineMax}}" disabled="{{fv.readOnly}}" bind:change="onIncline" />
+        </block>
+        <block wx:else>
+          <stepper label="{{fv.loadLabel}}" value="{{fv.w}}" step="{{fv.loadStep}}" disabled="{{fv.readOnly}}" custom-step bind:change="onLoad" bind:step="onLoadStep" />
+          <view wx:if="{{fv.timed}}" class="focus-timed">
+            <text class="bold">{{fv.hold}}</text>
+            <view class="btn sm {{fv.goDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onStart"><icon-x name="play" /><text>开始</text></view>
+          </view>
+          <stepper wx:else label="次数" value="{{fv.r}}" step="{{1}}" decimal="{{false}}" disabled="{{fv.readOnly}}" bind:change="onReps" />
+        </block>
+      </block>
+      <view class="focus-extras">
+        <view wx:for="{{fv.drops}}" wx:for-item="d" wx:key="k" class="focus-extra" mark:k="{{d.k}}">
+          <text>{{d.label}}</text>
+          <stepper label="负重" value="{{d.w}}" step="{{fv.loadStep}}" disabled="{{fv.readOnly}}" custom-step bind:change="onDropW" bind:step="onDropWStep" />
+          <stepper label="次数" value="{{d.r}}" step="{{1}}" decimal="{{false}}" disabled="{{fv.readOnly}}" bind:change="onDropR" />
+        </view>
+        <view wx:for="{{fv.bursts}}" wx:for-item="b" wx:key="k" class="focus-extra" mark:k="{{b.k}}">
+          <text>{{b.label}}</text>
+          <stepper label="次数" value="{{b.r}}" step="{{1}}" decimal="{{false}}" disabled="{{fv.readOnly}}" bind:change="onBurstR" />
+          <text class="dim small">{{b.rest}}</text>
+        </view>
+      </view>
+      <view wx:if="{{fv.effort}}" class="effcell focus-effort {{fv.effort.empty ? 'is-empty' : ''}} {{fv.readOnly ? 'disabled' : ''}}" style="{{fv.effort.style}}" hover-class="hv" bindtap="onEffort">{{fv.effort.text}}</view>
+    </view>
+
+    <view class="btn primary" hover-class="hv" bindtap="onComplete"><icon-x name="check" /><text>{{fv.completeLabel}}</text></view>
+    <view class="focus-secondary">
+      <view class="focus-skip {{fv.skipDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onSkip"><icon-x name="play" /><text>跳过</text></view>
+      <view class="iconbtn" hover-class="hv" bindtap="onSetMenu"><icon-x name="more" /></view>
+    </view>
+  </view>
+
+  <view class="focus-pager">
+    <view class="iconbtn {{fv.prevDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onPrevSet"><icon-x name="chevronLeft" /></view>
+    <view class="focus-dots">
+      <view wx:for="{{fv.dots}}" wx:for-item="d" wx:key="k" mark:k="{{d.k}}" class="focus-dot {{d.active ? 'active' : ''}} {{d.done ? 'done' : ''}}" bindtap="onDot"></view>
+    </view>
+    <view class="iconbtn {{fv.nextDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onNextSet"><icon-x name="chevronRight" /></view>
+  </view>
+</view>

@@ -1,0 +1,23 @@
+<view class="page sheet-page" style="{{theme}}">
+  <block wx:if="{{kind === 'exercise'}}">
+    <view class="small muted mb4">本次训练</view>
+    <textarea class="field area" maxlength="{{max}}" value="{{note}}" placeholder="感觉如何，下次要改什么。随今天的训练一起保存。" placeholder-class="ph" bindinput="onNote" />
+    <view class="sect-b mt12">
+      <row icon="pin" icon-tint="var(--yellow)" title="下次显示" subtitle="下次练这个动作时会再次出现。">
+        <switch-x checked="{{pin}}" disabled="{{noteEmpty}}" bind:change="onPin" />
+      </row>
+    </view>
+    <block wx:if="{{!editing}}">
+      <view class="small muted mb4 mt24">这个动作始终显示</view>
+      <textarea class="field area note-short" maxlength="{{max}}" value="{{standing}}" placeholder="座椅高度、插销位置、动作要点。每次训练都会显示。" placeholder-class="ph" bindinput="onStanding" />
+    </block>
+  </block>
+  <block wx:elif="{{kind === 'set'}}">
+    <textarea class="field area" maxlength="{{max}}" value="{{note}}" placeholder="记录这组需要特别注意的事项。" placeholder-class="ph" focus bindinput="onNote" />
+  </block>
+  <block wx:else>
+    <textarea class="field area" maxlength="{{max}}" value="{{note}}" placeholder="这次训练整体感觉如何。" placeholder-class="ph" focus bindinput="onNote" />
+  </block>
+  <view class="btn primary mt24" hover-class="hv" bindtap="onSave"><text>保存</text></view>
+  <toast-x />
+</view>

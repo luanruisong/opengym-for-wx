@@ -1,0 +1,11 @@
+<view class="page pc-page" style="{{theme}}">
+  <view id="stage" class="pp-compare" catchtouchstart="onTouch" catchtouchmove="onTouch">
+    <image wx:if="{{after}}" class="pp-img" src="{{after}}" mode="aspectFit" />
+    <view class="pp-clip" style="width:{{pct}}%">
+      <image wx:if="{{before}}" class="pp-img" style="width:{{w}}px" src="{{before}}" mode="aspectFit" />
+    </view>
+    <view class="pp-handle" style="left:{{pct}}%"><view class="pp-line"></view><view class="pp-grip"></view></view>
+    <view class="pp-label pp-label-before">{{da}}</view>
+    <view class="pp-label pp-label-after">{{db}}</view>
+  </view>
+</view>

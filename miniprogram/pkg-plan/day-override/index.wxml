@@ -1,0 +1,46 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">
+    <view>每周计划：{{weekly}}<text wx:if="{{changed}}" class="orange"> · 此日已更改</text></view>
+    <view>生病、错过一天或想换个训练？选择改练什么。</view>
+  </view>
+  <view wx:if="{{missed}}" class="dov-block">
+    <view class="btn primary" hover-class="hv" bindtap="onLog"><icon-x name="checkCircle" /><text>补记这次训练</text></view>
+  </view>
+  <view wx:if="{{canNote}}" class="dov-block">
+    <view class="item" hover-class="hv" bindtap="onNote">
+      <view class="lrow-i rest"><icon-x name="{{noteIcon}}" /></view>
+      <view class="grow">
+        <view class="tt">{{noteTitle}}</view>
+        <view wx:if="{{noteText}}" class="ss dov-pre">{{noteText}}</view>
+      </view>
+      <icon-x name="{{hasNote ? 'pencil' : 'plus'}}" cls="chev" />
+    </view>
+  </view>
+  <block wx:if="{{coach.length}}">
+    <view class="sec dov-sec0">{{coachTitle}}</view>
+    <view class="list dov-coach">
+      <view wx:for="{{coach}}" wx:key="id" class="item" hover-class="hv" data-id="{{item.id}}" bindtap="onRoutine">
+        <view class="lrow-i"><icon-x name="{{item.glyph}}" /></view>
+        <view class="grow"><view class="tt">{{item.name}}</view><view class="ss">{{item.sub}}</view></view>
+        <icon-x wx:if="{{item.on}}" name="check" cls="accent" />
+      </view>
+    </view>
+  </block>
+  <view class="list">
+    <view wx:for="{{others}}" wx:key="id" class="item" hover-class="hv" data-id="{{item.id}}" bindtap="onRoutine">
+      <view class="lrow-i"><icon-x name="{{item.glyph}}" /></view>
+      <view class="grow"><view class="tt">{{item.name}}</view><view class="ss">{{item.sub}}</view></view>
+      <icon-x wx:if="{{item.on}}" name="check" cls="accent" />
+    </view>
+    <view class="item" hover-class="hv" bindtap="onRest">
+      <view class="lrow-i rest"><icon-x name="moon" /></view>
+      <view class="grow"><view class="tt">休息 / 跳过这天</view></view>
+      <icon-x wx:if="{{restOn}}" name="check" cls="accent" />
+    </view>
+    <view wx:if="{{hasOvr}}" class="item" hover-class="hv" bindtap="onReset">
+      <view class="lrow-i rest"><icon-x name="reset" /></view>
+      <view class="grow"><view class="tt">恢复每周计划</view></view>
+    </view>
+  </view>
+  <toast-x />
+</view>

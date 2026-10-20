@@ -1,0 +1,143 @@
+<view class="page has-tabbar {{resting ? 'resting' : ''}}" style="{{theme}}">
+  <view class="hdr">
+    <view class="hdr-m">
+      <view class="h1">计划</view>
+      <view class="sub">{{sub}}</view>
+    </view>
+    <view class="iconbtn" hover-class="hv" bindtap="onMenu"><icon-x name="share" /></view>
+  </view>
+
+  <seg options="{{viewOpts}}" value="{{view}}" cls="plan-views" bind:change="onView" />
+
+  <!-- ============================ Routines ============================ -->
+  <block wx:if="{{view === 'routines'}}">
+    <view class="plan-sec-h">
+      <view wx:if="{{hasRoutines}}" class="plan-textbtn" hover-class="hv" bindtap="onEditR">{{editR ? '完成' : '编辑'}}</view>
+      <view class="plan-sec-acts">
+        <view class="btn sm tinted" hover-class="hv" bindtap="onNewRoutine"><icon-x name="plus" /><text>新训练日</text></view>
+      </view>
+    </view>
+    <block wx:if="{{hasRoutines}}">
+      <view class="list">
+        <block wx:if="{{editR}}">
+          <view wx:for="{{routines}}" wx:key="id" class="item">
+            <view class="plan-minus" hover-class="hv" data-id="{{item.id}}" bindtap="onRoutineMinus"><icon-x name="minus" /></view>
+            <view class="lrow-i"><icon-x name="{{item.glyph}}" /></view>
+            <view class="grow"><view class="tt">{{item.name}}</view><view class="ss">{{item.ss}}</view></view>
+            <view wx:if="{{multi}}" class="mv-btns">
+              <view class="mv {{item.up ? '' : 'disabled'}}" hover-class="hv" data-i="{{item.i}}" data-dir="-1" bindtap="onRoutineMove"><icon-x name="chevronUp" /></view>
+              <view class="mv {{item.down ? '' : 'disabled'}}" hover-class="hv" data-i="{{item.i}}" data-dir="1" bindtap="onRoutineMove"><icon-x name="chevronDown" /></view>
+            </view>
+          </view>
+        </block>
+        <block wx:else>
+          <view wx:for="{{routines}}" wx:key="id" class="item" hover-class="hv" data-id="{{item.id}}" bindtap="onRoutine" bindlongpress="onRoutineLong">
+            <view class="lrow-i"><icon-x name="{{item.glyph}}" /></view>
+            <view class="grow"><view class="tt">{{item.name}}</view><view class="ss">{{item.ss}}</view></view>
+            <icon-x name="chevronRight" cls="chev" />
+          </view>
+        </block>
+      </view>
+      <view class="sect-f">{{routinesFoot}}</view>
+    </block>
+    <block wx:else>
+      <view class="empty">
+        <view class="ico"><icon-x name="clipboard" /></view>
+        <view>还没有训练日。</view>
+        <view>自己建一个，或者拿入门计划开始。</view>
+      </view>
+      <view class="btn" hover-class="hv" bindtap="onStarter"><icon-x name="clipboard" /><text>加载入门计划</text></view>
+    </block>
+  </block>
+
+  <!-- ============================ Schedule ============================ -->
+  <block wx:else>
+    <view class="sect">
+      <view class="sect-b">
+        <row icon="repeat" icon-tint="var(--orange)" title="训练方式">
+          <text wx:if="{{external}}" class="small dim mode-locked">轮换 · 由外部管理</text>
+          <seg wx:else options="{{modeOpts}}" value="{{mode}}" inline bind:change="onMode" />
+        </row>
+      </view>
+      <view class="sect-f">{{modeFoot}}</view>
+    </view>
+
+    <view wx:if="{{!hasRoutines}}" class="empty plan-empty">
+      <view class="ico"><icon-x name="clipboard" /></view>
+      <view>还没有训练日。</view>
+      <view>自己建一个，或者拿入门计划开始。</view>
+      <view class="mt12"><view class="btn sm" hover-class="hv" bindtap="onStarter"><icon-x name="clipboard" /><text>加载入门计划</text></view></view>
+    </view>
+
+    <view wx:if="{{recovery}}" class="empty">
+      <view>无法读取此轮换。可能是另一台设备写入的。</view>
+      <view class="mt8"><view class="btn sm tinted" hover-class="hv" bindtap="onDiscardQueue"><text>丢弃它</text></view></view>
+    </view>
+
+    <block wx:if="{{mode === 'week'}}">
+      <view class="sec">本周</view>
+      <view class="list">
+        <view wx:for="{{weekDays}}" wx:key="d" class="item" hover-class="hv" data-d="{{item.d}}" bindtap="onDay">
+          <text class="plan-day-n {{item.today ? 'today' : ''}}">{{item.n}}</text>
+          <view class="lrow-i {{item.rest ? 'rest' : ''}}"><icon-x name="{{item.icon}}" /></view>
+          <view class="grow"><view class="tt">{{item.tt}}</view><view class="ss">{{item.ss}}</view></view>
+          <icon-x name="chevronRight" cls="chev" />
+        </view>
+      </view>
+      <view class="sect-f">一天想练两个训练日？点一下那天，两个都选上。</view>
+    </block>
+
+    <block wx:else>
+      <view class="plan-sec-h">
+        <view class="sec">循环<text wx:if="{{external}}" class="tag ml8">由外部管理</text></view>
+        <view wx:if="{{!external}}" class="plan-sec-acts">
+          <view wx:if="{{loop.length}}" class="plan-textbtn mr6" hover-class="hv" bindtap="onEditLoop">{{editing ? '完成' : '编辑'}}</view>
+          <view class="btn sm tinted {{canAdd ? '' : 'disabled'}}" hover-class="hv" bindtap="onAddToLoop"><icon-x name="plus" /><text>添加</text></view>
+        </view>
+      </view>
+      <view wx:if="{{loop.length}}" class="list">
+        <view wx:for="{{loop}}" wx:key="id" class="item rotation-row {{item.done ? 'is-done' : ''}}" data-id="{{item.id}}" bindlongpress="onLoopLong">
+          <view wx:if="{{editing}}" class="plan-minus" hover-class="hv" data-id="{{item.id}}" bindtap="onLoopMinus"><icon-x name="minus" /></view>
+          <view class="plan-order {{item.next ? 'next' : ''}}">
+            <icon-x wx:if="{{item.done}}" name="check" />
+            <text wx:else>{{item.i + 1}}</text>
+          </view>
+          <view class="lrow-i"><icon-x name="{{item.glyph}}" /></view>
+          <view class="grow"><view class="tt">{{item.name}}</view><view class="ss">{{item.ss}}</view></view>
+          <view wx:if="{{editing && loopMulti}}" class="mv-btns">
+            <view class="mv {{item.up ? '' : 'disabled'}}" hover-class="hv" data-i="{{item.i}}" data-dir="-1" bindtap="onLoopMove"><icon-x name="chevronUp" /></view>
+            <view class="mv {{item.down ? '' : 'disabled'}}" hover-class="hv" data-i="{{item.i}}" data-dir="1" bindtap="onLoopMove"><icon-x name="chevronDown" /></view>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="empty">还没有轮换。按你想训练的顺序添加训练日。第一个还没记录的训练日会一直排在下一个。</view>
+      <view wx:if="{{loopFoot}}" class="sect-f">{{loopFoot}}</view>
+      <view class="row wrap loop-acts">
+        <view wx:if="{{external}}" class="btn sm tinted" hover-class="hv" bindtap="onAdopt"><text>使用此轮换</text></view>
+        <view wx:if="{{showOver}}" class="btn sm" hover-class="hv" bindtap="onStartOver"><icon-x name="reset" /><text>重新开始循环</text></view>
+        <view wx:if="{{showStart}}" class="btn sm tinted" hover-class="hv" bindtap="onStartLoop"><icon-x name="play" /><text>开始循环</text></view>
+      </view>
+      <block wx:if="{{extraDays.length}}">
+        <view class="sec">固定日也有安排</view>
+        <view class="list">
+          <view wx:for="{{extraDays}}" wx:key="d" class="item" hover-class="hv" data-d="{{item.d}}" bindtap="onDay">
+            <text class="plan-day-n {{item.today ? 'today' : ''}}">{{item.n}}</text>
+            <view class="lrow-i"><icon-x name="{{item.icon}}" /></view>
+            <view class="grow"><view class="tt">{{item.tt}}</view><view class="ss">{{item.ss}}</view></view>
+            <icon-x name="chevronRight" cls="chev" />
+          </view>
+        </view>
+        <view class="sect-f">这些在循环之外另算。点某一天可更改或清空。</view>
+      </block>
+    </block>
+
+    <view wx:if="{{hasRoutines}}" class="sect mt24">
+      <view class="sect-b">
+        <row icon="chart" icon-tint="var(--indigo)" title="每周肌肉训练量" subtitle="现在在统计里，肌肉平衡旁边" accessory="chevron" tap bind:tap="onVolume" />
+      </view>
+    </view>
+  </block>
+
+  <rest-timer place="tabbar" />
+  <toast-x tabbar />
+</view>

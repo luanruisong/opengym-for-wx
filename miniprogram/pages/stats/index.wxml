@@ -1,0 +1,219 @@
+<view class="page has-tabbar {{resting ? 'resting' : ''}}" style="{{theme}}">
+  <view class="hdr">
+    <view class="hdr-m"><view class="h1">统计</view><view class="sub">进度与历史</view></view>
+    <view class="iconbtn" hover-class="hv" bindtap="onHistory"><icon-x name="history" /></view>
+  </view>
+
+  <!-- tiles -->
+  <view class="tiles">
+    <view class="tile"><view class="l"><icon-x name="dumbbell" /><text>训练次数</text></view><view class="v">{{tiles.workouts}}</view></view>
+    <view class="tile"><view class="l"><icon-x name="calendar" /><text>本月</text></view><view class="v">{{tiles.month}}</view></view>
+    <view class="tile"><view class="l"><icon-x name="flame" /><text>连续周数</text></view><view class="v">{{tiles.streak}}</view></view>
+    <view class="tile"><view class="l"><icon-x name="scale" /><text>体重 30 天</text></view><view class="v bw-v" style="{{tiles.bwStyle}}">{{tiles.bw}}</view></view>
+  </view>
+
+  <!-- activity heatmap -->
+  <view class="card">
+    <view class="h2">活动（近 12 个月）</view>
+    <heatmap metric="{{hmMetric}}" bind:metricchange="onHmMetric" bind:day="onHmDay" />
+  </view>
+
+  <!-- muscle balance / fatigue / strength -->
+  <view wx:if="{{showMB && mb}}" class="card">
+    <seg cls="seg-range" options="{{mb.viewOpts}}" value="{{mb.view}}" bind:change="onMbView" />
+
+    <block wx:if="{{mb.view === 'balance'}}">
+      <view class="row between mb8">
+        <view class="h2 m0">{{mb.title}} <text class="dim nocap">· {{mb.by}}</text></view>
+        <view wx:if="{{mb.showHardBtn}}" class="btn sm {{mb.on ? 'is-y' : ''}}" hover-class="hv" bindtap="onMbHard"><icon-x name="gauge" /><text>{{mb.hardLabel}}</text></view>
+      </view>
+      <seg cls="seg-range" options="{{mb.winOpts}}" value="{{mb.win}}" bind:change="onMbWin" />
+
+      <view wx:if="{{mb.weekly}}" class="row between week-nav">
+        <view class="iconbtn sm" hover-class="hv" bindtap="onPrevWeek"><icon-x name="chevronLeft" /></view>
+        <text class="small bold">{{mb.weekLabel}}</text>
+        <view class="iconbtn sm {{mb.nextDisabled ? 'disabled' : ''}}" hover-class="hv" bindtap="onNextWeek"><icon-x name="chevronRight" /></view>
+      </view>
+
+      <block wx:if="{{mb.weekly || mb.hasData}}">
+        <body-map load="{{mb.load}}" body="{{mb.body}}" selected="{{mb.sel}}" tappable legend bind:pick="onMuscle" />
+      </block>
+
+      <block wx:if="{{mb.hasData}}">
+        <view wx:if="{{mb.selRow}}" class="mrow sel-row">
+          <view class="nm"><text class="bold">{{mb.selRow.name}}</text></view>
+          <view class="v">{{mb.selRow.v}}</view>
+        </view>
+        <bar-chart wx:if="{{mb.rows.length}}" rows="{{mb.rows}}" />
+        <block wx:if="{{mb.showToggle}}">
+          <view class="gap8"></view>
+          <view class="btn" hover-class="hv" bindtap="onMbToggle"><text>{{mb.toggleLabel}}</text><icon-x name="{{mb.expanded ? 'chevronUp' : 'chevronDown'}}" /></view>
+        </block>
+        <block wx:if="{{mb.missed.length}}">
+          <view class="sec mt12">{{mb.missedTitle}}</view>
+          <view class="mchips"><view wx:for="{{mb.missed}}" wx:key="k" class="mchip miss">{{item.n}}</view></view>
+        </block>
+        <view wx:if="{{mb.allWorked}}" class="muted small mt8">{{mb.allWorked}}</view>
+      </block>
+      <view wx:else class="muted small">{{mb.emptyText}}</view>
+    </block>
+
+    <block wx:elif="{{mb.view === 'fatigue'}}">
+      <view class="h2">{{mb.title}}</view>
+      <body-map load="{{mb.load}}" thresholds="{{mb.thresholds}}" body="{{mb.body}}" selected="{{mb.sel}}" tappable variant="fatigue" bind:pick="onMuscle" />
+      <view class="hm-legend hm-fatigue">
+        <block wx:for="{{mb.legend}}" wx:key="k"><text>{{item.txt}}</text><view class="hm-c {{item.c}}"></view></block>
+      </view>
+      <view class="muted small mt8">{{mb.note}}</view>
+      <view wx:if="{{mb.sel}}" class="mrow sel-row">
+        <view class="nm"><text class="bold">{{mb.selName}}</text></view>
+        <view class="v">{{mb.selValue}}</view>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="h2">{{mb.title}}</view>
+      <body-map load="{{mb.load}}" thresholds="{{mb.thresholds}}" body="{{mb.body}}" selected="{{mb.sel}}" tappable variant="strength" bind:pick="onMuscle" />
+      <view class="hm-legend hm-strength">
+        <text>1 <text class="dim">{{mb.fullWord}}</text></text>
+        <view class="hm-c l4"></view><view class="hm-c l3"></view><view class="hm-c l2"></view><view class="hm-c l1"></view><view class="hm-c l0"></view>
+        <text>{{mb.floorTxt}} <text class="dim">{{mb.floorWord}}</text></text>
+      </view>
+      <view class="muted small mt8">{{mb.note}}</view>
+      <block wx:if="{{mb.sel}}">
+        <view class="sec mt12">{{mb.exHead}}</view>
+        <bar-chart wx:if="{{mb.exRows.length}}" rows="{{mb.exRows}}" tappable bind:rowtap="onStrengthEx" />
+        <view wx:else class="muted small">{{mb.exEmpty}}</view>
+      </block>
+      <view wx:else class="muted small mt8">{{mb.tapHint}}</view>
+      <bar-chart wx:if="{{mb.detrained.length}}" rows="{{mb.detrained}}" />
+    </block>
+  </view>
+
+  <!-- the plan's weekly muscle volume (Plan links here: /stats?focus=weekly-volume) -->
+  <view wx:if="{{showPlan}}" class="card" id="weekly-volume">
+    <view class="h2 mb2">每周肌肉训练量</view>
+    <view class="muted small mb8">按你的计划，每周计划的组数。</view>
+    <bar-chart wx:if="{{!plan.empty}}" rows="{{plan.rows}}" />
+    <view wx:else class="muted small">{{plan.emptyText}}</view>
+    <block wx:if="{{plan.showToggle}}">
+      <view class="gap8"></view>
+      <view class="btn" hover-class="hv" bindtap="onPlanToggle"><text>{{plan.toggleLabel}}</text><icon-x name="{{plan.all ? 'chevronUp' : 'chevronDown'}}" /></view>
+    </block>
+  </view>
+
+  <!-- links -->
+  <view wx:if="{{hasWorkouts}}" class="card row between link-card">
+    <view class="grow"><view class="h2 m0">结构平衡</view><view class="muted small mt4">看看哪个动作拖了其他动作的后腿。</view></view>
+    <view class="btn sm tinted none" hover-class="hv" bindtap="onBalance"><text>打开</text><icon-x name="chevronRight" /></view>
+  </view>
+  <view wx:if="{{hasWorkouts}}" class="card row between link-card">
+    <view class="grow"><view class="h2 m0">进度照片</view><view class="muted small mt4">你随训练保存的每张照片，按日期排好。还有前后对比滑块。</view></view>
+    <view class="btn sm tinted none" hover-class="hv" bindtap="onPhotos"><text>打开</text><icon-x name="chevronRight" /></view>
+  </view>
+  <view class="card row between link-card">
+    <view class="grow"><view class="h2 m0">身体围度</view><view class="muted small mt4">{{measureSub}}</view></view>
+    <view class="btn sm tinted none" hover-class="hv" bindtap="onMeasure"><text>打开</text><icon-x name="chevronRight" /></view>
+  </view>
+
+  <!-- effort -->
+  <view wx:if="{{showEffort && eff}}" class="card">
+    <view class="h2">{{eff.head}} <text class="dim nocap">{{eff.headSub}}</text></view>
+    <seg cls="seg-range" options="{{eff.winOpts}}" value="{{eff.win}}" bind:change="onEffWin" />
+    <view wx:if="{{eff.empty}}" class="muted small">{{eff.emptyText}}</view>
+    <block wx:else>
+      <view class="row between eff-top">
+        <view><view class="stat-v">{{eff.avg}}</view><view class="small dim">{{eff.avgLabel}}</view></view>
+        <view class="right-t"><view class="stat-v yellow">{{eff.hard}}</view><view class="small dim">{{eff.hardLabel}}</view></view>
+      </view>
+      <view class="small dim mt8">{{eff.count}}</view>
+      <view wx:if="{{eff.off}}" class="small yellow mt4">{{eff.off}}</view>
+      <block wx:if="{{eff.pts.length}}">
+        <view class="sec mt12">{{eff.weekByWeek}}</view>
+        <view class="chart"><line-chart points="{{eff.pts}}" h="{{140}}" unit="{{eff.unit}}" color="var(--yellow)" invert="{{eff.invert}}" /></view>
+      </block>
+      <view class="sec mt12">{{eff.whereTitle}}</view>
+      <bar-chart rows="{{eff.bins}}" />
+      <view class="small dim mt8">{{eff.foot}}</view>
+    </block>
+  </view>
+
+  <!-- body weight -->
+  <view class="card">
+    <view class="row between bw-head mb8">
+      <view class="h2 m0">体重</view>
+      <view class="row">
+        <view class="btn sm {{bw.goalOn ? 'is-y' : ''}}" hover-class="hv" bindtap="onGoal"><icon-x name="target" /><text>{{bw.goal}}</text></view>
+        <view class="btn sm ml8" hover-class="hv" bindtap="onLogBw"><icon-x name="plus" /><text>记录</text></view>
+      </view>
+    </view>
+    <seg cls="seg-range" options="{{bw.rangeOpts}}" value="{{bw.range}}" bind:change="onBwRange" />
+    <view class="chart"><line-chart points="{{bw.pts}}" h="{{160}}" unit="{{bw.unit}}" goal="{{bw.goalV}}" /></view>
+    <view wx:if="{{bw.any}}" class="row end mt4">
+      <view class="btn sm ghost" hover-class="hv" bindtap="onWeighIns"><text>全部称重记录</text><icon-x name="chevronRight" /></view>
+    </view>
+  </view>
+
+  <!-- exercise progress -->
+  <view class="card">
+    <view class="h2">动作进度</view>
+    <block wx:if="{{ex.hasHist}}">
+      <view class="sect-b mb12">
+        <view class="lrow tap stack-value" hover-class="hv" bindtap="onPickerOpen">
+          <view class="lrow-m"><view class="lrow-t">{{ex.exLabel}}</view></view>
+          <view class="lrow-v">{{ex.curLabel}}</view>
+          <icon-x name="chevronRight" cls="lrow-c" />
+        </view>
+      </view>
+      <seg wx:if="{{ex.exOpts.length}}" cls="seg-range" options="{{ex.exOpts}}" value="{{ex.metric}}" bind:change="onExMetric" />
+      <seg cls="seg-range" options="{{ex.rangeOpts}}" value="{{ex.range}}" bind:change="onExRange" />
+      <view class="chart">
+        <view wx:if="{{ex.tooShort}}" class="empty small">{{ex.tooShortText}}</view>
+        <line-chart wx:else points="{{ex.chart.pts}}" series="{{ex.chart.series}}" h="{{150}}" unit="{{ex.chart.unit}}" color="{{ex.chart.color}}" invert="{{ex.chart.invert}}" />
+      </view>
+      <view wx:if="{{ex.legend.length}}" class="row wrap small set-legend">
+        <view wx:for="{{ex.legend}}" wx:key="n" class="row set-key"><view class="set-dot" style="{{item.dot}}"></view><text>{{item.txt}}</text></view>
+      </view>
+      <view class="mt8">
+        <view wx:for="{{ex.list}}" wx:key="k" class="row between small ex-sess">
+          <text class="muted none">{{item.d}}</text><text class="ex-sets">{{item.sets}}</text>
+        </view>
+      </view>
+      <view class="small dim mt8">{{ex.caption}}<block wx:if="{{ex.best}}"> · {{ex.bestLabel}} <text class="accent bold">{{ex.best}}</text></block></view>
+      <view wx:if="{{ex.dropLine}}" class="small dim mt4">{{ex.dropLine}}</view>
+      <view wx:if="{{ex.e1Line}}" class="small dim mt4">{{ex.e1Line}}</view>
+      <view wx:if="{{ex.dotLine}}" class="small dim mt4">{{ex.dotLine}}</view>
+    </block>
+    <view wx:else class="muted small">{{ex.emptyText}}</view>
+  </view>
+
+  <!-- recent workouts -->
+  <block wx:if="{{hasWorkouts}}">
+    <view class="row between mb8">
+      <view class="sec m0">最近训练</view>
+      <view class="btn sm ghost" hover-class="hv" bindtap="onHistory"><text>{{allN}}</text><icon-x name="chevronRight" /></view>
+    </view>
+    <view class="list">
+      <workout-row wx:for="{{recent}}" wx:key="id" row="{{item}}" bind:open="onWorkout" />
+    </view>
+  </block>
+
+  <!-- exercise picker (the original SelectRow with search) -->
+  <sheet show="{{picker.open}}" title="动作进度" bind:close="onPickerClose">
+    <view class="searchf mb12">
+      <icon-x name="magnifier" cls="lead" />
+      <input class="field" placeholder="搜索…" placeholder-class="ph" value="{{picker.q}}" bindinput="onPickerQ" />
+      <view wx:if="{{picker.q}}" class="clear" bindtap="onPickerClear"><icon-x name="xmark" /></view>
+    </view>
+    <view wx:if="{{picker.list.length}}" class="sect-b">
+      <view wx:for="{{picker.list}}" wx:key="id" class="lrow tap" hover-class="hv" data-id="{{item.id}}" bindtap="onPickEx">
+        <view class="lrow-m"><view class="lrow-t">{{item.label}}</view></view>
+        <icon-x wx:if="{{item.on}}" name="check" cls="lrow-k" />
+      </view>
+    </view>
+    <view wx:else class="empty">没有匹配</view>
+  </sheet>
+
+  <rest-timer place="tabbar" />
+  <toast-x tabbar />
+</view>

@@ -1,0 +1,2 @@
+textarea.field.area{display:block;box-sizing:border-box;height:110px}
+textarea.field.area.note-short{height:80px;min-height:80px}

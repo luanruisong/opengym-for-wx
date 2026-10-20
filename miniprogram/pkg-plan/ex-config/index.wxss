@@ -1,0 +1,20 @@
+/* Exercise settings: only what app.wxss has no class for (the original's inline margins). */
+.cfg-tags{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
+.cfg-tags>.tag+.tag{margin-left:0}
+.cfg-mb4{margin-bottom:4px}
+.cfg-mb6{margin-bottom:6px}
+.cfg-mb8{margin-bottom:8px}
+.cfg-mb10{margin-bottom:10px}
+.cfg-mb14{margin-bottom:14px}
+.cfg-mb18{margin-bottom:18px}
+.cfg-mt4{margin-top:4px}
+.cfg-mt8{margin-top:8px}
+.cfg-ml8{margin-left:8px}
+.cfg-pull{margin-top:-10px;margin-bottom:18px}
+.cfg-pyr{margin-top:-10px;margin-bottom:18px}
+.cfg-pyr-set{margin-bottom:10px}
+.cfg-pyr-acts{justify-content:flex-end}
+.cfg-max{display:flex;align-items:center;align-self:center}
+.cfg-intens-t{margin-top:-2px;margin-bottom:18px}
+.cfg-seg-t{margin:8px 0 18px}
+.cfg-kind-t{margin:8px 0 12px}

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "目标体重",
+  "usingComponents": {
+    "toast-x": "/components/toast/index",
+    "weight-input": "/pkg-body/components/weight-input/index"
+  }
+}

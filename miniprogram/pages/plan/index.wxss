@@ -1,0 +1,10 @@
+.item>text+view{margin-left:12px}
+.plan-sec-acts .mr6{margin-right:6px}
+.ml8{margin-left:8px}
+.mode-locked{margin-left:auto;white-space:nowrap}
+.mv-btns{display:flex;flex:none;margin-right:-4px}
+.mv{width:30px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--label-3);font-size:18px;border-radius:8px}
+.mv.hv{background:var(--surface-2)}
+.mv.disabled{opacity:.3;pointer-events:none}
+.loop-acts{margin-top:4px}
+.loop-acts>.btn{margin:8px 8px 0 0}

@@ -1,0 +1,317 @@
+<view class="page" style="{{theme}}">
+
+  <!-- ============================ Workout ============================ -->
+  <block wx:if="{{page === 'workout'}}">
+    <view class="sect">
+      <text class="sect-t">{{L.rest}}</text>
+      <view class="sect-b">
+        <row icon="timer" icon-tint="var(--orange)" title="{{L.restTimer}}" value="{{restValue}}" accessory="chevron" tap cls="{{fc.restTimer}}" bind:tap="onRestTimer" />
+        <row icon="bolt" icon-tint="var(--orange)" title="{{L.restPause}}" value="{{restPauseValue}}" accessory="chevron" tap cls="{{fc.restPause}}" bind:tap="onRestPause" />
+      </view>
+      <view class="sect-f">{{L.restFoot}}</view>
+    </view>
+    <view class="sect">
+      <text class="sect-t">{{L.logging}}</text>
+      <view class="sect-b">
+        <row icon="gauge" icon-tint="var(--purple)" title="{{L.effort}}" cls="{{fc.effort}}">
+          <view class="helpbtn" hover-class="hv" catchtap="onEffortHelp"><icon-x name="info" /></view>
+          <seg inline options="{{seg.effort.options}}" value="{{seg.effort.value}}" bind:change="seg_effort" />
+        </row>
+        <row icon="history" icon-tint="var(--blue)" title="{{L.logRef}}" value="{{logRefValue}}" accessory="chevron" tap cls="{{fc.logRef}}" bind:tap="onLogRef" />
+        <row icon="layout" icon-tint="var(--blue)" title="{{L.layout}}" cls="{{fc.layout}}">
+          <seg inline options="{{seg.layout.options}}" value="{{seg.layout.value}}" bind:change="seg_layout" />
+        </row>
+        <row icon="minimize" icon-tint="var(--teal)" title="{{L.collapse}}" subtitle="{{L.collapseSub}}" cls="{{fc.collapse}}">
+          <switch-x checked="{{sw.collapse}}" bind:change="sw_collapse" />
+        </row>
+      </view>
+    </view>
+    <view class="sect">
+      <text class="sect-t">{{L.beforeDuring}}</text>
+      <view class="sect-b">
+        <row icon="scale" icon-tint="var(--green)" title="{{L.weighIn}}" subtitle="{{L.weighInSub}}" cls="{{fc.weighIn}}">
+          <switch-x checked="{{sw.weighIn}}" bind:change="sw_weighIn" />
+        </row>
+        <row icon="phoneScreen" icon-tint="var(--yellow)" title="{{L.keepAwake}}" subtitle="{{wakeOK ? L.keepAwakeSub : L.notSupported}}" cls="{{fc.keepAwake}}">
+          <switch-x checked="{{sw.keepAwake}}" disabled="{{!wakeOK}}" bind:change="sw_keepAwake" />
+        </row>
+      </view>
+    </view>
+    <view class="sect">
+      <view class="sect-b">
+        <row icon="wrench" icon-tint="var(--grey)" title="{{L.fineTuning}}" subtitle="{{L.fineTuningSub}}" accessory="chevron" tap cls="{{fc.advanced}}" bind:tap="onAdvanced" />
+      </view>
+    </view>
+  </block>
+
+  <!-- ============================ Fine-tuning ============================ -->
+  <block wx:if="{{page === 'advanced'}}">
+    <view class="sect">
+      <text class="sect-t">{{L.sessionsTimed}}</text>
+      <view class="sect-b">
+        <row icon="clipboard" icon-tint="var(--green)" title="{{L.startFrom}}" value="{{startFromValue}}" accessory="chevron" tap cls="{{fc.startFrom}}" bind:tap="onStartFrom" />
+        <row icon="stopwatch" icon-tint="var(--orange)" title="{{L.overtime}}" subtitle="{{L.overtimeSub}}" cls="{{fc.overtime}}">
+          <switch-x checked="{{sw.overtime}}" bind:change="sw_overtime" />
+        </row>
+      </view>
+    </view>
+    <view class="sect">
+      <text class="sect-t">{{L.wcTitle}}</text>
+      <view class="sect-b">
+        <row icon="plusCircle" icon-tint="var(--green)" title="{{L.steppers}}" subtitle="{{L.steppersSub}}" cls="{{fc.wc_steppers}}">
+          <switch-x checked="{{sw.wc_steppers}}" bind:change="sw_wc_steppers" />
+        </row>
+        <row icon="bolt" icon-tint="var(--orange)" title="{{L.setShortcuts}}" cls="{{fc.wc_setShortcuts}}">
+          <switch-x checked="{{sw.wc_setShortcuts}}" bind:change="sw_wc_setShortcuts" />
+        </row>
+        <row icon="swap" icon-tint="var(--indigo)" title="{{L.swipeSets}}" subtitle="{{L.swipeSetsSub}}" cls="{{fc.wc_swipeSets}}">
+          <switch-x checked="{{sw.wc_swipeSets}}" bind:change="sw_wc_swipeSets" />
+        </row>
+        <row icon="more" icon-tint="var(--mint)" title="{{L.exerciseChips}}" subtitle="{{L.exerciseChipsSub}}" cls="{{fc.wc_exerciseChips}}">
+          <switch-x checked="{{sw.wc_exerciseChips}}" bind:change="sw_wc_exerciseChips" />
+        </row>
+        <row icon="link" icon-tint="var(--blue)" title="{{L.pairButtons}}" cls="{{fc.wc_pairButtons}}">
+          <switch-x checked="{{sw.wc_pairButtons}}" bind:change="sw_wc_pairButtons" />
+        </row>
+        <row icon="swap" icon-tint="var(--teal)" title="{{L.exerciseButtons}}" cls="{{fc.wc_exerciseButtons}}">
+          <switch-x checked="{{sw.wc_exerciseButtons}}" bind:change="sw_wc_exerciseButtons" />
+        </row>
+      </view>
+      <view class="sect-f">{{L.wcFoot}}</view>
+    </view>
+  </block>
+
+  <!-- ============================ Timer alerts ============================ -->
+  <block wx:if="{{page === 'alerts'}}">
+    <view class="sect">
+      <text class="sect-t">{{L.restEnds}}</text>
+      <view class="sect-b">
+        <row icon="speaker" icon-tint="var(--pink)" title="{{L.playSound}}" cls="{{fc.sound}}">
+          <switch-x checked="{{sw.sound}}" bind:change="sw_sound" />
+        </row>
+        <row wx:if="{{soundOn}}" icon="speaker" icon-tint="var(--pink)" title="{{L.sound}}" value="{{soundValue}}" accessory="chevron" tap cls="{{fc.soundPick}}" bind:tap="onSoundOpen" />
+        <row wx:if="{{showSilent}}" icon="speaker" icon-tint="var(--orange)" title="{{L.soundOnSilent}}" subtitle="{{silentSub}}" cls="{{fc.soundOnSilent}}">
+          <switch-x checked="{{sw.soundOnSilent}}" bind:change="sw_soundOnSilent" />
+        </row>
+      </view>
+    </view>
+    <view class="sect">
+      <view class="sect-b">
+        <row icon="vibrate" icon-tint="var(--indigo)" title="{{L.vibrate}}" subtitle="{{vibrateSub}}" dis="{{!canVibrate}}" cls="{{fc.vibrate}}">
+          <switch-x checked="{{sw.vibrate}}" disabled="{{!canVibrate}}" bind:change="sw_vibrate" />
+        </row>
+        <row icon="sun" icon-tint="var(--yellow)" title="{{L.timerFlash}}" cls="{{fc.timerFlash}}">
+          <switch-x checked="{{sw.timerFlash}}" bind:change="sw_timerFlash" />
+        </row>
+      </view>
+      <view wx:if="{{vibrateFoot}}" class="sect-f">{{vibrateFoot}}</view>
+    </view>
+    <sheet show="{{soundOpen}}" title="{{L.sound}}" bind:close="onSoundClose">
+      <view class="muted small mb12">{{L.tapToHear}}</view>
+      <view class="sect">
+        <view class="sect-b">
+          <view wx:for="{{sounds}}" wx:key="id" class="lrow has-i tap" hover-class="hv" data-id="{{item.id}}" bindtap="onPickSound">
+            <view class="lrow-i" style="background:var(--pink)"><icon-x name="{{item.icon}}" /></view>
+            <view class="lrow-m">
+              <text class="lrow-t">{{item.label}}</text>
+              <text wx:if="{{item.hint}}" class="lrow-s">{{item.hint}}</text>
+            </view>
+            <icon-x wx:if="{{item.on}}" name="check" stroke="2.4" cls="lrow-k" />
+          </view>
+        </view>
+      </view>
+      <view class="btn primary" hover-class="hv" bindtap="onSoundClose">{{L.done}}</view>
+    </sheet>
+  </block>
+
+  <!-- ============================ Plan & schedule ============================ -->
+  <block wx:if="{{page === 'plan'}}">
+    <view class="sect">
+      <view class="sect-b">
+        <row icon="repeat" icon-tint="var(--orange)" title="{{L.howTrain}}" cls="{{fc.mode}}">
+          <text wx:if="{{externalQ}}" class="small dim">{{externalText}}</text>
+          <seg wx:else inline options="{{seg.mode.options}}" value="{{seg.mode.value}}" bind:change="seg_mode" />
+        </row>
+        <row wx:if="{{showBuildLoop}}" icon="calendar" icon-tint="var(--orange)" title="{{L.buildLoop}}" accessory="chevron" tap bind:tap="onBuildLoop" />
+        <row icon="calendar" icon-tint="var(--orange)" title="{{L.weekStart}}" cls="{{fc.weekStart}}">
+          <seg inline options="{{seg.weekStart.options}}" value="{{seg.weekStart.value}}" bind:change="seg_weekStart" />
+        </row>
+      </view>
+    </view>
+    <view class="sect">
+      <view class="sect-b">
+        <row icon="clipboard" icon-tint="var(--green)" title="{{L.starter}}" accessory="chevron" tap cls="{{fc.starter}}" bind:tap="onStarter" />
+      </view>
+    </view>
+  </block>
+
+  <!-- ============================ Units ============================ -->
+  <block wx:if="{{page === 'units'}}">
+    <view class="sect">
+      <view class="sect-b">
+        <row icon="globe" icon-tint="var(--purple)" title="{{L.enParens}}" subtitle="{{L.enParensSub}}" cls="{{fc.enParens}}">
+          <switch-x checked="{{sw.enParens}}" disabled="{{enOnlyOn}}" bind:change="sw_enParens" />
+        </row>
+        <row icon="globe" icon-tint="var(--purple)" title="{{L.enOnly}}" subtitle="{{L.enOnlySub}}" cls="{{fc.enOnly}}">
+          <switch-x checked="{{sw.enOnly}}" bind:change="sw_enOnly" />
+        </row>
+      </view>
+    </view>
+    <view class="sect">
+      <view class="sect-b">
+        <row icon="scale" icon-tint="var(--teal)" title="{{L.unit}}" cls="{{fc.unit}}">
+          <seg inline options="{{seg.unit.options}}" value="{{seg.unit.value}}" bind:change="seg_unit" />
+        </row>
+        <row icon="ruler" icon-tint="var(--teal)" title="{{L.wdec}}" subtitle="{{L.wdecSub}}" cls="{{fc.wdec}}">
+          <seg inline options="{{seg.wdec.options}}" value="{{seg.wdec.value}}" bind:change="seg_wdec" />
+        </row>
+        <row icon="figureRun" icon-tint="var(--teal)" title="{{L.speed}}" cls="{{fc.speed}}">
+          <seg inline options="{{seg.speed.options}}" value="{{seg.speed.value}}" bind:change="seg_speed" />
+        </row>
+        <row icon="chart" icon-tint="var(--teal)" title="{{L.formula}}" value="{{formulaValue}}" accessory="chevron" tap cls="{{fc.formula}}" bind:tap="onFormula" />
+      </view>
+      <view class="sect-f">{{L.unitFoot}}</view>
+    </view>
+  </block>
+
+  <!-- ============================ Equipment ============================ -->
+  <block wx:if="{{page === 'equipment'}}">
+    <view class="sect">
+      <text class="sect-t">{{L.equipment}}</text>
+      <view class="sect-b">
+        <row icon="plate" icon-tint="var(--orange)" title="{{L.plates}}" subtitle="{{plateSummary}}" accessory="chevron" tap cls="{{fc.plates}}" bind:tap="onPlates" />
+        <row icon="dumbbell" icon-tint="var(--teal)" title="{{L.dumbbells}}" subtitle="{{dumbbellSummary}}" accessory="chevron" tap cls="{{fc.dumbbells}}" bind:tap="onDumbbells" />
+        <row wx:if="{{hasProfiles}}" icon="kettlebell" icon-tint="var(--acc)" title="{{L.equipFilter}}" cls="{{fc.equipFilter}}">
+          <switch-x checked="{{sw.equipFilter}}" bind:change="sw_equipFilter" />
+        </row>
+        <row wx:if="{{hasProfiles}}" icon="house" icon-tint="var(--blue)" title="{{L.activeProfile}}" value="{{activeProfileValue}}" accessory="chevron" tap cls="{{fc.activeProfile}}" bind:tap="onActiveProfile" />
+        <view wx:for="{{profiles}}" wx:key="id" class="lrow has-i tap" hover-class="hv" data-id="{{item.id}}" bindtap="onProfile">
+          <view class="lrow-i" style="background:var(--teal)"><icon-x name="house" /></view>
+          <view class="lrow-m">
+            <text class="lrow-t">{{item.name}}</text>
+            <text class="lrow-s">{{item.sub}}</text>
+          </view>
+          <view class="iconbtn plain" hover-class="hv" data-id="{{item.id}}" catchtap="onProfileDelete"><icon-x name="trash" /></view>
+          <icon-x name="chevronRight" stroke="2.4" cls="lrow-c" />
+        </view>
+        <row icon="plus" icon-tint="var(--acc)" title="{{L.addProfile}}" accessory="chevron" tap cls="{{fc.addProfile}}" bind:tap="onAddProfile" />
+      </view>
+      <view class="sect-f">{{L.equipFoot}}</view>
+    </view>
+  </block>
+
+  <!-- ============================ Look & Home ============================ -->
+  <block wx:if="{{page === 'look'}}">
+    <view class="sect">
+      <view class="sect-b">
+        <row icon="moon" icon-tint="var(--indigo)" title="{{L.theme}}" cls="{{fc.theme}}">
+          <seg inline options="{{seg.theme.options}}" value="{{seg.theme.value}}" bind:change="seg_theme" />
+        </row>
+        <view class="lrow has-i wrap acc-row {{fc.accent}}">
+          <view class="lrow-i" style="background:var(--purple)"><icon-x name="palette" /></view>
+          <view class="lrow-m"><text class="lrow-t">{{L.accent}}</text></view>
+          <text class="lrow-v">{{accentValue}}</text>
+          <view class="swatches acc-swatches">
+            <view wx:for="{{swatches}}" wx:key="k" class="swatch {{item.on ? 'on' : ''}}" style="background:{{item.c}}" hover-class="hv" data-k="{{item.k}}" bindtap="onSwatch"></view>
+            <view wx:if="{{ownPicks}}" class="swatch swatch-own" style="background:{{own}}" hover-class="hv" bindtap="onOwnSwatch"></view>
+            <view wx:elif="{{own}}" class="swatch swatch-own {{ownOn ? 'on' : ''}}" style="background:{{own}};color:{{ownInk}}" hover-class="hv" bindtap="onOwnSwatch"><icon-x name="pencil" /></view>
+            <view wx:else class="swatch swatch-own unset" hover-class="hv" bindtap="onOwnSwatch"><icon-x name="plus" /></view>
+          </view>
+          <text wx:for="{{accentNotes}}" wx:key="*this" class="lrow-s acc-note">{{item}}</text>
+        </view>
+        <row icon="figureStrength" icon-tint="var(--teal)" title="{{L.body}}" cls="{{fc.body}}">
+          <seg inline options="{{seg.body.options}}" value="{{seg.body.value}}" bind:change="seg_body" />
+        </row>
+      </view>
+    </view>
+    <view class="sect">
+      <text class="sect-t">{{L.onHome}}</text>
+      <view class="sect-b">
+        <row icon="qr" icon-tint="var(--blue)" title="{{L.checkIn}}" subtitle="{{L.checkInSub}}" cls="{{fc.checkIn}}">
+          <switch-x checked="{{sw.checkIn}}" bind:change="sw_checkIn" />
+        </row>
+        <row icon="scale" icon-tint="var(--green)" title="{{L.weightCard}}" subtitle="{{L.weightCardSub}}" cls="{{fc.weightCard}}">
+          <switch-x checked="{{sw.weightCard}}" bind:change="sw_weightCard" />
+        </row>
+      </view>
+    </view>
+    <sheet show="{{colorOpen}}" title="{{L.ownColor}}" bind:close="onColorClose">
+      <view class="color-preview" style="background:{{colorHex}};color:{{colorInk}}">{{colorHex}}</view>
+      <view class="color-lbl small muted">色相</view>
+      <slider class="color-slider" min="0" max="359" value="{{hsl.h}}" activeColor="{{colorHex}}" block-size="22" bindchanging="onHue" bindchange="onHue" />
+      <view class="color-lbl small muted">饱和度</view>
+      <slider class="color-slider" min="0" max="100" value="{{hsl.s}}" activeColor="{{colorHex}}" block-size="22" bindchanging="onSat" bindchange="onSat" />
+      <view class="color-lbl small muted">亮度</view>
+      <slider class="color-slider" min="10" max="90" value="{{hsl.l}}" activeColor="{{colorHex}}" block-size="22" bindchanging="onLight" bindchange="onLight" />
+      <input class="field mt12 mb12" placeholder-class="ph" placeholder="#RRGGBB" maxlength="7" value="{{colorHex}}" bindconfirm="onHexInput" bindblur="onHexInput" />
+      <view class="btn primary" hover-class="hv" bindtap="onColorSave">{{L.save}}</view>
+      <view class="btn ghost mt8" hover-class="hv" bindtap="onColorClose">{{L.cancel}}</view>
+    </sheet>
+  </block>
+
+  <!-- ============================ Data & backup ============================ -->
+  <block wx:if="{{page === 'data'}}">
+    <view class="sect">
+      <text class="sect-t">{{L.backUp}}</text>
+      <view class="sect-b">
+        <row icon="share" icon-tint="var(--blue)" title="{{L.export}}" subtitle="{{exportSub}}" accessory="chevron" tap cls="{{fc.export}}" bind:tap="onExport" />
+        <row wx:if="{{hasMedia}}" icon="share" icon-tint="var(--blue)" title="{{L.exportZip}}" accessory="chevron" tap cls="{{fc.exportZip}}" bind:tap="onExportZip" />
+      </view>
+    </view>
+    <view class="sect">
+      <text class="sect-t">{{L.bringIn}}</text>
+      <view class="sect-b">
+        <row icon="download" icon-tint="var(--teal)" title="{{L.import}}" accessory="chevron" tap cls="{{fc.import}}" bind:tap="onImport" />
+        <row icon="download" icon-tint="var(--teal)" title="{{L.importApp}}" subtitle="{{L.importAppSub}}" accessory="chevron" tap cls="{{fc.importApp}}" bind:tap="onImportApp" />
+        <row icon="key" icon-tint="var(--teal)" title="{{L.hevy}}" subtitle="{{L.hevySub}}" accessory="chevron" tap cls="{{fc.hevy}}" bind:tap="onHevy" />
+      </view>
+      <view class="sect-f">导入的文件需要先发到微信聊天里（例如“文件传输助手”），再从聊天中选择。</view>
+    </view>
+    <view class="sect">
+      <view class="sect-b">
+        <row wx:if="{{hasMedia}}" icon="image" icon-tint="var(--teal)" title="{{L.media}}" subtitle="{{mediaUsage}}" cls="{{fc.media}}" />
+        <row icon="folder" icon-tint="var(--grey)" title="本机存储空间" subtitle="{{storageSub}}" value="{{storageValue}}" cls="{{fc.storage}}" />
+      </view>
+    </view>
+    <view class="sect">
+      <view class="sect-b">
+        <row icon="trash" icon-tint="var(--red)" title="{{L.reset}}" danger tap cls="{{fc.reset}}" bind:tap="onReset" />
+      </view>
+    </view>
+    <sheet show="{{zipOpen}}" title="{{L.exportZip}}" bind:close="onZipClose">
+      <view class="muted small mb16">{{zipText}}</view>
+      <view class="btn primary" hover-class="hv" bindtap="onShareZip"><icon-x name="share" /><text>{{L.share}}</text></view>
+      <view class="btn ghost mt8" hover-class="hv" bindtap="onZipClose">{{L.cancel}}</view>
+    </sheet>
+  </block>
+
+  <!-- ============================ About ============================ -->
+  <block wx:if="{{page === 'about'}}">
+    <view class="sect">
+      <view class="sect-b">
+        <row icon="info" icon-tint="var(--grey)" title="{{L.version}}" value="{{versionValue}}" cls="{{fc.version}}" />
+        <row icon="lock" icon-tint="var(--acc)" title="{{L.local}}" subtitle="{{L.localSub}}" />
+      </view>
+    </view>
+    <view class="dim small sp-version">
+      <view>{{versionLine}}</view>
+      <view class="accent" hover-class="hv" bindtap="onSource">{{L.source}} · github.com/DuarteSantos8/openGym（点按复制链接）</view>
+      <view class="mt8">动作数据（名称、肌群、器械、步骤说明）来自 openGym 开源项目。本小程序版不包含动作图片和动画：它们来自 Gym visual（gymvisual.com），授权仅限 openGym 本身使用。</view>
+    </view>
+  </block>
+
+  <!-- RIR / RPE explainer (Settings.jsx effortHelpSheet) -->
+  <sheet show="{{effortOpen}}" title="{{L.effort}}" bind:close="onEffortClose">
+    <view class="muted small help-p">{{L.effortIntro}}</view>
+    <view class="efftbl">
+      <view class="r hd"><text class="n">{{L.rir}}</text><text class="n">{{L.rpe}}</text><text class="f">{{L.howFelt}}</text></view>
+      <view wx:for="{{effortRows}}" wx:key="rir" class="r {{item.on ? 'on' : ''}}">
+        <text class="n">{{item.rir}}</text><text class="n">{{item.rpe}}</text><text class="f">{{item.feel}}</text>
+      </view>
+    </view>
+    <view class="dim small help-p">{{L.effortNote1}}</view>
+    <view class="dim small help-p mt8">{{L.effortNote2}}</view>
+  </sheet>
+
+  <toast-x />
+</view>

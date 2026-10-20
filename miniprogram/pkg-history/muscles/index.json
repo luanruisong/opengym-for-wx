@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "探索肌肉",
+  "usingComponents": {
+    "body-map": "/components/body-map/index"
+  }
+}

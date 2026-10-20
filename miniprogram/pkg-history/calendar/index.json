@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "日历",
+  "usingComponents": {
+    "workout-row": "/pkg-history/components/workout-row/index"
+  }
+}

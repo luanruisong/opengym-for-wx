@@ -1,0 +1,11 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="list">
+    <view wx:for="{{routines}}" wx:for-item="r" wx:key="id" class="item {{r.disabled ? 'disabled' : ''}}" hover-class="{{r.disabled ? 'none' : 'hv'}}" data-id="{{r.id}}" bindtap="onPick">
+      <view class="lrow-i"><icon-x name="{{r.icon}}" /></view>
+      <view class="grow"><view class="tt">{{r.name}}</view><view class="ss">{{r.sub}}</view></view>
+      <view wx:if="{{r.tag}}" class="tag">{{r.tag}}</view>
+      <icon-x wx:else name="chevronRight" cls="chev" />
+    </view>
+  </view>
+  <toast-x />
+</view>

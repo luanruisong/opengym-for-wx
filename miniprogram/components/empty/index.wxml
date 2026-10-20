@@ -1,0 +1,6 @@
+<view class="empty {{cls}}">
+  <view wx:if="{{icon}}" class="ico"><icon-x name="{{icon}}" /></view>
+  <view wx:if="{{text}}">{{text}}</view>
+  <view wx:if="{{sub}}" class="small dim mt4">{{sub}}</view>
+  <slot></slot>
+</view>

@@ -1,0 +1,8 @@
+/* layout of the original .bodymap / .bm-v; the shades themselves are drawn in index.js */
+.bodymap{display:flex;gap:6px;justify-content:center;align-items:flex-start;width:100%}
+.bm-c{flex:none;display:block}
+.bm-ph{height:200px;width:100%}
+/* the legend reuses app.wxss's .hm-legend/.hm-c ramp when it is there; this is the fallback */
+.hm-legend{display:flex;align-items:center;justify-content:flex-end;gap:3px;margin-top:8px;font-size:11px;color:var(--label-3)}
+.hm-legend .bm-lt{margin:0 3px}
+.hm-legend .hm-c{width:10px;height:10px;border-radius:3px;flex:none}

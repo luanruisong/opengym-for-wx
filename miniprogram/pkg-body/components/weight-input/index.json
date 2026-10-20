@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "num-field": "/components/num-field/index"
+  }
+}

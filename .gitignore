@@ -30,3 +30,7 @@ frontend/bundle-size.json
 
 # Local planning notes
 docs/superpowers/plans/
+
+# WeChat DevTools: per-developer local settings
+project.private.config.json
+miniprogram/project.private.config.json

@@ -1,0 +1,23 @@
+.ci-rail{height:430px;margin:0 calc(-1 * var(--pad))}
+.ci-rail.tall{height:476px}
+.ci-rail swiper-item{padding:4px var(--pad) 8px;box-sizing:border-box}
+.ci-card{height:100%;box-sizing:border-box}
+.ci-card>view+view{margin-top:14px}
+.ci-card-hd{display:flex;align-items:center;width:100%}
+.ci-card-hd>view+view{margin-left:8px}
+.ci-card-btn{width:30px;height:30px;font-size:14px;flex:none}
+.ci-red{color:var(--red)}
+.ci-label{flex:1;min-width:0;font-size:19px;font-weight:600;letter-spacing:-.014em;text-align:center;word-break:break-all}
+.ci-value{font-size:14px;color:var(--label-2);word-break:break-all;text-align:center}
+.ci-reorder{display:flex;align-items:center;justify-content:center}
+.ci-reorder>view+text,.ci-reorder>text+view{margin-left:14px}
+.ci-pos{font-size:13px;color:var(--label-2);min-width:44px;text-align:center}
+.ci-reorder .disabled{opacity:.3;pointer-events:none}
+.ci-add{
+  height:100%;min-height:280px;box-sizing:border-box;border-radius:var(--r-xl);
+  border:2px dashed var(--surface-3);color:var(--label-2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:40px;
+}
+.ci-add.hv{background:var(--surface)}
+.ci-add-t{font-size:16px;font-weight:500;margin-top:10px}
+.ci-hint{text-align:center;margin-top:18px;line-height:1.5}

@@ -1,0 +1,5 @@
+@import "../weigh.wxss";
+.wk-hd{display:flex;align-items:center;justify-content:space-between;margin:16px 2px 4px}
+.wk-t{font-weight:600;margin-right:8px}
+.wk-d{font-weight:500;margin-right:8px}
+.wk-d text{margin-left:2px}

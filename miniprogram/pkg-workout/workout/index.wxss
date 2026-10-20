@@ -1,0 +1,31 @@
+/* the running workout: only what app.wxss does not have */
+.gap6{height:6px} .gap10{height:10px} .gap12{height:12px} .gap14{height:14px}
+.mb6{margin-bottom:6px} .mb8{margin-bottom:8px} .mb10{margin-bottom:10px}
+.center-row{display:flex;justify-content:center}
+.btn.red{color:var(--red)}
+.btns>.btn{flex:1}
+.today-card{box-shadow:inset 0 0 0 1.5px var(--acc)}
+.tc-row{margin:8px 0 12px}
+.today-glyph{width:38px;height:38px;border-radius:9px;font-size:22px;flex:none}
+.list .item .tag{flex:none}
+
+/* header: pinned while the list scrolls under it */
+.whdr-wrap{background:var(--bg)}
+.whdr-wrap.stick{position:sticky;top:0;z-index:20;margin:0 calc(0px - var(--pad));padding:0 var(--pad) 4px}
+.whdr>.iconbtn{flex:none}
+.whdr>.iconbtn+.btn{margin-left:8px}
+.wchips{margin-bottom:10px}
+.wchip .wchip-l{font-size:11px;margin-left:3px}
+
+/* superset card bits */
+.ss-hd.between{justify-content:space-between}
+.ss-hd .row>text{margin-left:5px}
+.ss-t{text-align:left}
+
+/* list */
+.wl-hd .row>view+view,.wl-hd .row>view+text,.wl-hd .row>text+view{margin-left:6px}
+.wl-sumrow+.wl-sumrow{margin-top:6px}
+.wl-sumrow .tag>.icx+text{margin-left:4px}
+.wl-summary.hv{opacity:.6}
+
+.workout-end-spacer{height:24px}

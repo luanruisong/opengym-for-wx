@@ -1,0 +1,28 @@
+<view class="page" style="{{theme}}">
+  <view class="muted small mb12">将你的动作成绩与已发布的比例表对比，找出最薄弱的环节。</view>
+
+  <seg cls="seg-range" options="{{tplOpts}}" value="{{templateId}}" bind:change="onTemplate" />
+
+  <view class="card">
+    <view wx:for="{{rows}}" wx:key="id" class="mrow sb-row">
+      <view class="sb-top">
+        <view class="nm sb-nm">
+          <view>{{item.label}}</view>
+          <view class="small dim">{{item.exName}}</view>
+          <view wx:if="{{item.needsBw}}" class="small sb-hint">记录你的体重以评估这个动作。</view>
+          <view wx:if="{{item.needsAnchor}}" class="small sb-hint">记录锚点动作以评估这个动作。</view>
+        </view>
+        <view class="v sb-v">
+          <view style="{{item.statusStyle}}">{{item.status}}</view>
+          <view class="dim small">{{item.value}}</view>
+        </view>
+      </view>
+      <view class="sb-acts">
+        <view wx:if="{{item.needsBw}}" class="btn sm ghost" hover-class="hv" bindtap="onLogBw"><icon-x name="plus" /><text>记录体重</text></view>
+        <view class="btn sm ghost" hover-class="hv" data-id="{{item.id}}" bindtap="onChange"><icon-x name="pencil" /><text>更换动作</text></view>
+        <view wx:if="{{item.overridden}}" class="btn sm ghost" hover-class="hv" data-id="{{item.id}}" bindtap="onClear"><text>使用默认动作</text></view>
+      </view>
+    </view>
+  </view>
+  <toast-x />
+</view>

@@ -1,0 +1,15 @@
+<view class="tabbar" style="{{theme}}">
+  <view wx:for="{{left}}" wx:key="url" class="tab {{selected === index ? 'on' : ''}}" data-i="{{index}}" bindtap="onTab" hover-class="hv">
+    <view class="tab-ic"><icon-x name="{{item.icon}}" size="25" stroke="{{selected === index ? 2 : 1.65}}" /></view>
+    <text class="tab-l">{{item.label}}</text>
+  </view>
+  <view class="tab start {{rec ? 'rec' : ''}}" bindtap="onStart" hover-class="hv">
+    <view class="cir"><icon-x name="play" size="26" stroke="2" /></view>
+    <text wx:if="{{running}}" class="tab-l tab-time">{{elapsed}}</text>
+    <text wx:else class="tab-l">{{startLabel}}</text>
+  </view>
+  <view wx:for="{{right}}" wx:key="url" class="tab {{selected === index + 2 ? 'on' : ''}}" data-i="{{index + 2}}" bindtap="onTab" hover-class="hv">
+    <view class="tab-ic"><icon-x name="{{item.icon}}" size="25" stroke="{{selected === index + 2 ? 2 : 1.65}}" /></view>
+    <text class="tab-l">{{item.label}}</text>
+  </view>
+</view>

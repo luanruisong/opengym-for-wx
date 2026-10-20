@@ -1,0 +1,18 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small da-sub">选一个训练日，或选多个一起练。</view>
+  <view class="menu-list">
+    <view class="menu-item" hover-class="hv" bindtap="onRest">
+      <view class="lrow-i da-rest"><icon-x name="moon" /></view>
+      <view class="grow"><view class="tt">休息日</view></view>
+      <view class="menu-on {{restOn ? 'is-on' : ''}}"><icon-x name="check" /></view>
+    </view>
+    <view wx:for="{{routines}}" wx:key="id" class="menu-item" hover-class="hv" data-id="{{item.id}}" bindtap="onToggle">
+      <view class="lrow-i"><icon-x name="{{item.glyph}}" /></view>
+      <view class="grow"><view class="tt">{{item.name}}</view><view class="ss">{{item.sub}}</view></view>
+      <view class="menu-on {{item.on ? 'is-on' : ''}}"><icon-x name="check" /></view>
+    </view>
+  </view>
+  <view style="height:12px"></view>
+  <view class="btn primary" hover-class="hv" bindtap="onDone"><text>完成</text></view>
+  <toast-x />
+</view>

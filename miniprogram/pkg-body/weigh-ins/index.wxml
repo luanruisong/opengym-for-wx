@@ -1,0 +1,27 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view wx:if="{{!n}}" class="empty"><view class="ico"><icon-x name="scale" /></view>还没有称重记录。记一下体重，曲线就开始了。</view>
+  <block wx:else>
+    <view class="muted small mb8">{{count}}</view>
+    <view class="chart"><line-chart points="{{points}}" h="{{140}}" unit="{{unit}}" goal="{{goal}}" /></view>
+    <view class="small dim mt4">每周平均</view>
+    <view wx:for="{{weeks}}" wx:for-item="w" wx:key="key">
+      <view class="wk-hd">
+        <text class="small wk-t">{{w.title}}</text>
+        <view class="small row">
+          <view wx:if="{{w.moved}}" class="row wk-d" style="color:{{w.color}}"><icon-x name="{{w.up ? 'arrowUp' : 'arrowDown'}}" size="12" /><text>{{w.delta}}</text></view>
+          <text class="muted nowrap">{{w.avg}}</text>
+        </view>
+      </view>
+      <view>
+        <view wx:for="{{w.entries}}" wx:key="d" class="wi-row">
+          <text class="small muted">{{item.date}}</text>
+          <view class="row">
+            <text class="bold">{{item.w}}</text>
+            <view class="wi-del" hover-class="hv" data-d="{{item.d}}" bindtap="onDelete"><icon-x name="trash" /></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <toast-x />
+</view>

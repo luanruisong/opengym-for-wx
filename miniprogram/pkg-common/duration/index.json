@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "duration-wheel": "../components/duration-wheel/index"
+  }
+}

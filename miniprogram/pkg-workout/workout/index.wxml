@@ -1,0 +1,147 @@
+<view class="page {{resting ? 'resting' : ''}}" style="{{theme}}">
+  <!-- ======================= no workout: the start chooser ======================= -->
+  <block wx:if="{{!active}}">
+    <view wx:if="{{chooser}}" class="narrow">
+      <view class="hdr"><view><view class="h1">开始训练</view><view class="sub muted">{{chooser.sub}}</view></view></view>
+      <view wx:if="{{chooser.today}}" class="card today-card">
+        <view class="h2 accent">{{chooser.today.title}}</view>
+        <view class="row between tc-row">
+          <view class="grow"><view class="big">{{chooser.today.name}}</view><view class="muted small">{{chooser.today.count}}</view></view>
+          <view class="lrow-i today-glyph"><icon-x name="{{chooser.today.glyph}}" /></view>
+        </view>
+        <view class="btn primary" hover-class="hv" bindtap="onStartToday"><icon-x name="play" /><text>{{chooser.today.start}}</text></view>
+      </view>
+      <block wx:if="{{chooser.others.length}}">
+        <view class="sec">其他训练日</view>
+        <view class="list">
+          <view wx:for="{{chooser.others}}" wx:for-item="r" wx:key="id" class="item" hover-class="hv" mark:id="{{r.id}}" bindtap="onStartRoutine">
+            <view class="lrow-i"><icon-x name="{{r.glyph}}" /></view>
+            <view class="grow"><view class="tt">{{r.name}}</view><view class="ss">{{r.count}}</view></view>
+            <text class="tag acc">开始</text>
+          </view>
+        </view>
+      </block>
+      <view class="gap14"></view>
+      <view class="btn" hover-class="hv" bindtap="onFreestyle"><icon-x name="shuffle" /><text>自由训练（边练边选）</text></view>
+      <block wx:if="{{chooser.noRoutines}}">
+        <view class="gap10"></view>
+        <view class="btn primary" hover-class="hv" bindtap="onBuildPlan"><text>先创建一个计划</text></view>
+      </block>
+    </view>
+  </block>
+
+  <!-- ======================= the running workout ======================= -->
+  <block wx:else>
+    <view class="whdr-wrap {{listMode ? 'stick' : ''}}">
+      <view class="whdr">
+        <view wx:if="{{editing}}" class="iconbtn" hover-class="hv" bindtap="onCloseEditor"><icon-x name="xmark" /></view>
+        <view wx:else class="iconbtn" hover-class="hv" bindtap="onMinimize"><icon-x name="chevronDown" /></view>
+        <view class="whdr-mid">
+          <view class="whdr-name">{{name}}</view>
+          <view class="sub"><text wx:if="{{timeless}}">{{dateText}}</text><text wx:else>{{elapsed}}</text><text> · {{setsText}}</text></view>
+        </view>
+        <view class="iconbtn" hover-class="hv" bindtap="onMenu"><icon-x name="more" /></view>
+        <view class="btn primary pill whdr-finish" hover-class="hv" bindtap="onFinishPill">{{editing ? '保存' : '结束'}}</view>
+      </view>
+      <view class="wprog"><view class="fill" style="width:{{pct}}%"></view></view>
+      <scroll-view wx:if="{{listMode && chips.length}}" scroll-x class="chips wchips" scroll-into-view="{{chipInto}}" scroll-with-animation enhanced show-scrollbar="{{false}}">
+        <view class="chips-in">
+          <view wx:for="{{chips}}" wx:for-item="c" wx:key="key" id="wc-{{c.key}}" mark:key="{{c.key}}" class="wchip {{c.state}} {{c.cur ? 'cur' : ''}}" bindtap="onChip">
+            <text>{{c.n}}</text><icon-x wx:if="{{c.link}}" name="link" cls="wchip-l" />
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view wx:if="{{editing}}" class="muted small mb8">正在编辑已保存的训练。日期和时长保持不变。</view>
+    <view wx:if="{{backfill}}" class="muted small mb8">正在补记过去的训练，所以没有休息计时器。</view>
+
+    <view wx:if="{{empty}}" class="empty"><view class="ico"><icon-x name="shuffle" /></view><text>自由训练。添加第一个动作，开练吧。</text></view>
+
+    <!-- List / Compact: every unit stacked -->
+    <view wx:elif="{{listMode}}" class="workout-list">
+      <view wx:for="{{listUnits}}" wx:for-item="u" wx:key="key" id="u-{{u.key}}" mark:key="{{u.key}}" mark:first="{{u.first}}" class="wl-unit {{u.isCur ? 'cur' : ''}}">
+        <view class="wl-hd">
+          <text class="muted small">{{u.hd}}</text>
+          <view class="row">
+            <view wx:if="{{u.reopened}}" class="chip" hover-class="hv" bindtap="onUnitFold">收起</view>
+            <text wx:if="{{u.isCur}}" class="tag acc wl-cur">当前</text>
+            <view wx:else class="chip wl-cur" hover-class="hv" bindtap="onSetCurrent">设为当前</view>
+          </view>
+        </view>
+        <view wx:if="{{u.collapsed}}" class="wl-summary" hover-class="hv" bindtap="onUnitOpen">
+          <view wx:for="{{u.summary}}" wx:for-item="s" wx:key="idx" class="row between wl-sumrow">
+            <text class="bold capitalize">{{s.name}}</text>
+            <view class="tag acc nocap"><icon-x name="check" /><text>{{s.sets}}</text></view>
+          </view>
+        </view>
+        <view wx:elif="{{u.multi}}" class="ss-card">
+          <view class="ss-hd between">
+            <view class="row"><icon-x name="link" /><text class="ss-t">{{u.ss}}</text></view>
+            <view class="btn xs ghost" hover-class="hv" bindtap="onUnpair"><icon-x name="link" /><text>取消组合</text></view>
+          </view>
+          <view wx:for="{{u.members}}" wx:for-item="m" wx:key="idx" class="ss-ex" id="sx-{{m.idx}}">
+            <view wx:if="{{m.j > 0}}" class="ss-amp">+</view>
+            <ex-block idx="{{m.idx}}" compact dense="{{dense}}" />
+          </view>
+        </view>
+        <ex-block wx:else idx="{{u.first}}" dense="{{dense}}" pairable />
+      </view>
+    </view>
+
+    <!-- Cards / Focus: one unit at a time -->
+    <block wx:else>
+      <scroll-view wx:if="{{chips.length}}" scroll-x class="chips wchips" scroll-into-view="{{chipInto}}" scroll-with-animation enhanced show-scrollbar="{{false}}">
+        <view class="chips-in">
+          <view wx:for="{{chips}}" wx:for-item="c" wx:key="key" id="wc-{{c.key}}" mark:key="{{c.key}}" class="wchip {{c.state}} {{c.cur ? 'cur' : ''}}" bindtap="onChip">
+            <text>{{c.n}}</text><icon-x wx:if="{{c.link}}" name="link" cls="wchip-l" />
+          </view>
+        </view>
+      </scroll-view>
+      <view wx:else class="muted small mb6">{{unitText}}</view>
+      <view class="wcard" bindtouchstart="onCardTouchStart" bindtouchend="onCardTouchEnd">
+        <focus-view wx:if="{{focusMode}}" idx="{{card.cur}}" unit="{{card.unit}}" epoch="{{epoch}}" pairprev="{{card.pairPrev}}" pairnext="{{card.pairNext}}" />
+        <view wx:elif="{{card.multi}}" class="ss-card">
+          <view class="ss-hd between">
+            <view class="row"><icon-x name="link" /><text class="ss-t">{{card.ss}}</text></view>
+            <view class="btn xs ghost" hover-class="hv" mark:first="{{card.cur}}" bindtap="onUnpair"><icon-x name="link" /><text>取消组合</text></view>
+          </view>
+          <view wx:for="{{card.members}}" wx:for-item="m" wx:key="idx" class="ss-ex" id="sx-{{m.idx}}">
+            <view wx:if="{{m.j > 0}}" class="ss-amp">+</view>
+            <ex-block idx="{{m.idx}}" compact />
+          </view>
+        </view>
+        <view wx:else id="sx-{{card.cur}}"><ex-block idx="{{card.cur}}" pairable /></view>
+      </view>
+    </block>
+
+    <view class="gap12"></view>
+    <view wx:if="{{!listMode}}" class="btns">
+      <view class="btn {{prevDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onPrev"><icon-x name="chevronLeft" /><text>上一个</text></view>
+      <view class="btn {{nextDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onNext"><text>下一个</text><icon-x name="chevronRight" /></view>
+    </view>
+    <view wx:if="{{!listMode}}" class="gap10"></view>
+    <view wx:if="{{exBtnsHint}}" class="muted small mb6">{{exBtnsHint}}</view>
+    <view class="btn" hover-class="hv" bindtap="onAddExercise"><icon-x name="plus" /><text>添加动作</text></view>
+    <block wx:if="{{exBtns}}">
+      <view class="gap6"></view>
+      <view class="btns">
+        <view class="btn sm grow {{moveUpDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onMoveUp"><icon-x name="chevronUp" /><text>上移</text></view>
+        <view class="btn sm grow {{moveDownDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onMoveDown"><text>下移</text><icon-x name="chevronDown" /></view>
+      </view>
+      <view class="gap6"></view>
+      <view class="center-row"><view class="btn sm {{busy ? 'disabled' : ''}}" hover-class="hv" bindtap="onSwap"><icon-x name="swap" /><text>更换动作</text></view></view>
+      <view class="gap6"></view>
+      <view class="center-row"><view class="btn sm red {{busy ? 'disabled' : ''}}" hover-class="hv" bindtap="onRemoveExercise"><icon-x name="minus" /><text>移除动作</text></view></view>
+    </block>
+    <view class="gap10"></view>
+    <view class="center-row mb10">
+      <view class="btn sm {{hasNote ? 'tinted' : ''}}" hover-class="hv" bindtap="onSessionNote"><icon-x name="note" /><text>{{hasNote ? '编辑训练备注' : '添加训练备注'}}</text></view>
+    </view>
+    <view class="btn {{finishPrimary ? 'primary' : 'ghost dim'}}" hover-class="hv" bindtap="onFinish">{{finishLabel}}</view>
+    <view class="workout-end-spacer"></view>
+  </block>
+
+  <rest-timer place="docked" />
+  <timer-flash />
+  <toast-x />
+</view>

@@ -1,0 +1,36 @@
+<view class="page {{resting ? 'resting' : ''}}" style="{{theme}}">
+  <view class="hdr">
+    <view class="hdr-m"><view class="sub">{{count}}</view></view>
+    <block wx:if="{{canCompare}}">
+      <view wx:if="{{comparing}}" class="btn sm ghost" hover-class="hv" bindtap="onCancelCompare"><text>取消</text></view>
+      <view wx:else class="btn sm tinted" hover-class="hv" bindtap="onCompare"><text>比较</text></view>
+    </block>
+  </view>
+
+  <view wx:if="{{!comparing}}" class="row pp-add">
+    <view wx:if="{{hasToday}}" class="btn {{busy || !storable ? 'disabled' : ''}}" hover-class="hv" bindtap="onAdd">
+      <icon-x name="{{busy ? 'image' : 'camera'}}" /><text>{{busy ? '加载中…' : '为今天添加照片'}}</text>
+    </view>
+    <view wx:else class="btn" hover-class="hv" bindtap="onLogWorkout"><icon-x name="dumbbell" /><text>记录今天的训练后即可添加照片</text></view>
+  </view>
+
+  <view wx:if="{{comparing}}" class="small dim pp-hint">{{hint}}</view>
+
+  <view wx:if="{{!n}}" class="empty"><view class="ico"><icon-x name="image" /></view>还没有进度照片。今天记录训练后，可用上方按钮为今天添加一张。</view>
+  <view wx:for="{{groups}}" wx:for-item="g" wx:key="d" class="pp-group">
+    <view class="small muted pp-date">{{g.title}}</view>
+    <view class="wmedia-grid">
+      <view wx:for="{{g.items}}" wx:for-item="p" wx:key="key" class="wmedia-item {{p.on ? 'pp-selected' : ''}}" data-key="{{p.key}}" bindtap="onPhoto">
+        <image wx:if="{{p.src}}" src="{{p.src}}" mode="aspectFill" lazy-load />
+        <view wx:else class="pp-missing"><icon-x name="image" /></view>
+        <view wx:if="{{p.on}}" class="pp-check"><icon-x name="check" /></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{comparing && ready}}" class="pp-cta">
+    <view class="btn primary" hover-class="hv" bindtap="onRunCompare"><text>比较</text></view>
+  </view>
+  <rest-timer place="float" />
+  <toast-x />
+</view>

@@ -1,0 +1,72 @@
+<view class="page sheet-page" style="{{theme}}">
+  <block wx:if="{{found}}">
+    <view class="muted small mb12">{{meta}}</view>
+
+    <view wx:for="{{sections}}" wx:for-item="g" wx:key="key">
+      <view wx:if="{{grouped}}" class="row between wd-sec">
+        <view class="row wd-sec-n">
+          <icon-x wx:if="{{g.glyph}}" name="{{g.glyph}}" />
+          <text>{{g.name}}</text>
+        </view>
+        <view class="small dim">{{g.sub}}</view>
+      </view>
+      <block wx:for="{{g.units}}" wx:for-item="u" wx:key="key">
+        <view wx:if="{{u.ss}}" class="wd-ss">
+          <view class="ss-label"><icon-x name="link" /><text>超级组</text></view>
+          <view wx:for="{{u.rows}}" wx:for-item="e" wx:key="i" class="row top wd-ex" hover-class="hv" data-i="{{e.i}}" bindtap="onEntry">
+            <view class="grow">
+              <view class="tt wd-tt">{{e.name}} <view wx:if="{{e.pr}}" class="pr"><icon-x name="trophy" /><text>PR</text></view></view>
+              <view class="ss">{{e.sets}}</view>
+              <view wx:if="{{e.note}}" class="small dim mt4"><icon-x wx:if="{{e.notePin}}" name="pin" cls="wd-pin" />{{e.note}}</view>
+            </view>
+            <icon-x name="chevronRight" cls="chev wd-chev" />
+          </view>
+        </view>
+        <block wx:else>
+          <view wx:for="{{u.rows}}" wx:for-item="e" wx:key="i" class="row top wd-ex" hover-class="hv" data-i="{{e.i}}" bindtap="onEntry">
+            <view class="grow">
+              <view class="tt wd-tt">{{e.name}} <view wx:if="{{e.pr}}" class="pr"><icon-x name="trophy" /><text>PR</text></view></view>
+              <view class="ss">{{e.sets}}</view>
+              <view wx:if="{{e.note}}" class="small dim mt4"><icon-x wx:if="{{e.notePin}}" name="pin" cls="wd-pin" />{{e.note}}</view>
+            </view>
+            <icon-x name="chevronRight" cls="chev wd-chev" />
+          </view>
+        </block>
+      </block>
+    </view>
+
+    <view class="wmedia">
+      <view class="small muted wmedia-h">照片和视频</view>
+      <view class="wmedia-grid">
+        <view wx:for="{{media}}" wx:for-item="m" wx:key="hash" class="wmedia-item" hover-class="hv" aria-label="{{m.label}}" data-i="{{m.i}}" data-hash="{{m.hash}}" bindtap="onMediaTap" bindlongpress="onMediaLong">
+          <image wx:if="{{m.src}}" src="{{m.src}}" mode="aspectFill" lazy-load />
+          <view wx:else class="wmedia-ph"><icon-x name="image" /></view>
+          <view wx:if="{{m.video}}" class="wmedia-kind"><icon-x name="play" /></view>
+        </view>
+        <view wx:if="{{showAdd}}" class="wmedia-add {{mediaBusy ? 'disabled' : ''}}" hover-class="hv" bindtap="onMediaAdd">
+          <icon-x name="{{mediaBusy ? 'image' : 'plus'}}" />
+          <text>{{mediaBusy ? '加载中…' : '添加照片或视频'}}</text>
+        </view>
+      </view>
+      <view wx:if="{{mediaFull}}" class="small dim wmedia-note">{{mediaFullText}}</view>
+    </view>
+
+    <view class="small muted wd-note-h">训练备注</view>
+    <textarea class="field area wd-note" auto-height maxlength="{{noteMax}}" value="{{note}}" placeholder="这次训练整体感觉如何。" placeholder-class="ph" bindinput="onNoteInput" bindblur="onNoteBlur" />
+    <view class="gap16" />
+    <view wx:if="{{active}}" class="small muted mb12">请先完成当前训练。</view>
+    <view class="btn {{active ? 'disabled' : ''}}" hover-class="hv" bindtap="onEdit"><icon-x name="pencil" /><text>编辑训练</text></view>
+    <view class="gap8" />
+    <view class="btn mb8 {{active ? 'disabled' : ''}}" hover-class="hv" bindtap="onRepeat"><icon-x name="reset" /><text>今天再练一次</text></view>
+    <view class="btn mb8" hover-class="hv" bindtap="onDate"><icon-x name="calendar" /><text>修改日期和时间</text></view>
+    <view class="btn mb8" hover-class="hv" bindtap="onDuration"><icon-x name="stopwatch" /><text>修改时长</text></view>
+    <view class="btn" hover-class="hv" bindtap="onSaveRoutine"><icon-x name="plus" /><text>保存为训练计划</text></view>
+    <view class="gap8" />
+    <view class="btn" hover-class="hv" bindtap="onCopy"><icon-x name="copy" /><text>复制为文本</text></view>
+    <view class="gap8" />
+    <view class="btn" hover-class="hv" bindtap="onFit"><icon-x name="download" /><text>导出为 .fit 文件</text></view>
+    <view class="wd-gap" />
+    <view class="btn danger" hover-class="hv" bindtap="onDelete"><text>删除训练</text></view>
+  </block>
+  <toast-x />
+</view>

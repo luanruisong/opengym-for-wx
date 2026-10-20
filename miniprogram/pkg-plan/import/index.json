@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "导入此计划",
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "switch-x": "/components/switch-x/index",
+    "toast-x": "/components/toast/index"
+  }
+}

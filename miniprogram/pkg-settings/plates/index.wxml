@@ -1,0 +1,10 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb16">{{intro}}</view>
+  <view wx:for="{{rows}}" wx:key="w" class="row cfgrow mb8" mark:w="{{item.w}}">
+    <stepper label="{{item.label}}" value="{{item.n}}" step="{{1}}" decimal="{{false}}" unit="{{pairsU}}" bind:change="onPairs" />
+  </view>
+  <view class="small dim pl-note">{{note}}</view>
+  <view wx:if="{{own}}" class="btn mb8" hover-class="hv" bindtap="onReset">{{resetL}}</view>
+  <view class="btn primary" hover-class="hv" bindtap="onDone">{{doneL}}</view>
+  <toast-x />
+</view>

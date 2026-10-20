@@ -1,0 +1,20 @@
+<view class="page sheet-page" style="{{theme}}">
+  <block wx:if="{{profiles.length}}">
+    <view class="small dim st-lbl">按我的器械调整</view>
+    <scroll-view scroll-x class="chips st-chips" enhanced show-scrollbar="{{false}}">
+      <view class="chips-in">
+        <view class="chip nocap {{asWritten ? 'on' : ''}}" hover-class="hv" data-id="" bindtap="onFit">保持原样</view>
+        <view wx:for="{{profiles}}" wx:key="id" class="chip nocap {{item.on ? 'on' : ''}}" hover-class="hv" data-id="{{item.id}}" bindtap="onFit">{{item.name}}</view>
+      </view>
+    </scroll-view>
+  </block>
+  <view wx:else class="small dim st-chips">在设置中添加器械配置，即可让计划适配你拥有的器械。</view>
+  <view class="list">
+    <view wx:for="{{plans}}" wx:key="id" class="item" hover-class="hv" data-id="{{item.id}}" bindtap="onChoose">
+      <view class="lrow-i rest"><icon-x name="clipboard" /></view>
+      <view class="grow"><view class="tt">{{item.name}}</view><view class="ss">{{item.sub}}</view></view>
+      <icon-x name="chevronRight" cls="chev" />
+    </view>
+  </view>
+  <toast-x />
+</view>

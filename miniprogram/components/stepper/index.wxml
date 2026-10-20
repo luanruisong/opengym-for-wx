@@ -1,0 +1,19 @@
+<view wx:if="{{label}}" class="stp-w">
+  <text class="stp-l">{{label}}</text>
+  <view class="stp {{cls}} {{plain ? 'plain' : ''}} {{invalid ? 'invalid' : ''}}">
+    <view wx:if="{{!plain}}" class="stp-b dec {{disabled ? 'disabled' : ''}}" hover-class="hv" bindtap="onDec" bindtouchstart="onDownStart" bindtouchend="onEnd" bindtouchcancel="onEnd"><icon-x name="minus" stroke="2.2" /></view>
+    <view class="val">
+      <num-field value="{{value}}" decimal="{{decimal}}" nullable="{{nullable}}" disabled="{{disabled}}" placeholder="{{placeholder}}" bind:change="onField" bind:blur="onBlur" />
+      <text wx:if="{{unit}}" class="u">{{unit}}</text>
+    </view>
+    <view wx:if="{{!plain}}" class="stp-b inc {{disabled ? 'disabled' : ''}}" hover-class="hv" bindtap="onInc" bindtouchstart="onUpStart" bindtouchend="onEnd" bindtouchcancel="onEnd"><icon-x name="plus" stroke="2.2" /></view>
+  </view>
+</view>
+<view wx:else class="stp {{cls}} {{plain ? 'plain' : ''}} {{invalid ? 'invalid' : ''}}">
+  <view wx:if="{{!plain}}" class="stp-b dec {{disabled ? 'disabled' : ''}}" hover-class="hv" bindtap="onDec" bindtouchstart="onDownStart" bindtouchend="onEnd" bindtouchcancel="onEnd"><icon-x name="minus" stroke="2.2" /></view>
+  <view class="val">
+    <num-field value="{{value}}" decimal="{{decimal}}" nullable="{{nullable}}" disabled="{{disabled}}" placeholder="{{placeholder}}" bind:change="onField" bind:blur="onBlur" />
+    <text wx:if="{{unit}}" class="u">{{unit}}</text>
+  </view>
+  <view wx:if="{{!plain}}" class="stp-b inc {{disabled ? 'disabled' : ''}}" hover-class="hv" bindtap="onInc" bindtouchstart="onUpStart" bindtouchend="onEnd" bindtouchcancel="onEnd"><icon-x name="plus" stroke="2.2" /></view>
+</view>

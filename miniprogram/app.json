@@ -1,0 +1,190 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/plan/index",
+    "pages/stats/index",
+    "pages/library/index"
+  ],
+  "subPackages": [
+    {
+      "root": "data-desc-en",
+      "pages": [
+        "placeholder/index"
+      ]
+    },
+    {
+      "root": "data-ex",
+      "pages": [
+        "placeholder/index"
+      ]
+    },
+    {
+      "root": "data-instr-en",
+      "pages": [
+        "placeholder/index"
+      ]
+    },
+    {
+      "root": "data-instr-zh",
+      "pages": [
+        "placeholder/index"
+      ]
+    },
+    {
+      "root": "pkg-body",
+      "pages": [
+        "card/index",
+        "checkin/index",
+        "goal/index",
+        "measurement-fields/index",
+        "measurement-log/index",
+        "measurements/index",
+        "photo-compare/index",
+        "progress-photos/index",
+        "weigh-in/index",
+        "weigh-ins/index"
+      ]
+    },
+    {
+      "root": "pkg-common",
+      "pages": [
+        "duration/index",
+        "menu/index"
+      ]
+    },
+    {
+      "root": "pkg-history",
+      "pages": [
+        "calendar/index",
+        "exercise-history/index",
+        "history/index",
+        "log-past/index",
+        "muscles/index",
+        "structural-balance/index",
+        "workout-date/index",
+        "workout-detail/index",
+        "workout-duration/index"
+      ]
+    },
+    {
+      "root": "pkg-library",
+      "pages": [
+        "add-to-routine/index",
+        "custom/index",
+        "exercise/index",
+        "picker/index"
+      ]
+    },
+    {
+      "root": "pkg-plan",
+      "pages": [
+        "day-assign/index",
+        "day-note/index",
+        "day-override/index",
+        "equipment-profile/index",
+        "ex-config/index",
+        "glyph/index",
+        "import/index",
+        "routine/index",
+        "starter/index",
+        "tools/index"
+      ]
+    },
+    {
+      "root": "pkg-settings",
+      "pages": [
+        "dumbbells/index",
+        "hevy-import/index",
+        "import-summary/index",
+        "page/index",
+        "plates/index",
+        "settings/index"
+      ]
+    },
+    {
+      "root": "pkg-workout",
+      "pages": [
+        "add-routine/index",
+        "complete/index",
+        "effort/index",
+        "finish/index",
+        "note/index",
+        "plates/index",
+        "rename/index",
+        "settings/index",
+        "summary/index",
+        "superset/index",
+        "workout/index"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/home/index": {
+      "network": "all",
+      "packages": [
+        "pkg-workout",
+        "pkg-library"
+      ]
+    },
+    "pages/plan/index": {
+      "network": "all",
+      "packages": [
+        "pkg-plan"
+      ]
+    },
+    "pages/stats/index": {
+      "network": "all",
+      "packages": [
+        "pkg-history"
+      ]
+    }
+  },
+  "window": {
+    "navigationBarTitleText": "openGym",
+    "navigationBarBackgroundColor": "#000000",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#000000",
+    "backgroundTextStyle": "light"
+  },
+  "darkmode": true,
+  "tabBar": {
+    "custom": true,
+    "color": "#8e8e93",
+    "selectedColor": "#30d158",
+    "backgroundColor": "#0e0e10",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/plan/index",
+        "text": "计划"
+      },
+      {
+        "pagePath": "pages/stats/index",
+        "text": "统计"
+      },
+      {
+        "pagePath": "pages/library/index",
+        "text": "动作库"
+      }
+    ]
+  },
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "toast-x": "/components/toast/index",
+    "rest-timer": "/components/rest-timer/index",
+    "timer-flash": "/components/timer-flash/index",
+    "row": "/components/row/index",
+    "seg": "/components/seg/index",
+    "switch-x": "/components/switch-x/index",
+    "stepper": "/components/stepper/index",
+    "num-field": "/components/num-field/index",
+    "empty": "/components/empty/index",
+    "sheet": "/components/sheet/index"
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

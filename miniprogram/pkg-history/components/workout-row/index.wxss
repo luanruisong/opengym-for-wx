@@ -1,0 +1,3 @@
+.wrow-i{width:34px;height:34px;border-radius:8px;font-size:19px}
+.wrow-media{display:inline-flex;align-items:center;color:var(--label-2);font-size:12px;flex:none}
+.wrow-media>text{margin-left:3px}

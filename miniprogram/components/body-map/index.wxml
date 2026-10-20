@@ -1,0 +1,12 @@
+<view class="bodymap {{tappable ? 'tappable' : ''}} {{variant ? 'hm-' + variant : ''}} {{cls}}">
+  <block wx:if="{{sizes}}">
+    <canvas wx:for="{{sizes}}" wx:key="index" type="2d" class="bm-c" data-i="{{index}}"
+      style="width:{{item.w}}px;height:{{item.h}}px" bindtap="onTap"></canvas>
+  </block>
+  <view wx:else class="bm-ph"></view>
+</view>
+<view wx:if="{{legend}}" class="hm-legend {{variant ? 'hm-' + variant : ''}}">
+  <text class="bm-lt">更少</text>
+  <view wx:for="{{legendCls}}" wx:key="*this" class="hm-c {{item}}"></view>
+  <text class="bm-lt">更多</text>
+</view>

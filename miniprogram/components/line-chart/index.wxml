@@ -1,0 +1,5 @@
+<view wx:if="{{empty}}" class="empty small lc-empty">暂无数据</view>
+<view wx:else class="lc" style="height:{{h}}px">
+  <canvas type="2d" id="lc" class="lc-cv" style="height:{{h}}px" bindtouchstart="onTouch" bindtouchmove="onTouch"></canvas>
+  <view wx:if="{{tipText}}" class="ctip" style="{{tipStyle}}">{{tipText}}</view>
+</view>

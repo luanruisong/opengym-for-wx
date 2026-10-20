@@ -1,0 +1,41 @@
+<view class="page" style="{{theme}}">
+  <view class="sp-search">
+    <view class="searchf">
+      <icon-x name="magnifier" cls="lead" />
+      <input class="field" placeholder-class="ph" placeholder="搜索…" value="{{q}}" confirm-type="search" bindinput="onQ" />
+      <view wx:if="{{q}}" class="clear" hover-class="hv" bindtap="onClear"><icon-x name="xmark" stroke="2.6" /></view>
+    </view>
+  </view>
+
+  <block wx:if="{{searching}}">
+    <view wx:if="{{hits.length}}" class="sect">
+      <text class="sect-t">{{hitsTitle}}</text>
+      <view class="sect-b">
+        <view wx:for="{{hits}}" wx:key="key" class="lrow has-i tap" hover-class="hv" data-i="{{index}}" bindtap="onHit">
+          <view class="lrow-i" style="background:{{item.tint}}"><icon-x name="{{item.icon}}" /></view>
+          <view class="lrow-m">
+            <text class="lrow-t">{{item.label}}</text>
+            <text class="lrow-s">{{item.trail}}</text>
+          </view>
+          <icon-x name="chevronRight" stroke="2.4" cls="lrow-c" />
+        </view>
+      </view>
+    </view>
+    <view wx:else class="sp-empty">{{emptyText}}</view>
+  </block>
+
+  <block wx:else>
+    <view wx:for="{{groups}}" wx:for-item="g" wx:key="key" class="sect">
+      <view class="sect-b">
+        <view wx:for="{{g.rows}}" wx:key="id" class="lrow has-i tap sp-root-row" hover-class="hv" data-id="{{item.id}}" bindtap="onOpen">
+          <view class="lrow-i" style="background:{{item.tint}}"><icon-x name="{{item.icon}}" /></view>
+          <view class="lrow-m"><text class="lrow-t">{{item.title}}</text></view>
+          <text wx:if="{{item.value}}" class="lrow-v">{{item.value}}</text>
+          <icon-x name="chevronRight" stroke="2.4" cls="lrow-c" />
+        </view>
+      </view>
+    </view>
+    <view class="dim small sp-version">{{versionLine}}</view>
+  </block>
+  <toast-x />
+</view>

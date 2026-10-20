@@ -1,0 +1,2 @@
+/* the hairline between the two rows: each sits in its own <picker>, so .lrow+.lrow cannot see it */
+.wd-sep::before{content:'';position:absolute;left:55px;right:0;top:0;height:var(--hair);background:var(--sep)}

@@ -1,0 +1,8 @@
+.mx-prof{margin:-4px 2px 10px}
+.mx-prof>.icx{font-size:13px}
+.mx-prof-t{margin-left:6px}
+.mx-prof-b{margin-left:8px;padding:3px 10px;font-size:12px}
+.mx-head{margin:2px 0 10px}
+.mx-sec{margin:0}
+.item .btn.sm{flex:none}
+.item .tag{flex:none}

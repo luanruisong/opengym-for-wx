@@ -1,0 +1,10 @@
+<view class="item" hover-class="hv" bindtap="onTap">
+  <view class="lrow-i wrow-i"><icon-x name="{{row.glyph}}" /></view>
+  <view class="grow">
+    <view class="tt">{{row.name}}</view>
+    <view class="ss">{{row.sub}}</view>
+  </view>
+  <view wx:if="{{row.mediaN > 0}}" class="wrow-media" aria-label="{{row.mediaLabel}}"><icon-x name="image" /><text>{{row.mediaN}}</text></view>
+  <view wx:if="{{row.prN > 0}}" class="pr"><icon-x name="trophy" /><text>{{row.prN}} PR</text></view>
+  <icon-x name="chevronRight" cls="chev" />
+</view>

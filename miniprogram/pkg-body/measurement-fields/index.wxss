@@ -1,0 +1,3 @@
+.mf-add{align-items:stretch}
+.mf-btn{flex:none;width:auto;margin-left:8px;padding:0 16px}
+.gap14{height:14px}

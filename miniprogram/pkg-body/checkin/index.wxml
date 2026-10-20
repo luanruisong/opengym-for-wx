@@ -1,0 +1,36 @@
+<view class="page" style="{{theme}}">
+  <view class="hdr"><view class="hdr-m"><view class="sub">{{sub}}</view></view></view>
+
+  <swiper class="ci-rail {{count > 1 ? 'tall' : ''}}" current="{{current}}" bindchange="onSwipe" previous-margin="0" next-margin="0">
+    <swiper-item wx:for="{{cards}}" wx:for-item="card" wx:key="id">
+      <view class="ci-card">
+        <view class="ci-card-hd">
+          <view class="iconbtn ci-card-btn" hover-class="hv" data-id="{{card.id}}" bindtap="onEdit"><icon-x name="pencil" /></view>
+          <view class="ci-label">{{card.label}}</view>
+          <view class="iconbtn ci-card-btn ci-red" hover-class="hv" data-id="{{card.id}}" bindtap="onRemove"><icon-x name="trash" /></view>
+        </view>
+        <view class="ci-qr-plate"><qr-code value="{{card.value}}" size="{{230}}" /></view>
+        <view class="ci-value">{{card.value}}</view>
+        <view wx:if="{{count > 1}}" class="ci-reorder">
+          <view class="iconbtn ci-card-btn {{card.first ? 'disabled' : ''}}" hover-class="hv" data-i="{{card.i}}" data-d="-1" bindtap="onMove"><icon-x name="chevronLeft" /></view>
+          <text class="ci-pos">{{card.pos}}</text>
+          <view class="iconbtn ci-card-btn {{card.last ? 'disabled' : ''}}" hover-class="hv" data-i="{{card.i}}" data-d="1" bindtap="onMove"><icon-x name="chevronRight" /></view>
+        </view>
+      </view>
+    </swiper-item>
+    <swiper-item>
+      <view class="ci-add" hover-class="hv" bindtap="onAdd">
+        <icon-x name="plus" size="40" stroke="1.8" />
+        <text class="ci-add-t">添加卡片</text>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <view wx:if="{{count > 0}}" class="ci-dots">
+    <view wx:for="{{cards}}" wx:key="id" class="ci-dot {{item.i === active ? 'on' : ''}}"></view>
+    <view class="ci-dot {{active >= count ? 'on' : ''}}"></view>
+  </view>
+
+  <view wx:if="{{!count}}" class="muted small ci-hint">导入会员卡照片，或用相机扫描。到了健身房不用另开应用，打开这个界面就行。</view>
+  <toast-x />
+</view>

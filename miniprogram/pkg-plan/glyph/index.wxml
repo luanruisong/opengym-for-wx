@@ -1,0 +1,12 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view wx:for="{{groups}}" wx:for-item="g" wx:key="key" class="glyph-group">
+    <view class="sect-t glyph-t">{{g.title}}</view>
+    <view class="glyph-grid">
+      <view wx:for="{{g.items}}" wx:for-item="it" wx:key="n" class="glyph-cell {{it.on ? 'on' : ''}}" hover-class="hv" data-n="{{it.n}}" bindtap="onPick">
+        <icon-x name="{{it.n}}" />
+      </view>
+    </view>
+  </view>
+  <view style="height:4px"></view>
+  <toast-x />
+</view>

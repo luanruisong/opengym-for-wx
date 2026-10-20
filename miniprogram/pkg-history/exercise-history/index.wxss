@@ -1,0 +1,6 @@
+.eh-name{margin-bottom:2px}
+.eh-best{margin:6px 0 4px}
+.eh-best>text+text{margin-left:4px}
+.eh-trophy{font-size:14px;color:var(--yellow);margin-right:5px}
+.eh-item{align-items:flex-start}
+.eh-item .pr{margin-left:4px;vertical-align:middle}

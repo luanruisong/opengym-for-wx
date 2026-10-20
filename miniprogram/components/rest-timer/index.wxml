@@ -1,0 +1,25 @@
+<view wx:if="{{on}}" class="timer {{place}} {{mode}} {{paused ? 'paused' : ''}} {{ready ? 'ready' : ''}}">
+  <view class="bar"><view class="bar-i" style="width:{{pct}}%"></view></view>
+  <block wx:if="{{mode === 'working'}}">
+    <view class="tclock">
+      <text class="t">{{clock}}</text>
+      <text wx:if="{{label}}" class="lbl">{{label}}</text>
+    </view>
+    <view class="acts">
+      <view class="btn plain sm" hover-class="hv" bindtap="onWorkCancel"><text>取消</text></view>
+      <view class="btn primary sm" hover-class="hv" bindtap="onWorkDone"><icon-x name="check" /><text>完成</text></view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="tclock" hover-class="hv" bindtap="onClock">
+      <text class="t">{{clock}}</text>
+      <view class="lbl"><text class="lbl-t">{{label}}</text><icon-x name="chevronDown" size="10" /></view>
+    </view>
+    <view class="acts">
+      <view class="btn plain sm adj" hover-class="hv" bindtap="onMinus"><icon-x name="minus" /><text class="adj-t">15s</text></view>
+      <view class="btn plain sm adj {{plusOff ? 'disabled' : ''}}" hover-class="hv" bindtap="onPlus"><icon-x name="plus" /><text class="adj-t">15s</text></view>
+      <view class="btn plain sm pause {{ready ? 'slot' : ''}}" hover-class="hv" bindtap="onPause"><icon-x name="{{paused ? 'play' : 'pause'}}" /></view>
+      <view class="btn primary sm skip" hover-class="hv" bindtap="onSkip"><text>{{skipLabel}}</text></view>
+    </view>
+  </block>
+</view>

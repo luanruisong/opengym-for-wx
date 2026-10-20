@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "新建器械配置",
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "toast-x": "/components/toast/index"
+  }
+}

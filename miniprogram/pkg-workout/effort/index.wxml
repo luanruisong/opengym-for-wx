@@ -1,0 +1,23 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb12">{{hint}}</view>
+  <view class="menu-list effpick">
+    <view wx:for="{{presets}}" wx:for-item="p" wx:key="rir" class="menu-item {{p.on ? 'on' : ''}}" hover-class="hv" data-rir="{{p.rir}}" bindtap="onPreset">
+      <view class="lrow-i effpick-n" style="background:{{p.color}}">{{p.label}}</view>
+      <view class="grow"><view class="tt">{{p.feel}}</view></view>
+      <view class="menu-on {{p.on ? 'is-on' : ''}}" style="{{p.on ? 'color:' + p.color : ''}}"><icon-x name="check" stroke="2.4" /></view>
+    </view>
+    <view class="menu-item effpick-free">
+      <view class="grow"><view class="tt">{{exactLabel}}</view></view>
+      <view class="stp effcell-stp effpick-stp" style="{{tint}}">
+        <view class="dec" hover-class="hv" bindtap="onDec"><icon-x name="minus" /></view>
+        <view class="val"><num-field value="{{v}}" decimal nullable placeholder="–" bind:change="onType" /></view>
+        <view class="inc" hover-class="hv" bindtap="onInc"><icon-x name="plus" /></view>
+      </view>
+    </view>
+  </view>
+  <block wx:if="{{showClear}}">
+    <view wx:if="{{showDone}}" class="btn mt12" hover-class="hv" bindtap="onDone"><icon-x name="check" /><text>完成</text></view>
+    <view class="btn ghost dim mt8" hover-class="hv" bindtap="onClear"><icon-x name="xmark" /><text>清除评分</text></view>
+  </block>
+  <toast-x />
+</view>

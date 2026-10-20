@@ -1,0 +1,185 @@
+<view class="page sheet-page" style="{{theme}}">
+  <block wx:if="{{ready}}">
+    <view class="tags cfg-tags">
+      <view wx:for="{{tags}}" wx:for-item="tg" wx:key="k" class="tag {{tg.cls}}">
+        <icon-x wx:if="{{tg.icon}}" name="{{tg.icon}}" />
+        <text>{{tg.label}}</text>
+      </view>
+    </view>
+    <view wx:if="{{desc}}" class="exnote">{{desc}}</view>
+
+    <view wx:if="{{!cardio}}" class="cfg-mb14">
+      <seg cls="seg-range" options="{{modeOpts}}" value="{{mode}}" bind:change="onMode" />
+    </view>
+
+    <!-- sets / reps / weight (or the cardio and the timed form) -->
+    <view class="row cfgrow" style="margin-bottom: {{mainMb}}px">
+      <block wx:if="{{cardio}}">
+        <stepper label="间歇数" value="{{sets}}" step="1" decimal="{{false}}" bind:change="on_sets" />
+        <stepper label="分钟" value="{{min}}" step="1" decimal="{{false}}" bind:change="on_min" />
+        <stepper label="{{speedLabel}}" value="{{speed}}" step="0.5" bind:change="on_speed" />
+      </block>
+      <block wx:elif="{{mode === 'time'}}">
+        <stepper label="{{setsLabel}}" value="{{sets}}" step="1" decimal="{{false}}" bind:change="on_sets" />
+        <stepper label="秒数" value="{{sec}}" step="5" decimal="{{false}}" bind:change="on_sec" />
+        <stepper wx:if="{{showTimeWeight}}" label="{{weightLabel}}" value="{{weight}}" step="2.5" bind:change="on_weight" />
+      </block>
+      <block wx:else>
+        <stepper wx:if="{{showSets}}" label="{{setsLabel}}" value="{{sets}}" step="1" decimal="{{false}}" bind:change="on_sets" />
+        <stepper wx:if="{{showReps}}" label="次数" value="{{reps}}" step="{{repStep}}" decimal="{{false}}" bind:change="on_reps" />
+        <stepper wx:if="{{showRepsWeight}}" label="{{weightLabel}}" value="{{weight}}" step="2.5" bind:change="on_weight" />
+      </block>
+    </view>
+
+    <!-- pyramid sets: a row per set -->
+    <view wx:if="{{pyramid}}" class="cfg-pyr">
+      <scroll-view scroll-x class="chips cfg-mb10" enhanced show-scrollbar="{{false}}">
+        <view class="chips-in">
+          <view wx:for="{{presets}}" wx:for-item="pr" wx:key="k" class="chip" hover-class="hv" data-k="{{pr.k}}" bindtap="onPreset">{{pr.label}}</view>
+        </view>
+      </scroll-view>
+      <view wx:for="{{pyramidRows}}" wx:for-item="r" wx:key="i" class="cfg-pyr-set" data-i="{{r.i}}" capture-bind:touchstart="onPyrTouch">
+        <view class="row cfgrow cfg-mb4">
+          <view wx:if="{{r.isMax}}" class="small cfg-max"><text class="bold">{{r.label}}</text> · {{r.maxText}}</view>
+          <stepper wx:else label="{{r.label}}" value="{{r.value}}" step="{{repStep}}" min="1" decimal="{{false}}" bind:change="on_pyrRep" />
+          <stepper label="休息（秒）" value="{{r.rest}}" step="15" decimal="{{false}}" bind:change="on_pyrRest" />
+        </view>
+        <view wx:if="{{!bw}}" class="row cfgrow cfg-mb4">
+          <stepper label="{{weightLabel}}" value="{{r.weight}}" step="2.5" bind:change="on_pyrW" />
+        </view>
+        <view class="row end cfg-pyr-acts">
+          <view class="btn sm {{r.isMax ? 'primary' : 'plain'}}" hover-class="hv" data-i="{{r.i}}" bindtap="onPyrMax"><text>力竭</text></view>
+          <view wx:if="{{canRemoveSet}}" class="btn sm cfg-ml8" hover-class="hv" data-i="{{r.i}}" bindtap="onPyrRemove"><icon-x name="trash" /></view>
+        </view>
+      </view>
+      <view class="btn sm {{canAddSet ? '' : 'disabled'}}" hover-class="hv" bindtap="onPyrAdd"><icon-x name="plus" /><text>加一组</text></view>
+      <view class="small dim cfg-mt8">休息为 0 的组使用该动作的休息时间。</view>
+      <view wx:if="{{!bw}}" class="small dim cfg-mt4">重量为 0 的组从上次同一组的重量开始。</view>
+    </view>
+
+    <view wx:if="{{restpauseNote}}" class="small dim cfg-pull">Rest-pause 始终按这个次数练一个热身组，再加一个 rest-pause 正式组。这里不使用“组数”。</view>
+
+    <!-- planned warm-ups -->
+    <block wx:if="{{showWarmups}}">
+      <view class="row cfgrow cfg-mb6">
+        <stepper label="热身组" value="{{warmupSets}}" step="1" decimal="{{false}}" bind:change="on_warmupSets" />
+      </view>
+      <view class="small dim cfg-mb18">{{warmupText}}</view>
+    </block>
+    <view wx:if="{{timeNote}}" class="small dim cfg-mb18">保持这一组时会有计时器运行。徒手静力动作把重量留在 0。</view>
+
+    <!-- rest for this exercise -->
+    <view class="sect-b cfg-mb6">
+      <row icon="timer" iconTint="var(--orange)" title="本动作的休息" accessory="chevron" value="{{restValue}}" tap bind:tap="onRest" />
+    </view>
+    <view class="small dim cfg-mb18">这个动作每组之后的休息时间。设为 0:00 就用默认休息。</view>
+
+    <!-- bodyweight / per side / last set to failure / pyramid -->
+    <view wx:if="{{!cardio}}" class="sect-b cfg-mb8">
+      <row icon="figureStrength" iconTint="var(--acc)" title="徒手动作" subtitle="{{bwSub}}">
+        <switch-x checked="{{bw}}" bind:change="onBodyweight" />
+      </row>
+      <row icon="sides" iconTint="var(--blue)" title="每侧" subtitle="{{perSideSub}}">
+        <switch-x checked="{{perSide}}" bind:change="onPerSide" />
+      </row>
+      <row wx:if="{{showFailure}}" icon="gauge" iconTint="var(--purple)" title="最后一组做到力竭" subtitle="{{failureSub}}">
+        <switch-x checked="{{failure}}" bind:change="onFailure" />
+      </row>
+      <row wx:if="{{showPyramidToggle}}" icon="steps" iconTint="var(--acc)" title="金字塔组" subtitle="每组设定不同的目标次数，例如 12 · 8 · 6 · 力竭 · 12。">
+        <switch-x checked="{{pyramid}}" bind:change="onPyramid" />
+      </row>
+    </view>
+
+    <!-- added weight on bodyweight work -->
+    <block wx:if="{{bw}}">
+      <view class="row cfgrow cfg-mb8">
+        <stepper label="{{addedLabel}}" value="{{added}}" step="2.5" bind:change="on_added" />
+      </view>
+      <view class="small dim cfg-mb18">用于系负重腰带做双杠臂屈伸或引体向上。此时进阶方式跟随重量。</view>
+    </block>
+    <block wx:if="{{showRepsMax}}">
+      <view class="row cfgrow cfg-mb18">
+        <stepper label="次数上限" value="{{repsMax}}" step="1" decimal="{{false}}" bind:change="on_repsMax" />
+      </view>
+      <view class="small dim cfg-pull">{{repsMaxText}}</view>
+    </block>
+
+    <!-- drop-set / rest-pause -->
+    <block wx:if="{{showIntens}}">
+      <view class="sec">递减组 / 歇息暂停组</view>
+      <view class="sect-b cfg-mb8">
+        <row title="强化技巧" accessory="chevron" value="{{intensValue}}" tap bind:tap="onIntensifier" />
+      </view>
+      <view wx:if="{{intensType === 'dropset'}}" class="row cfgrow cfg-mb8">
+        <stepper label="递减次数" value="{{dropCount}}" step="1" min="1" decimal="{{false}}" bind:change="on_dropCount" />
+        <stepper label="减重幅度（%）" value="{{dropPct}}" step="5" min="5" decimal="{{false}}" bind:change="on_dropPct" />
+      </view>
+      <view wx:if="{{intensType === 'restpause'}}" class="row cfgrow cfg-mb8">
+        <stepper label="歇息暂停次数" value="{{rpReps}}" step="1" min="1" decimal="{{false}}" bind:change="on_rpReps" />
+        <stepper label="休息（秒）" value="{{rpRest}}" step="5" min="5" decimal="{{false}}" bind:change="on_rpRest" />
+      </view>
+      <view wx:if="{{intensType}}" class="small dim cfg-intens-t">{{intensText}}</view>
+    </block>
+
+    <!-- what a dumbbell weight means -->
+    <block wx:if="{{showDb}}">
+      <view class="sec">重量表示</view>
+      <seg inline cls="seg-inline" options="{{dbOpts}}" value="{{dbValue}}" bind:change="onDbLoad" />
+      <view class="small dim cfg-seg-t">{{dbText}}</view>
+    </block>
+
+    <!-- plate loading: per exercise, written to the store at once -->
+    <block wx:if="{{showPlate}}">
+      <view class="sec">配重</view>
+      <seg inline cls="seg-inline" options="{{kindOpts}}" value="{{kind}}" bind:change="onKind" />
+      <view class="small dim cfg-kind-t">{{kindText}}</view>
+      <block wx:if="{{kindOn}}">
+        <view wx:if="{{bar}}" class="sect-b cfg-mb6">
+          <row icon="barbell" title="无杠铃杆" subtitle="你记录的重量全部是杠铃片。">
+            <switch-x checked="{{noBar}}" bind:change="onNoBar" />
+          </row>
+        </view>
+        <view wx:if="{{!noBar}}" class="row cfgrow cfg-mb6">
+          <stepper label="{{baseLabel}}" value="{{base}}" step="2.5" bind:change="onBase" />
+        </view>
+        <view class="small dim cfg-mb18">{{plateText}}</view>
+      </block>
+    </block>
+
+    <!-- progression -->
+    <view wx:if="{{pyramidProgNote}}" class="small dim cfg-mb18">重量由你决定：金字塔组不会自动递增。</view>
+    <block wx:elif="{{prog.show}}">
+      <view class="sec">进阶方式</view>
+      <view class="sect-b cfg-mb8">
+        <row title="规则" accessory="chevron" value="{{prog.ruleValue}}" tap bind:tap="onRule" />
+      </view>
+      <view class="small dim" style="margin-bottom: {{prog.descMb}}px">{{prog.desc}}</view>
+      <view wx:if="{{prog.showRow}}" class="row cfgrow {{prog.row4 ? 'cfgrow-4' : ''}} cfg-mb18">
+        <stepper label="{{prog.stepLabel}}" value="{{prog.step}}" step="{{prog.stepStep}}" decimal="{{prog.stepDecimal}}" invalid="{{prog.invalid}}" bind:change="on_inc" />
+        <block wx:if="{{prog.showRange}}">
+          <stepper label="次数下限" value="{{prog.repsFrom}}" step="{{prog.stride}}" decimal="{{false}}" bind:change="on_repsMin" />
+          <stepper label="次数上限" value="{{prog.repsTo}}" step="{{prog.stride}}" decimal="{{false}}" bind:change="on_repsTo" />
+        </block>
+        <stepper wx:if="{{prog.showSetsMax}}" label="组数上限" value="{{prog.setsMax}}" step="1" decimal="{{false}}" bind:change="on_setsMax" />
+        <stepper wx:if="{{prog.showDeload}}" label="减量 1RM (%)" value="{{prog.deload}}" step="5" min="50" max="95" decimal="{{false}}" bind:change="on_deload" />
+      </view>
+      <view wx:if="{{prog.invalid}}" class="small red cfg-pull">{{prog.invalidMsg}}</view>
+      <block wx:if="{{prog.canBackoff}}">
+        <view class="sect-b cfg-mb8">
+          <row icon="steps" iconTint="var(--acc)" title="递减组" subtitle="每组比上一组轻一个步长。上面的重量是第一组。">
+            <switch-x checked="{{prog.backoff}}" bind:change="onBackoff" />
+          </row>
+        </view>
+        <view class="small dim cfg-mb18">{{prog.backoffText}}</view>
+      </block>
+    </block>
+
+    <textarea class="field area cfg-mb18" maxlength="500" auto-height value="{{note}}" placeholder="备注（可选）：加重提示，比如“空杠开始，之后每组每侧 +1 片”，任何值得记住的事" placeholder-class="ph" bindinput="onNote" />
+
+    <view class="btn primary {{saveDisabled ? 'disabled' : ''}}" hover-class="hv" bindtap="onSave"><text>{{saveLabel}}</text></view>
+    <view wx:if="{{showCustom}}" class="btn cfg-mt8" hover-class="hv" bindtap="onCustom"><icon-x name="pencil" /><text>编辑或删除此动作</text></view>
+    <view wx:if="{{showReplace}}" class="btn cfg-mt8" hover-class="hv" bindtap="onReplace"><icon-x name="swap" /><text>替换动作</text></view>
+    <view wx:if="{{showDelete}}" class="btn danger cfg-mt8" hover-class="hv" bindtap="onDelete"><text>从计划中移除</text></view>
+  </block>
+  <toast-x />
+</view>

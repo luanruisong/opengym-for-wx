@@ -1,0 +1,42 @@
+/* frontend/src/index.css #timer */
+.timer{
+  position:fixed;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;
+  background:var(--surface-glass);
+  -webkit-backdrop-filter:saturate(180%) blur(10px);backdrop-filter:saturate(180%) blur(10px);
+  border-radius:var(--r-lg);padding:12px 12px 10px;overflow:hidden;
+  display:flex;align-items:center;
+  box-shadow:0 12px 34px -8px rgba(0,0,0,.55);
+  animation:slideup var(--med) var(--ease);
+  color:var(--label);
+}
+.timer.tabbar{bottom:calc(var(--tabbar-h) + 32px + env(safe-area-inset-bottom))}
+.timer.docked{
+  left:0;right:0;bottom:0;
+  border-radius:var(--r-xl) var(--r-xl) 0 0;padding:14px 14px calc(10px + env(safe-area-inset-bottom));
+  box-shadow:0 -10px 30px -14px rgba(0,0,0,.55);
+}
+@keyframes slideup{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+.timer .bar{position:absolute;top:0;left:0;right:0;height:3px;background:var(--surface-3)}
+.timer .bar-i{display:block;height:100%;background:var(--acc);transition:width 1s linear}
+.timer .tclock{flex:none;min-width:0;display:flex;flex-direction:column;align-items:flex-start;padding:2px 0;margin-right:10px}
+.timer .tclock.hv{opacity:.6}
+.timer .t{font-size:28px;font-weight:600;line-height:1.1;letter-spacing:-.026em;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:72px}
+.timer .lbl{font-size:12px;color:var(--label-2);margin-top:1px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.timer .lbl-t{margin-right:3px}
+.timer .acts{display:flex;align-items:center;justify-content:flex-end;flex:1 1 auto;min-width:0}
+.timer .acts>.btn+.btn{margin-left:6px}
+.timer .acts .btn{flex:none;padding-top:11px;padding-bottom:11px}
+.timer .acts .adj{padding-left:9px;padding-right:9px}
+.timer .acts .adj-t{margin-left:2px}
+.timer .acts .btn.plain{background:var(--surface-2);color:var(--label);font-weight:600}
+.timer .acts .btn.plain.hv{background:var(--surface-3)}
+.timer .acts .pause{padding-left:10px;padding-right:10px}
+.timer .acts .pause.slot{visibility:hidden;pointer-events:none}
+.timer .acts .skip{min-width:64px;padding-left:10px;padding-right:10px}
+.timer.rest.paused .t,.timer.rest.paused .bar{opacity:.5}
+.timer.working{box-shadow:inset 0 0 0 .5px var(--acc),0 12px 34px -8px rgba(0,0,0,.55)}
+.timer.working .t{color:var(--acc)}
+.timer.working .tclock{flex:1 1 0;min-width:0}
+.timer.working .lbl{display:block;max-width:100%}
+.timer.working .acts{flex:none}
+.timer.docked.working{box-shadow:inset 0 .5px 0 var(--acc),0 -10px 30px -14px rgba(0,0,0,.55)}

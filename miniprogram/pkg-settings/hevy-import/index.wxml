@@ -1,0 +1,50 @@
+<view class="page sheet-page" style="{{theme}}">
+  <block wx:if="{{!hasPayload || !sum}}">
+    <view class="muted small hv-intro">{{L.intro}}</view>
+    <text class="small dim hv-label">{{L.keyLabel}}</text>
+    <input class="field" password placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" placeholder-class="ph" value="{{apiKey}}" disabled="{{busy}}" confirm-type="go" bindinput="onKey" bindconfirm="onFetch" />
+    <view class="small hv-link">
+      <text class="accent" bindtap="onCopyLink">{{L.getKey}}</text><text class="dim">{{L.where}}</text>
+    </view>
+    <view class="small dim hv-note">{{domainNote}}</view>
+    <view wx:if="{{busy}}" class="small dim mb12">{{progressText}}</view>
+    <view class="btn primary {{busy || !apiKey ? 'disabled' : ''}}" hover-class="hv" bindtap="onFetch">{{busy ? L.fetching : L.fetch}}</view>
+    <view class="hv-gap"></view>
+    <view class="btn ghost dim {{busy ? 'disabled' : ''}}" hover-class="hv" bindtap="onCancel">{{L.cancel}}</view>
+  </block>
+  <block wx:else>
+    <view class="muted small mb12">{{sum.range}}</view>
+    <view class="tiles">
+      <view wx:for="{{sum.tiles}}" wx:key="k" class="tile">
+        <view class="l">{{item.l}}</view>
+        <view class="v hv-v">{{item.v}}</view>
+      </view>
+    </view>
+    <view class="hv-opts">
+      <view wx:if="{{sum.showW}}" class="hv-opt">
+        <view class="grow"><view class="tt hv-tt">{{L.workouts}}</view><view class="small dim">{{sum.subW}}</view></view>
+        <switch-x checked="{{wantWorkouts}}" bind:change="onWantW" />
+      </view>
+      <view wx:if="{{sum.showR}}" class="hv-opt">
+        <view class="grow"><view class="tt hv-tt">{{L.routines}}</view><view class="small dim">{{sum.subR}}</view></view>
+        <switch-x checked="{{wantRoutines}}" bind:change="onWantR" />
+      </view>
+      <view wx:if="{{sum.showB}}" class="hv-opt">
+        <view class="grow"><view class="tt hv-tt">{{L.body}}</view><view class="small dim">{{sum.subB}}</view></view>
+        <switch-x checked="{{wantBody}}" bind:change="onWantB" />
+      </view>
+    </view>
+    <view wx:for="{{sum.notes}}" wx:key="k" class="small hv-n {{item.warn ? 'yellow' : 'dim'}}">{{item.text}}</view>
+    <block wx:if="{{sum.unmatchedTitle}}">
+      <view class="sec">{{sum.unmatchedTitle}}</view>
+      <view class="mchips mb12">
+        <text wx:for="{{sum.unmatched}}" wx:key="k" class="mchip capitalize">{{item.n}}</text>
+        <text wx:if="{{sum.more}}" class="mchip">{{sum.more}}</text>
+      </view>
+    </block>
+    <view class="btn primary {{sum.canImport ? '' : 'disabled'}}" hover-class="hv" bindtap="onImport">{{sum.importLabel}}</view>
+    <view class="hv-gap"></view>
+    <view class="btn ghost dim" hover-class="hv" bindtap="onCancel">{{L.cancel}}</view>
+  </block>
+  <toast-x />
+</view>

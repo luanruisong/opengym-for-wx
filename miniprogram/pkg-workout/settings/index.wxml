@@ -1,0 +1,28 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="row between mb12">
+    <view class="muted small grow">更改也会用于你之后的训练。</view>
+    <view class="btn ghost sm" hover-class="hv" bindtap="onDone"><text>完成</text></view>
+  </view>
+  <view class="sect">
+    <view class="sect-b">
+      <row icon="timer" icon-tint="var(--orange)" title="休息计时" value="{{restText}}" accessory="chevron" tap bind:tap="onRest" />
+      <row icon="speaker" icon-tint="var(--pink)" title="播放提示音"><switch-x checked="{{sound}}" bind:change="onSound" /></row>
+      <row icon="vibrate" icon-tint="var(--indigo)" title="振动"><switch-x checked="{{vibrate}}" bind:change="onVibrate" /></row>
+      <row icon="sun" icon-tint="var(--yellow)" title="闪烁屏幕"><switch-x checked="{{flash}}" bind:change="onFlash" /></row>
+      <row wx:if="{{wakeOK}}" icon="phoneScreen" icon-tint="var(--yellow)" title="保持屏幕常亮" subtitle="训练进行时屏幕保持常亮，组间无需再解锁手机。"><switch-x checked="{{keepAwake}}" bind:change="onAwake" /></row>
+    </view>
+  </view>
+  <view class="sect">
+    <view class="sect-b">
+      <row icon="layout" icon-tint="var(--blue)" title="布局"><seg inline options="{{layoutOpts}}" value="{{layout}}" bind:change="onLayout" /></row>
+      <row icon="gauge" icon-tint="var(--purple)" title="每组强度"><seg inline options="{{effortOpts}}" value="{{effort}}" bind:change="onEffort" /></row>
+      <row icon="swap" icon-tint="var(--indigo)" title="滑动操作" subtitle="组、计划和循环：左滑移除，右滑复制"><switch-x checked="{{swipe}}" bind:change="onSwipe" /></row>
+    </view>
+  </view>
+  <view class="sect">
+    <view class="sect-b">
+      <row icon="gear" icon-tint="var(--grey)" title="所有设置" accessory="chevron" tap bind:tap="onAll" />
+    </view>
+  </view>
+  <toast-x />
+</view>

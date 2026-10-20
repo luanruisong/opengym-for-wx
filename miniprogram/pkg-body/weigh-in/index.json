@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "记录体重",
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "toast-x": "/components/toast/index",
+    "weight-input": "/pkg-body/components/weight-input/index"
+  }
+}

@@ -1,0 +1,23 @@
+.exb{display:block}
+.exhd{margin-bottom:6px}
+.exname{flex:1;min-width:0;font-size:17px;font-weight:600;letter-spacing:-.02em;line-height:1.2}
+.exname.big{font-size:20px}
+.exbtns{flex:none}
+.exbtns>view+view{margin-left:2px}
+.iconbtn.accent{color:var(--acc)}
+.pairbtns{margin-bottom:8px}
+.pairbtns>view{margin:0 6px 6px 0}
+.extags{margin-bottom:8px}
+.extags>.tag{margin:0 6px 6px 0;display:inline-flex;align-items:center}
+.extags>.tag>.icx+text{margin-left:4px}
+.exnote .exnote-i{font-size:13px;margin-right:5px;vertical-align:-2px}
+.exnote.pinned{color:var(--yellow)}
+.planline{margin-bottom:4px}
+.refline.hv{opacity:.6}
+.progline.hv{opacity:.6}
+.setcard{margin-top:10px;margin-bottom:0}
+.swrow{display:block;border-radius:8px}
+.sidepill{flex:none;min-width:34px;text-align:center}
+.setfoot{padding-top:8px}
+.setfoot .gap8>view{margin:0 8px 8px 0}
+.effcell-stp.plain .val{width:100%}

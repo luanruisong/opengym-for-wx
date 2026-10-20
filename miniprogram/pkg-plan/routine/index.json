@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "训练日",
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "toast-x": "/components/toast/index",
+    "row": "/components/row/index",
+    "switch-x": "/components/switch-x/index",
+    "body-map": "/components/body-map/index"
+  }
+}

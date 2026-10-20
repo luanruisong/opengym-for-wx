@@ -1,0 +1,8 @@
+<view class="item day-note-row" hover-class="hv" bindtap="onTap">
+  <view class="lrow-i dnrow-i"><icon-x name="{{row.icon}}" /></view>
+  <view class="grow">
+    <view class="tt">{{row.title}}</view>
+    <view class="ss">{{row.sub}}</view>
+  </view>
+  <icon-x name="chevronRight" cls="chev" />
+</view>

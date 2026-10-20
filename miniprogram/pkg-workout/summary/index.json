@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "训练完成！",
+  "usingComponents": {
+    "body-map": "/components/body-map/index",
+    "workout-media": "../components/workout-media/index"
+  }
+}

@@ -1,0 +1,8 @@
+.pp-add{margin-bottom:16px}
+.pp-add>.btn{width:auto}
+.pp-hint{margin:0 0 12px}
+.pp-group{margin-bottom:18px}
+.pp-date{margin-bottom:6px}
+.pp-missing{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--label-3)}
+.pp-cta{position:sticky;bottom:calc(var(--sab) + 10px);display:flex;justify-content:center;margin-top:14px}
+.pp-cta>.btn{width:auto;padding-left:32px;padding-right:32px}

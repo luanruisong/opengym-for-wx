@@ -1,0 +1,17 @@
+<view wx:if="{{show}}" class="wmedia">
+  <view class="small muted wmedia-h">照片和视频</view>
+  <view class="wmedia-grid">
+    <view wx:for="{{items}}" wx:key="hash" class="wmedia-item" hover-class="hv" data-i="{{item.i}}" data-hash="{{item.hash}}" bindtap="onView" bindlongpress="onRemove">
+      <image wx:if="{{item.src}}" src="{{item.src}}" mode="aspectFill" />
+      <view wx:else class="wmedia-ph"><icon-x name="{{item.video ? 'play' : 'image'}}" /></view>
+      <view wx:if="{{item.video}}" class="wmedia-kind"><icon-x name="play" /></view>
+    </view>
+    <view wx:if="{{canAdd}}" class="wmedia-add {{busy ? 'disabled' : ''}}" hover-class="hv" bindtap="onAdd">
+      <icon-x name="{{busy ? 'image' : 'plus'}}" />
+      <text wx:if="{{busy}}">加载中…</text>
+      <text wx:else>添加照片或视频</text>
+    </view>
+  </view>
+  <view wx:if="{{showHint}}" class="small dim wmedia-note">进度照片或动作检查视频，与本次训练一起保存。</view>
+  <view wx:if="{{full}}" class="small dim wmedia-note">每次训练最多 6 个照片或视频。</view>
+</view>

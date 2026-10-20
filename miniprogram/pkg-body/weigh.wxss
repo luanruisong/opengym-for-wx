@@ -1,0 +1,9 @@
+/* shared by the weigh-in pages (WeighInRow) */
+.gap14{height:14px}
+.gap8{height:8px}
+.gap2{height:2px}
+.wi-row{display:flex;align-items:center;justify-content:space-between;padding:9px 2px;border-bottom:1px solid var(--sep)}
+.wi-row .bold{margin-right:12px}
+.wi-del{width:32px;height:30px;border-radius:8px;font-size:15px;color:var(--red);background:var(--surface);display:flex;align-items:center;justify-content:center}
+.wi-del.hv{background:var(--surface-2)}
+.wi-more{margin-top:6px}

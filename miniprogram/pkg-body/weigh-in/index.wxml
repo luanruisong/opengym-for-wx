@@ -1,0 +1,28 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small">{{sub}}</view>
+  <weight-input value="{{v}}" unit="{{unit}}" bind:change="onV" />
+  <view class="gap14"></view>
+  <view class="btn primary" hover-class="hv" bindtap="onSave"><text>{{required ? '保存并开始训练' : '保存'}}</text></view>
+  <block wx:if="{{required}}">
+    <view class="gap8"></view>
+    <view class="btn ghost dim" hover-class="hv" bindtap="onSkip"><text>不称重直接开始</text></view>
+    <view class="gap2"></view>
+    <view class="btn ghost dim" hover-class="hv" bindtap="onDifferent"><icon-x name="swap" /><text>选择其他训练</text></view>
+  </block>
+  <block wx:if="{{!required && recent.length}}">
+    <view class="sec">最近称重</view>
+    <view class="wi-list">
+      <view wx:for="{{recent}}" wx:key="d" class="wi-row">
+        <text class="small muted">{{item.date}}</text>
+        <view class="row">
+          <text class="bold">{{item.w}}</text>
+          <view class="wi-del" hover-class="hv" data-d="{{item.d}}" bindtap="onDelete"><icon-x name="trash" /></view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{more}}" class="row end wi-more">
+      <view class="btn sm ghost" hover-class="hv" bindtap="onAll"><text>全部称重记录</text><icon-x name="chevronRight" /></view>
+    </view>
+  </block>
+  <toast-x />
+</view>

@@ -1,0 +1,3 @@
+.cd-btns{margin-bottom:16px}
+.cd-btns>.btn+.btn{margin-left:8px}
+.cd-qr{display:flex;justify-content:center;margin-bottom:16px}

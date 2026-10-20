@@ -1,0 +1,4 @@
+.ml-date{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;color:var(--label-2);font-size:15px}
+.ml-date-v{width:auto;min-width:150px;display:flex;align-items:center;justify-content:flex-end;color:var(--label);margin-left:12px}
+.gap14{height:14px}
+.gap8{height:8px}

@@ -1,0 +1,1 @@
+<canvas type="2d" id="qr" class="qr-canvas" style="width:{{size}}px;height:{{size}}px;opacity:{{ok ? 1 : 0}}"></canvas>

@@ -1,0 +1,26 @@
+/* index.css "activity heatmap". color-mix() is precomputed by utils/theme.js as --hm-1…3. */
+:host{display:block}
+.hm-seg{display:flex;background:var(--fill-search,var(--surface-3));border-radius:9px;padding:2px;margin-bottom:12px}
+.hm-seg-b{flex:1 1 0;min-width:0;text-align:center;padding:6px 8px;min-height:18px;line-height:18px;font-size:14px;color:var(--label-2);border-radius:7px}
+.hm-seg-b.on{background:var(--seg-sel,var(--surface));color:var(--label);font-weight:500;box-shadow:0 3px 8px rgba(0,0,0,.12),0 1px 1px rgba(0,0,0,.06)}
+.hm-wrap{width:100%;white-space:nowrap;padding-bottom:2px}
+.hm-inner{display:inline-block;vertical-align:top}
+.hm-months{display:flex;margin-left:28px;margin-bottom:5px}
+.hm-mo{flex:none;width:14px;font-size:11px;line-height:13px;height:13px;color:var(--label-3);white-space:nowrap;overflow:visible}
+.hm-body{display:flex}
+.hm-days{display:flex;flex-direction:column;flex:none;width:28px}
+.hm-dl{height:11px;margin-bottom:3px;font-size:10px;color:var(--label-2);line-height:11px;white-space:nowrap}
+.hm-grid{display:flex}
+.hm-col{display:flex;flex-direction:column;margin-right:3px}
+.hm-col .hm-c{margin-bottom:3px}
+.hm-c{width:11px;height:11px;border-radius:3px;background:var(--surface-2);flex:none}
+.hm-c.l1{background:var(--hm-1)}
+.hm-c.l2{background:var(--hm-2)}
+.hm-c.l3{background:var(--hm-3)}
+.hm-c.l4{background:var(--acc)}
+.hm-c.today{box-shadow:0 0 0 1.5px var(--acc)}
+.hm-c.future{opacity:.3}
+.hm-c.noted{box-shadow:inset 0 0 0 1.5px var(--indigo)}
+.hm-legend{display:flex;align-items:center;justify-content:flex-end;margin-top:9px;font-size:11px;color:var(--label-3)}
+.hm-legend .hm-c{width:10px;height:10px;margin-left:4px}
+.hm-legend .hm-hi{margin-left:4px}

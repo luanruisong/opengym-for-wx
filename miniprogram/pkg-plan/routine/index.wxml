@@ -1,0 +1,75 @@
+<view class="page" style="{{theme}}">
+  <block wx:if="{{ready}}">
+    <view class="re-hdr">
+      <input class="input re-name" value="{{nameInit}}" bindinput="onName" confirm-type="done" />
+      <view class="iconbtn" hover-class="hv" bindtap="onGlyph"><icon-x name="{{glyph}}" /></view>
+    </view>
+
+    <view class="sect-b re-sect">
+      <row icon="chartLine" title="进阶方式" value="{{progName}}" accessory="chevron" tap bind:tap="onProg" />
+      <row icon="chartLineSlash" icon-tint="var(--orange)" title="减载训练日" subtitle="它的训练不计入进阶，但仍会显示在历史记录和统计中。">
+        <switch-x checked="{{deload}}" bind:change="onDeload" />
+      </row>
+    </view>
+    <view class="small dim re-prognote">{{progNote}}</view>
+
+    <view wx:if="{{missText}}" class="card re-miss">
+      <view class="row gap8">
+        <icon-x name="warning" color="var(--orange)" />
+        <view class="small">{{missText}}</view>
+      </view>
+    </view>
+
+    <view class="row between plan-sec-h">
+      <view class="sec">动作库</view>
+      <view class="btn tinted sm" hover-class="hv" bindtap="onAdd"><icon-x name="plus" /><text>添加动作</text></view>
+    </view>
+
+    <view wx:if="{{hasEx}}" class="list routine-list">
+      <view wx:for="{{rows}}" wx:for-item="e" wx:key="i" class="re-unit">
+        <view wx:if="{{e.ssHead}}" class="ss-label re-ss-btn" hover-class="hv" data-i="{{e.i}}" bindtap="onSuperset">
+          <icon-x name="link" />
+          <text class="re-ss-name">{{e.ssName}}</text>
+          <text wx:if="{{e.ssRest}}" class="dim">{{e.ssRest}}</text>
+          <icon-x name="pencil" />
+        </view>
+        <view class="item {{e.inSS ? 'in-ss' : ''}}" hover-class="hv" data-i="{{e.i}}" bindtap="onRow" bindlongpress="onRowLong">
+          <view wx:if="{{e.ssPos}}" class="ss-pos">{{e.ssPos}}</view>
+          <view class="grow">
+            <view class="tt {{e.nameCls}}">{{e.name}}</view>
+            <view class="ss">{{e.line}}</view>
+            <view wx:if="{{e.note}}" class="small dim re-note">{{e.note}}</view>
+          </view>
+          <view wx:if="{{e.noEquip}}" class="tag re-noeq"><icon-x name="warning" /></view>
+          <view class="re-ctl">
+            <view wx:if="{{e.showLink}}" class="iconbtn re-link {{e.linked ? 'on-ss' : ''}}" hover-class="hv" data-i="{{e.i}}" catchtap="onLink"><icon-x name="link" /></view>
+            <view class="re-moves">
+              <view class="iconbtn re-mv {{e.upDis ? 'disabled' : ''}}" hover-class="hv" data-i="{{e.i}}" catchtap="onUp"><icon-x name="chevronUp" /></view>
+              <view class="iconbtn re-mv {{e.downDis ? 'disabled' : ''}}" hover-class="hv" data-i="{{e.i}}" catchtap="onDown"><icon-x name="chevronDown" /></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty">
+      <view class="ico"><icon-x name="dumbbell" /></view>
+      <text>还没有动作。添加第一个吧！</text>
+    </view>
+
+    <view wx:if="{{hasEx}}" class="card re-map">
+      <view class="h2">这次训练练到哪里</view>
+      <body-map load="{{load}}" body="{{body}}" />
+      <view class="mchips">
+        <view wx:for="{{mchips}}" wx:key="m" class="mchip">{{item.label}}</view>
+      </view>
+    </view>
+
+    <view class="small dim row re-hint"><icon-x name="link" size="13" /><text>点动作上的链接按钮，就能和上面的动作组成超级组。你会连着做完它们。</text></view>
+    <view class="btn" hover-class="hv" bindtap="onCopy"><text>复制训练日</text></view>
+    <view class="re-gap" />
+    <view class="btn {{hasEx ? '' : 'disabled'}}" hover-class="hv" bindtap="onPrint"><text>打印 / 保存为 PDF</text></view>
+    <view class="re-gap" />
+    <view class="btn danger" hover-class="hv" bindtap="onDelete"><text>删除训练日</text></view>
+  </block>
+  <toast-x />
+</view>

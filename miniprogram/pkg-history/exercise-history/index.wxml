@@ -1,0 +1,27 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="h3 eh-name">{{name}}</view>
+  <block wx:if="{{total}}">
+    <view class="muted small mb12">{{sub}}</view>
+    <seg wx:if="{{showToggle}}" cls="seg-range" options="{{curveOpts}}" value="{{curve}}" bind:change="onCurve" />
+    <view class="chart mt8">
+      <line-chart points="{{pts}}" h="{{140}}" unit="{{unit}}" color="blue" />
+    </view>
+    <view class="small row eh-best">
+      <icon-x name="trophy" cls="eh-trophy" />
+      <text>最佳：</text><text class="accent bold">{{bestText}}</text>
+    </view>
+    <view class="sec">{{secTitle}}</view>
+    <view class="list">
+      <view wx:for="{{sessions}}" wx:key="k" class="item eh-item">
+        <view class="grow">
+          <view class="tt">{{item.date}} <view wx:if="{{item.pr}}" class="pr"><icon-x name="trophy" /><text>PR</text></view></view>
+          <view class="ss">{{item.sets}}</view>
+          <view wx:if="{{item.tail}}" class="small dim mt4">{{item.tail}}</view>
+        </view>
+        <view wx:if="{{item.value}}" class="accent nocap bold nowrap">{{item.value}}</view>
+      </view>
+    </view>
+  </block>
+  <view wx:else class="empty"><view class="ico"><icon-x name="history" /></view>尚未记录任何训练</view>
+  <toast-x />
+</view>

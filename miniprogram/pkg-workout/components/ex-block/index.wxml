@@ -1,0 +1,159 @@
+<view wx:if="{{vm}}" class="exb" id="ex-{{vm.idx}}">
+  <view class="row between exhd">
+    <view class="exname {{vm.big ? 'big' : ''}} {{vm.cap ? 'capitalize' : ''}}">{{vm.name}}</view>
+    <view class="row exbtns">
+      <view wx:if="{{vm.note}}" class="iconbtn plain accent" hover-class="hv" bindtap="onNote"><icon-x name="note" /></view>
+      <view class="iconbtn plain" hover-class="hv" bindtap="onMore"><icon-x name="more" /></view>
+    </view>
+  </view>
+
+  <view wx:if="{{vm.noProg}}" class="noprog">
+    <icon-x name="chartLineSlash" /><text>未计入进阶</text>
+    <view wx:if="{{noProgUndo}}" class="chip" hover-class="hv" bindtap="onNoProgUndo">撤销</view>
+  </view>
+
+  <view wx:if="{{vm.dense && vm.planLine}}" class="small dim planline">{{vm.planLine}}</view>
+
+  <view wx:if="{{vm.pairBtns}}" class="row wrap pairbtns">
+    <view wx:if="{{vm.pairPrev}}" class="btn xs tinted" hover-class="hv" bindtap="onPairPrev"><icon-x name="link" /><text>与上一个组成超级组</text></view>
+    <view wx:if="{{vm.pairNext}}" class="btn xs tinted" hover-class="hv" bindtap="onPairNext"><icon-x name="link" /><text>与下一个组成超级组</text></view>
+  </view>
+
+  <block wx:if="{{!vm.dense}}">
+    <view wx:if="{{vm.tags.length}}" class="row wrap extags">
+      <view wx:for="{{vm.tags}}" wx:for-item="tg" wx:key="k" class="tag {{tg.acc ? 'acc' : ''}} {{tg.nocap ? 'nocap' : ''}}">
+        <icon-x wx:if="{{tg.icon}}" name="{{tg.icon}}" /><text>{{tg.text}}</text>
+      </view>
+    </view>
+    <view wx:if="{{vm.cfgNote}}" class="exnote">{{vm.cfgNote}}</view>
+    <view wx:if="{{vm.standingNote}}" class="exnote"><icon-x name="info" cls="exnote-i" />{{vm.standingNote}}</view>
+    <view wx:if="{{vm.pinnedNote}}" class="exnote pinned"><icon-x name="pin" cls="exnote-i" />{{vm.pinnedNote}}</view>
+    <view wx:if="{{vm.note}}" class="exnote">{{vm.note}}</view>
+    <view wx:if="{{vm.planLine}}" class="small dim planline">{{vm.planLine}}</view>
+    <view wx:if="{{vm.refText}}" class="refline small dim" hover-class="hv" bindtap="onRef">
+      <text class="grow">{{vm.refText}}</text><icon-x name="history" />
+    </view>
+    <view wx:if="{{vm.prog}}" class="progline {{vm.prog.warn ? 'warn' : ''}}" hover-class="hv" bindtap="onProg">
+      <icon-x name="{{vm.prog.icon}}" />
+      <view><text class="bold">{{vm.prog.label}}</text><text> · {{vm.prog.why}}</text></view>
+    </view>
+  </block>
+
+  <view class="card setcard">
+    <view class="sethead {{vm.head.eff3 ? 'eff3' : ''}} {{vm.head.timed ? 'timed' : ''}} {{vm.head.perSide ? 'per-side' : ''}} {{vm.head.plain ? 'plain' : ''}}">
+      <view class="n-sp"></view>
+      <view class="w-sp">{{vm.head.h1}}</view>
+      <view wx:if="{{vm.hasC2}}" class="r-sp">{{vm.head.h2}}</view>
+      <view wx:if="{{vm.hasC3}}" class="{{vm.head.h3eff ? 'eff-sp' : 'r-sp'}}">{{vm.head.h3}}</view>
+      <view wx:if="{{vm.head.timed}}" class="ck-sp"></view>
+      <view class="ck-sp"></view>
+    </view>
+
+    <view wx:for="{{vm.groups}}" wx:for-item="g" wx:key="i" mark:i="{{g.i}}">
+      <view wx:if="{{g.warmHdr}}" class="setph">热身</view>
+      <view wx:if="{{g.sep}}" class="setsep"></view>
+      <view wx:if="{{g.maxLine}}" class="setph">{{g.maxLine}}</view>
+
+      <view wx:if="{{!g.tail}}" class="swrow {{g.flash ? 'swflash' : ''}}" bindtouchstart="onSwStart" bindtouchend="onSwEnd" bindtouchcancel="onSwCancel">
+        <!-- a unilateral set: the number beside an L/R stack -->
+        <view wx:if="{{g.kind === 'side'}}" class="setrow-side {{g.side.done ? 'done' : ''}}">
+          <view class="n" hover-class="hv" bindtap="onSetMenu">{{g.side.num}}<text wx:if="{{g.side.fail}}" class="failmark">F</text></view>
+          <view class="side-rows">
+            <block wx:for="{{[g.side.L, g.side.R]}}" wx:for-item="sd" wx:key="side">
+              <view class="setrow side {{sd.done ? 'done' : ''}} {{vm.eff3 ? 'eff3' : ''}}" mark:side="{{sd.side}}">
+                <text class="sidetag">{{sd.tag}}</text>
+                <stepper value="{{sd.c1.v}}" decimal="{{sd.c1.dec}}" nullable="{{sd.c1.opt}}" plain="{{!vm.steppers}}" cls="w" custom-step bind:change="onC1" bind:step="onS1" />
+                <stepper wx:if="{{sd.c2}}" value="{{sd.c2.v}}" decimal="{{sd.c2.dec}}" nullable="{{sd.c2.opt}}" plain="{{!vm.steppers}}" cls="r" custom-step bind:change="onC2" bind:step="onS2" />
+                <block wx:if="{{sd.c3}}">
+                  <view wx:if="{{sd.c3.empty}}" class="effcell is-empty" hover-class="hv" bindtap="onEff">{{sd.c3.hd}}</view>
+                  <view wx:else class="effcell-stp {{vm.steppers ? '' : 'plain'}}" style="{{sd.c3.style}}">
+                    <view wx:if="{{vm.steppers}}" class="dec" mark:dir="{{-1}}" bindtap="onEffStep"><icon-x name="minus" /></view>
+                    <view class="val" hover-class="hv" bindtap="onEff">{{sd.c3.v}}</view>
+                    <view wx:if="{{vm.steppers}}" class="inc" mark:dir="{{1}}" bindtap="onEffStep"><icon-x name="plus" /></view>
+                  </view>
+                </block>
+                <view class="chk {{sd.done ? 'on' : ''}}" hover-class="hv" bindtap="onCheck"><icon-x name="check" stroke="2.6" /></view>
+              </view>
+              <view wx:for="{{sd.drops}}" wx:for-item="d" wx:key="di" class="subrow" mark:side="{{sd.side}}" mark:di="{{d.di}}">
+                <text class="subn">{{d.label}}</text>
+                <stepper value="{{d.w}}" cls="mini" custom-step bind:change="onDropW" bind:step="onDropWStep" />
+                <stepper value="{{d.r}}" decimal="{{false}}" cls="mini" bind:change="onDropR" />
+                <view class="iconbtn" hover-class="hv" bindtap="onRemoveDrop"><icon-x name="xmark" /></view>
+              </view>
+              <view wx:for="{{sd.bursts}}" wx:for-item="b" wx:key="ci" class="subrow" mark:side="{{sd.side}}" mark:ci="{{b.ci}}">
+                <text class="subn">{{b.label}}</text>
+                <stepper value="{{b.r}}" decimal="{{false}}" cls="mini" bind:change="onBurstR" />
+                <text class="dim small">{{b.rest}}</text>
+                <view class="iconbtn" hover-class="hv" bindtap="onRemoveBurst"><icon-x name="xmark" /></view>
+              </view>
+            </block>
+          </view>
+        </view>
+
+        <!-- plain rows (a timed per-side pair draws two) -->
+        <view wx:for="{{g.rows}}" wx:for-item="r" wx:key="i" mark:i="{{r.i}}" class="setrow {{r.done ? 'done' : ''}} {{vm.eff3 ? 'eff3' : ''}} {{vm.timed ? 'timed' : ''}}">
+          <view class="n" hover-class="hv" bindtap="onSetMenu">{{r.num}}<text wx:if="{{r.fail}}" class="failmark">F</text></view>
+          <view wx:if="{{r.sideTag}}" class="tag acc nocap sidepill">{{r.sideTag}}</view>
+          <stepper value="{{r.c1.v}}" decimal="{{r.c1.dec}}" nullable="{{r.c1.opt}}" plain="{{!vm.steppers}}" cls="w" custom-step bind:change="onC1" bind:step="onS1" />
+          <stepper wx:if="{{r.c2}}" value="{{r.c2.v}}" decimal="{{r.c2.dec}}" nullable="{{r.c2.opt}}" plain="{{!vm.steppers}}" cls="r" custom-step bind:change="onC2" bind:step="onS2" />
+          <block wx:if="{{r.c3}}">
+            <block wx:if="{{r.c3.eff}}">
+              <view wx:if="{{r.c3.empty}}" class="effcell is-empty" hover-class="hv" bindtap="onEff">{{r.c3.hd}}</view>
+              <view wx:else class="effcell-stp {{vm.steppers ? '' : 'plain'}}" style="{{r.c3.style}}">
+                <view wx:if="{{vm.steppers}}" class="dec" mark:dir="{{-1}}" bindtap="onEffStep"><icon-x name="minus" /></view>
+                <view class="val" hover-class="hv" bindtap="onEff">{{r.c3.v}}</view>
+                <view wx:if="{{vm.steppers}}" class="inc" mark:dir="{{1}}" bindtap="onEffStep"><icon-x name="plus" /></view>
+              </view>
+            </block>
+            <stepper wx:else value="{{r.c3.v}}" decimal="{{r.c3.dec}}" nullable="{{r.c3.opt}}" plain="{{!vm.steppers}}" cls="r inc" custom-step bind:change="onC3" bind:step="onS3" />
+          </block>
+          <view wx:if="{{r.go}}" class="setgo {{r.goDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onGo"><icon-x name="play" /></view>
+          <view class="chk {{r.done ? 'on' : ''}}" hover-class="hv" bindtap="onCheck"><icon-x name="check" stroke="2.6" /></view>
+        </view>
+      </view>
+
+      <view wx:if="{{g.hint}}" class="swhint">
+        <view class="swhint-b" hover-class="hv" bindtap="onHintClose"><icon-x name="swap" /><text>悄悄告诉你：滑动一组。左滑删除，右滑复制。</text><icon-x name="xmark" /></view>
+      </view>
+
+      <view wx:if="{{g.plate}}" class="plateline">
+        <icon-x name="plate" />
+        <view><text>{{g.plate.text}}</text><text wx:if="{{g.plate.short}}"> · </text><text wx:if="{{g.plate.short}}" class="short">{{g.plate.short}}</text></view>
+        <text wx:if="{{g.plate.moves}}" class="moves">{{g.plate.moves}}</text>
+      </view>
+
+      <block wx:for="{{g.drops}}" wx:for-item="d" wx:key="di">
+        <view class="subrow" mark:di="{{d.di}}">
+          <text class="subn">{{d.label}}</text>
+          <stepper value="{{d.w}}" cls="mini" custom-step bind:change="onDropW" bind:step="onDropWStep" />
+          <stepper value="{{d.r}}" decimal="{{false}}" cls="mini" bind:change="onDropR" />
+          <view class="iconbtn" hover-class="hv" bindtap="onRemoveDrop"><icon-x name="xmark" /></view>
+        </view>
+        <view wx:if="{{d.plate}}" class="plateline">
+          <icon-x name="plate" />
+          <view><text>{{d.plate.text}}</text><text wx:if="{{d.plate.short}}"> · </text><text wx:if="{{d.plate.short}}" class="short">{{d.plate.short}}</text></view>
+          <text wx:if="{{d.plate.moves}}" class="moves">{{d.plate.moves}}</text>
+        </view>
+      </block>
+      <view wx:for="{{g.bursts}}" wx:for-item="b" wx:key="ci" class="subrow" mark:ci="{{b.ci}}">
+        <text class="subn">{{b.label}}</text>
+        <stepper value="{{b.r}}" decimal="{{false}}" cls="mini" bind:change="onBurstR" />
+        <text class="dim small">{{b.rest}}</text>
+        <view class="iconbtn" hover-class="hv" bindtap="onRemoveBurst"><icon-x name="xmark" /></view>
+      </view>
+      <view wx:if="{{g.shortcuts}}" class="setextra">
+        <view wx:if="{{g.shortcuts.drop}}" class="chip add" hover-class="hv" bindtap="onAddDrop"><icon-x name="arrowDown" /><text>+ 递减组</text></view>
+        <view wx:if="{{g.shortcuts.burst}}" class="chip add" hover-class="hv" bindtap="onAddBurst"><icon-x name="bolt" /><text>+ 爆发组</text></view>
+      </view>
+    </view>
+
+    <view class="setfoot">
+      <view wx:if="{{vm.shortcuts}}" class="row wrap gap8">
+        <view class="btn sm" hover-class="hv" bindtap="onAddWarmup"><icon-x name="sunrise" /><text>添加热身组</text></view>
+        <view class="btn sm {{vm.removeSetDis ? 'disabled' : ''}}" hover-class="hv" bindtap="onRemoveSet"><icon-x name="minus" /><text>减一组</text></view>
+        <view class="btn sm" hover-class="hv" bindtap="onAddSet"><icon-x name="plus" /><text>加一组</text></view>
+      </view>
+      <view wx:else class="btn sm" hover-class="hv" bindtap="onAddSet"><icon-x name="plus" /><text>加一组</text></view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,18 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view wx:if="{{subtitle}}" class="muted small mb12">{{subtitle}}</view>
+  <view wx:for="{{groups}}" wx:for-item="g" wx:key="gi" class="menu-group {{grouped ? 'grouped' : ''}}">
+    <view wx:if="{{g.title}}" class="menu-sec">{{g.title}}</view>
+    <view class="menu-list">
+      <view wx:for="{{g.items}}" wx:for-item="it" wx:key="ii" class="menu-item {{it.danger ? 'danger' : ''}} {{it.disabled ? 'disabled' : ''}} {{it.accent ? 'accent' : ''}}" hover-class="hv" data-gi="{{g.gi}}" data-ii="{{it.ii}}" bindtap="onItem">
+        <view wx:if="{{it.icon}}" class="lrow-i"><icon-x name="{{it.icon}}" /></view>
+        <view class="grow">
+          <view class="tt">{{it.label}}</view>
+          <view wx:if="{{it.sub}}" class="ss">{{it.sub}}</view>
+        </view>
+        <view wx:if="{{it.hasOn}}" class="menu-on {{it.on ? 'is-on' : ''}}"><icon-x name="check" stroke="2.4" /></view>
+        <icon-x wx:if="{{it.chevron}}" name="chevronRight" stroke="2.4" cls="menu-chev" />
+      </view>
+    </view>
+  </view>
+  <toast-x />
+</view>

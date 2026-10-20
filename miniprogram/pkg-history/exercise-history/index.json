@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "动作历史",
+  "usingComponents": {
+    "line-chart": "/components/line-chart/index"
+  }
+}

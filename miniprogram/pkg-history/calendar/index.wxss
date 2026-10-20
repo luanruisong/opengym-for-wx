@@ -1,0 +1,8 @@
+.cal-top{margin-bottom:2px}
+.cal-title{margin:0}
+.cal-hint{margin-top:10px}
+.cal-legend>view{display:flex;align-items:center}
+.cal-l-done{background:var(--acc)}
+.cal-l-plan{background:var(--label-3)}
+.cal-l-ovr{background:var(--orange)}
+.cal-l-note{background:var(--indigo)}

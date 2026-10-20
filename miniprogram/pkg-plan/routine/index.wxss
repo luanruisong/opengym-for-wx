@@ -1,0 +1,20 @@
+.re-hdr{display:flex;align-items:center;margin:8px 0 18px}
+.re-name{flex:1;min-width:0;margin-right:12px;font-weight:600;font-size:20px;letter-spacing:-.021em}
+.re-hdr>.iconbtn{flex:none}
+.re-sect{margin-bottom:16px}
+.re-prognote{margin:-10px 2px 16px}
+.re-miss{margin-bottom:16px;border:1px solid var(--orange)}
+.re-ss-btn.hv{opacity:.6}
+.re-ss-name{font-weight:600}
+.re-ss-btn>text+.icx,.re-ss-btn>text+text{margin-left:5px}
+.re-note{margin-top:2px}
+.re-noeq{color:var(--orange);border-color:var(--orange);flex:none}
+.re-ctl{display:flex;flex-direction:column;align-items:center;flex:none}
+.re-link{width:32px;height:28px;border-radius:8px;font-size:15px;margin-bottom:2px}
+.re-moves{display:flex}
+.re-mv{width:28px;height:24px;border-radius:7px;font-size:12px}
+.re-mv+.re-mv{margin-left:2px}
+.re-map{margin-top:12px}
+.re-hint{margin:10px 2px;align-items:center}
+.re-hint>text{margin-left:5px}
+.re-gap{height:10px}

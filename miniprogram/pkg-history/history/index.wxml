@@ -1,0 +1,20 @@
+<view class="page" style="{{theme}}">
+  <view class="hdr">
+    <view class="hdr-m">
+      <view class="h1">历史</view>
+      <view class="sub">{{sub}}</view>
+    </view>
+    <view class="iconbtn" hover-class="hv" bindtap="onCalendar" aria-label="日历"><icon-x name="calendar" /></view>
+  </view>
+  <view class="btn mb12" hover-class="hv" bindtap="onLogPast"><icon-x name="plus" /><text>补记过去的训练</text></view>
+  <view wx:if="{{!empty}}" class="list">
+    <block wx:for="{{pages}}" wx:for-item="pg" wx:key="k">
+      <block wx:for="{{pg.rows}}" wx:for-item="r" wx:key="key">
+        <workout-row wx:if="{{r.kind === 'w'}}" row="{{r}}" bind:open="onOpen" />
+        <day-note-row wx:else row="{{r}}" />
+      </block>
+    </block>
+  </view>
+  <empty wx:else icon="history" text="还没有训练。你的第一次训练会出现在这里。" />
+  <toast-x />
+</view>

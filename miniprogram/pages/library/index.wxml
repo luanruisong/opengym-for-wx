@@ -1,0 +1,76 @@
+<view class="page has-tabbar {{resting ? 'resting' : ''}}" style="{{theme}}">
+  <view class="hdr lib-hdr">
+    <view class="h1">动作库</view>
+    <view class="btn sm tinted" hover-class="hv" bindtap="onByMuscle"><icon-x name="figureStrength" /><text>按肌肉</text></view>
+    <view class="sub lib-count">{{countLine}}</view>
+  </view>
+
+  <view class="search-row lib-search">
+    <view class="searchf {{narrowed ? 'has-count' : ''}}">
+      <icon-x name="magnifier" cls="lead" />
+      <input class="field" value="{{q}}" placeholder="搜索…" placeholder-class="ph" confirm-type="search" bindinput="onInput" />
+      <view wx:if="{{narrowed}}" class="search-count">{{countStr}}</view>
+      <view wx:if="{{qOn}}" class="clear" hover-class="hv" bindtap="onClear"><icon-x name="xmark" stroke="2.6" /></view>
+    </view>
+    <view class="iconbtn ex-view-btn {{cards ? 'on' : ''}}" hover-class="hv" bindtap="onToggleView"><icon-x name="grid" /></view>
+  </view>
+
+  <view wx:if="{{hasProfile}}" class="small dim row lib-prof">
+    <icon-x name="kettlebell" />
+    <text class="grow lib-prof-t">{{profileLine}}</text>
+    <view class="chip nocap lib-prof-b" hover-class="hv" bindtap="onShowAll">{{profileBtn}}</view>
+  </view>
+
+  <scroll-view scroll-x class="chips lib-chips" enhanced show-scrollbar="{{false}}">
+    <view class="chips-in">
+      <view class="chip nocap {{!bp ? 'on' : ''}}" hover-class="hv" data-v="" bindtap="onBp">全部</view>
+      <view wx:for="{{bpChips}}" wx:key="v" class="chip {{bp === item.v ? 'on' : ''}}" hover-class="hv" data-v="{{item.v}}" bindtap="onBp">{{item.label}}</view>
+    </view>
+  </scroll-view>
+  <scroll-view wx:if="{{catChips.length}}" scroll-x class="chips lib-chips" enhanced show-scrollbar="{{false}}">
+    <view class="chips-in">
+      <view class="chip nocap {{!catOn ? 'on' : ''}}" hover-class="hv" data-v="" bindtap="onCat">所有类型</view>
+      <view wx:for="{{catChips}}" wx:key="v" class="chip {{catOn === item.v ? 'on' : ''}}" hover-class="hv" data-v="{{item.v}}" bindtap="onCat">{{item.label}}</view>
+    </view>
+  </scroll-view>
+  <scroll-view wx:if="{{eqChips.length}}" scroll-x class="chips lib-chips" enhanced show-scrollbar="{{false}}">
+    <view class="chips-in">
+      <view class="chip nocap {{!eqOn ? 'on' : ''}}" hover-class="hv" data-v="" bindtap="onEq">所有器械</view>
+      <view wx:for="{{eqChips}}" wx:key="v" class="chip {{eqOn === item.v ? 'on' : ''}}" hover-class="hv" data-v="{{item.v}}" bindtap="onEq">{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <view class="list lib-list {{cards ? 'ex-grid' : ''}}">
+    <view class="item ex-new" hover-class="hv" bindtap="onNew">
+      <view class="thumb thumb-x"><icon-x name="plusCircle" /></view>
+      <view class="grow"><view class="tt">创建自己的动作</view><view class="ss">名称 + 身体部位，可附照片或视频</view></view>
+      <icon-x name="plus" cls="chev" />
+    </view>
+    <view wx:for="{{rows}}" wx:key="id" class="item" hover-class="hv" data-id="{{item.id}}" bindtap="onRow">
+      <image wx:if="{{item.img}}" class="thumb" src="{{item.img}}" mode="aspectFill" lazy-load />
+      <view wx:else class="thumb thumb-t">{{item.ch}}</view>
+      <view class="grow">
+        <view class="tt {{item.cap ? 'capitalize' : ''}}"><icon-x wx:if="{{item.fav}}" name="starFill" cls="fav-star" />{{item.name}}</view>
+        <view class="ss capitalize">{{item.sub}}</view>
+      </view>
+      <view wx:if="{{item.best}}" class="tag acc">{{item.best}}</view>
+      <view class="btn sm tinted lib-plan" hover-class="hv" data-id="{{item.id}}" catchtap="onPlan"><icon-x name="plus" /><text>计划</text></view>
+    </view>
+    <view wx:if="{{empty}}" class="empty lib-wide"><view class="ico"><icon-x name="magnifier" /></view>没有匹配</view>
+    <view wx:if="{{similarLabel}}" class="sec similar-label lib-wide">{{similarLabel}}</view>
+    <view wx:for="{{similar}}" wx:key="id" class="item" hover-class="hv" data-id="{{item.id}}" bindtap="onRow">
+      <image wx:if="{{item.img}}" class="thumb" src="{{item.img}}" mode="aspectFill" lazy-load />
+      <view wx:else class="thumb thumb-t">{{item.ch}}</view>
+      <view class="grow">
+        <view class="tt {{item.cap ? 'capitalize' : ''}}"><icon-x wx:if="{{item.fav}}" name="starFill" cls="fav-star" />{{item.name}}</view>
+        <view class="ss capitalize">{{item.sub}}</view>
+      </view>
+      <view wx:if="{{item.best}}" class="tag acc">{{item.best}}</view>
+      <view class="btn sm tinted lib-plan" hover-class="hv" data-id="{{item.id}}" catchtap="onPlan"><icon-x name="plus" /><text>计划</text></view>
+    </view>
+  </view>
+  <view wx:if="{{hasMore}}" class="btn mt12" hover-class="hv" bindtap="onMore"><text>显示更多</text></view>
+
+  <rest-timer place="tabbar" />
+  <toast-x tabbar />
+</view>

@@ -1,0 +1,131 @@
+<view class="page has-tabbar {{resting ? 'resting' : ''}}" style="{{theme}}">
+  <view class="hdr">
+    <view class="hdr-m">
+      <view class="h1">openGym</view>
+      <view class="sub">{{dateSub}}</view>
+    </view>
+    <view class="iconbtn" hover-class="hv" bindtap="onSettings"><icon-x name="gear" /></view>
+  </view>
+
+  <view class="card">
+    <block wx:if="{{rotating}}">
+      <view wx:if="{{queue}}" class="queue">
+        <view class="row between mb8">
+          <text class="small muted fw5">{{queue.label}}</text>
+          <text class="small muted">{{queue.count}}</text>
+        </view>
+        <view class="chips-wrap">
+          <view wx:for="{{queue.chips}}" wx:key="k" class="chip q-chip {{item.on ? 'on' : ''}} {{item.done ? 'q-done' : ''}}" hover-class="hv" data-id="{{item.id}}" data-done="{{item.done ? 1 : ''}}" bindtap="onQueueStart">
+            <icon-x wx:if="{{item.done}}" name="check" />
+            <text>{{item.name}}</text>
+            <text class="dim">{{item.word}}</text>
+          </view>
+        </view>
+        <view class="small muted mt8">{{queue.status}}</view>
+      </view>
+      <view wx:else class="empty">
+        <view>还没有轮换。在计划中添加训练日。</view>
+        <view class="mt8"><view class="btn sm tinted" hover-class="hv" bindtap="onPlan"><text>在计划中设置</text></view></view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="row between mb8">
+        <view class="iconbtn wk-btn" hover-class="hv" bindtap="onPrevWeek"><icon-x name="chevronLeft" /></view>
+        <text class="small muted fw5">{{weekLabel}}</text>
+        <view class="iconbtn wk-btn" hover-class="hv" bindtap="onNextWeek"><icon-x name="chevronRight" /></view>
+      </view>
+      <view class="week">
+        <view wx:for="{{days}}" wx:key="k" class="wday {{item.today ? 'today' : ''}}" hover-class="hv" data-iso="{{item.iso}}" bindtap="onDay">
+          <view class="lbl">{{item.lbl}}</view>
+          <view class="num">{{item.num}}</view>
+          <view class="dot {{item.dot}}"></view>
+        </view>
+      </view>
+    </block>
+
+    <view class="today-row" hover-class="hv" bindtap="onToday">
+      <view class="row grow">
+        <view class="lrow-i" style="background:{{tBg}}"><icon-x name="{{tIcon}}" color="{{tIconColor}}" /></view>
+        <view class="grow t-txt">
+          <view class="lbl2">今天</view>
+          <view class="ttl">{{tTitle}}</view>
+          <view wx:if="{{tNext}}" class="ss small muted">{{tNext}}</view>
+        </view>
+      </view>
+      <text wx:if="{{tTag}}" class="tag {{tTagCls}}">{{tTag}}</text>
+      <icon-x wx:else name="plus" cls="chev" />
+    </view>
+    <view wx:if="{{!active}}" class="row center-row mt4">
+      <view class="btn sm ghost dim" hover-class="hv" bindtap="onWorkout"><icon-x name="swap" /><text>选择其他训练</text></view>
+    </view>
+  </view>
+
+  <view wx:if="{{checkIn}}" class="card tap" hover-class="hv" bindtap="onCheckIn">
+    <view class="row between">
+      <view class="row">
+        <view class="lrow-i" style="background:var(--blue)"><icon-x name="qr" /></view>
+        <view class="ml9">
+          <view class="lbl2">在健身房</view>
+          <view class="ttl">签到</view>
+        </view>
+      </view>
+      <icon-x name="chevronRight" cls="chev" />
+    </view>
+  </view>
+
+  <view wx:if="{{welcome}}" class="card">
+    <view class="row mb4">
+      <view class="lrow-i"><icon-x name="calendar" /></view>
+      <view class="big welcome-t">欢迎！</view>
+    </view>
+    <view class="muted small mb12">设置每周计划就能开始，或者直接拿一份现成的入门计划。</view>
+    <view class="btn primary" hover-class="hv" bindtap="onStarter"><icon-x name="clipboard" /><text>加载入门计划</text></view>
+    <view class="gap8"></view>
+    <view class="btn" hover-class="hv" bindtap="onPlan"><text>创建自己的计划</text></view>
+  </view>
+
+  <view wx:if="{{showWeight}}" class="card">
+    <view class="row between bw-head mb4">
+      <view class="h2 m0">体重</view>
+      <view class="row">
+        <view class="btn sm {{targetW ? 'yellow' : ''}}" hover-class="hv" bindtap="onGoal"><icon-x name="target" /><text>{{goalBtn}}</text></view>
+        <view class="btn sm ml8" hover-class="hv" bindtap="onLogBw"><icon-x name="plus" /><text>记录</text></view>
+      </view>
+    </view>
+    <block wx:if="{{bw}}">
+      <view class="row bw-line">
+        <view class="big">{{bw.num}} <text class="muted bw-u">{{unit}}</text></view>
+        <view wx:if="{{bw.delta}}" class="small row bw-delta" style="color:{{bw.deltaColor}}">
+          <icon-x name="{{bw.up ? 'arrowUp' : 'arrowDown'}}" size="12" />
+          <text>{{bw.delta}}</text>
+        </view>
+        <text class="dim small ml-auto">{{bw.date}}</text>
+      </view>
+      <view wx:if="{{goalLine}}" class="small row yellow mt4">
+        <icon-x name="target" size="13" />
+        <text class="ml5">{{goalLine}}</text>
+      </view>
+      <view class="chart mt8"><line-chart points="{{bwPoints}}" h="{{130}}" unit="{{unit}}" goal="{{targetW}}" /></view>
+      <view class="row end mt4">
+        <view class="btn sm ghost" hover-class="hv" bindtap="onWeighIns"><text>全部称重记录</text><icon-x name="chevronRight" /></view>
+      </view>
+    </block>
+    <view wx:else class="muted small">{{noBw}}</view>
+  </view>
+
+  <view class="card tap" hover-class="hv" bindtap="onCalendar">
+    <view class="row between">
+      <view>
+        <view class="row streak-t">
+          <icon-x name="flame" color="var(--orange)" />
+          <text class="ml7">{{streak}}</text>
+        </view>
+        <view class="muted small mt2">{{streakSub}}</view>
+      </view>
+      <icon-x name="calendar" size="20" cls="chev" />
+    </view>
+  </view>
+
+  <rest-timer place="tabbar" />
+  <toast-x tabbar />
+</view>

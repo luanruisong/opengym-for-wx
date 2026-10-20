@@ -1,0 +1,4 @@
+.cpl{text-align:center;padding:24px 0 8px}
+.cpl-ico{font-size:44px;display:flex;justify-content:center;color:var(--acc)}
+.cpl-t{margin:8px 0}
+.cpl-s{margin-bottom:16px}

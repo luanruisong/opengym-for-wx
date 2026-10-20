@@ -1,0 +1,14 @@
+/* Library tab: only what app.wxss does not have. */
+.lib-search{margin-bottom:10px}
+.lib-prof{margin:-4px 2px 10px}
+.lib-prof>.icx{font-size:13px}
+.lib-prof-t{margin-left:6px;min-width:0}
+.lib-prof-b{margin-left:8px;padding:3px 10px;font-size:12px}
+.lib-chips{margin-bottom:6px}
+.lib-list{margin-top:6px}
+.lib-plan{flex:none}
+/* an <image> thumb next to the text, like the view thumb (.item>view+view) */
+.item>image+view{margin-left:12px}
+.ex-grid>.item>image+view{margin-left:0;margin-top:8px}
+.ex-grid>.lib-wide{width:100%}
+.ex-grid>.item>.tag{align-self:flex-start}

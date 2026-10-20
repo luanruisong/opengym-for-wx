@@ -1,0 +1,4 @@
+<view class="toast {{show ? 'show' : ''}} {{act ? 'has-action' : ''}} {{tabbar ? 'over-tabbar' : ''}} {{resting ? 'over-timer' : ''}}" bindtouchstart="onHold" bindtouchend="onRelease" bindtouchcancel="onRelease">
+  <text class="toast-msg">{{text}}</text>
+  <view wx:if="{{act}}" class="toast-act" hover-class="hv" catchtap="onAct"><icon-x name="undo" size="16" /><text class="toast-act-t">{{act}}</text></view>
+</view>

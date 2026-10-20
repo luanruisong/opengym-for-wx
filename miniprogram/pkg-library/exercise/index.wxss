@@ -1,0 +1,22 @@
+/* Exercise detail: only what app.wxss does not have. */
+.exd-head>.exd-name{margin-bottom:6px;min-width:0;flex:1}
+.exd-head>.fav-btn{margin-left:8px}
+.exd-media{margin:4px 0 6px;border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.exd-img{width:100%;height:240px;display:block}
+.exd-link{margin:6px 2px}
+.exd-link-t{margin:0 6px;min-width:0}
+.exd-tags{margin:10px 0;gap:6px}
+.exd-tags>.tag+.tag{margin-left:0}
+.exd-ti{margin-right:4px}
+.exd-best{margin-bottom:6px;line-height:1.5}
+.exd-trophy{font-size:14px;margin-right:5px;vertical-align:-2px}
+.exd-add{margin:10px 0 4px}
+.exd-note{margin:8px 0 12px}
+.exd-note2{margin:8px 0 18px}
+.exd-nobar{margin-bottom:6px}
+.exd-base{margin-bottom:6px}
+.exd-from{margin-bottom:8px}
+.exd-orm{margin-bottom:10px}
+.exd-est{margin-bottom:4px}
+.exd-estv{font-size:20px}
+.btns>.btn.grow{flex:1}

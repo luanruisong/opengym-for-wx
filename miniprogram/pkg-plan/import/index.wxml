@@ -1,0 +1,16 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small imp-line">{{summary}}</view>
+  <view class="dim small imp-line imp-lh">它们会作为新的训练日添加。你已有的内容一点都不会动。</view>
+  <view wx:if="{{dropped}}" class="small yellow imp-line imp-lh">{{dropped}}</view>
+  <view wx:if="{{scheduled}}" class="row between imp-sched">
+    <view class="grow">
+      <view class="tt imp-sched-t">使用此每周日程</view>
+      <view class="small dim">替换你当前的周一至周日安排。</view>
+    </view>
+    <switch-x checked="{{schedule}}" bind:change="onSchedule" />
+  </view>
+  <view class="btn primary" hover-class="hv" bindtap="onApply"><text>加入我的计划</text></view>
+  <view style="height:8px"></view>
+  <view class="btn ghost dim" hover-class="hv" bindtap="onCancel"><text>取消</text></view>
+  <toast-x />
+</view>

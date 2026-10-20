@@ -1,0 +1,24 @@
+<view class="page sheet-page" style="{{theme}}">
+  <block wx:if="{{ok}}">
+    <view class="muted small mb12">{{range}}</view>
+    <view class="tiles">
+      <view wx:for="{{tiles}}" wx:key="k" class="tile">
+        <view class="l">{{item.l}}</view>
+        <view class="v is-v">{{item.v}}</view>
+      </view>
+    </view>
+    <view wx:if="{{warn}}" class="small yellow is-note">{{warn}}</view>
+    <view wx:for="{{notes}}" wx:key="k" class="small dim is-note">{{item.text}}</view>
+    <block wx:if="{{unmatchedTitle}}">
+      <view class="sec">{{unmatchedTitle}}</view>
+      <view class="mchips mb12">
+        <text wx:for="{{unmatched}}" wx:key="k" class="mchip capitalize">{{item.n}}</text>
+        <text wx:if="{{more}}" class="mchip">{{more}}</text>
+      </view>
+    </block>
+    <view class="btn primary {{fresh ? '' : 'disabled'}}" hover-class="hv" bindtap="onImport">{{importLabel}}</view>
+    <view class="is-gap"></view>
+    <view class="btn ghost dim" hover-class="hv" bindtap="onCancel">{{cancelLabel}}</view>
+  </block>
+  <toast-x />
+</view>

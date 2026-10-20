@@ -1,0 +1,8 @@
+<view class="page sheet-page" style="{{theme}}">
+  <input class="field" type="text" maxlength="{{max}}" value="{{name}}" placeholder="名称，例如手臂收尾" placeholder-class="ph" confirm-type="done" bindinput="onInput" bindconfirm="onSave" />
+  <view class="sect-b mt12">
+    <row icon="timer" icon-tint="var(--orange)" title="每轮后的休息" value="{{restText}}" accessory="chevron" tap bind:tap="onRest" />
+  </view>
+  <view class="btn primary mt24" hover-class="hv" bindtap="onSave"><text>保存</text></view>
+  <toast-x />
+</view>

@@ -1,0 +1,11 @@
+.hv-intro{margin-bottom:14px;line-height:1.5}
+.hv-label{display:block;margin-bottom:6px}
+.hv-link{margin:10px 0 8px;line-height:1.45}
+.hv-note{margin-bottom:16px;line-height:1.45}
+.hv-gap{height:8px}
+.hv-v{font-size:18px;font-weight:600;margin-top:2px}
+.hv-opts{border-bottom:var(--hair) solid var(--sep);margin-bottom:8px}
+.hv-opt{display:flex;align-items:center;padding:10px 2px;border-top:var(--hair) solid var(--sep)}
+.hv-opt>.grow{flex:1;min-width:0;margin-right:12px}
+.hv-tt{font-size:15px}
+.hv-n{margin-bottom:10px;line-height:1.4}

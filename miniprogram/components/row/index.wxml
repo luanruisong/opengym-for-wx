@@ -1,0 +1,11 @@
+<view class="lrow {{icon ? 'has-i' : ''}} {{tap ? 'tap' : ''}} {{danger ? 'danger' : ''}} {{dis ? 'dis' : ''}} {{cls}}" hover-class="{{tap ? 'hv' : 'none'}}" catchtap="onTap">
+  <view wx:if="{{icon}}" class="lrow-i" style="{{tintStyle}}"><icon-x name="{{icon}}" /></view>
+  <view class="lrow-m">
+    <text class="lrow-t">{{title}}</text>
+    <text wx:if="{{subtitle}}" class="lrow-s">{{subtitle}}</text>
+  </view>
+  <slot></slot>
+  <text wx:if="{{valueText}}" class="lrow-v">{{valueText}}</text>
+  <icon-x wx:if="{{accessory === 'chevron'}}" name="chevronRight" stroke="2.4" cls="lrow-c" />
+  <icon-x wx:if="{{accessory === 'check'}}" name="check" stroke="2.4" cls="lrow-k" />
+</view>

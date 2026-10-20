@@ -1,0 +1,6 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="dw-read">{{read}}</view>
+  <duration-wheel value="{{v}}" min="{{min}}" max="{{max}}" bind:change="onChange" bind:pickstart="onPickStart" bind:pickend="onPickEnd" />
+  <view wx:if="{{footer}}" class="dim small dw-foot">{{footer}}</view>
+  <view class="btn primary" hover-class="hv" bindtap="onDone"><text>完成</text></view>
+</view>

@@ -1,0 +1,12 @@
+<view class="dw">
+  <picker-view class="dw-pv" indicator-class="dw-band" mask-class="dw-mask" value="{{idx}}" immediate-change bindchange="onChange" bindpickstart="onStart" bindpickend="onEnd">
+    <picker-view-column>
+      <view wx:for="{{mins}}" wx:key="k" class="dw-it {{item.out ? 'out' : ''}}">{{item.t}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{secs}}" wx:key="k" class="dw-it {{item.out ? 'out' : ''}}">{{item.t}}</view>
+    </picker-view-column>
+  </picker-view>
+  <view class="dw-unit dw-unit-m">分钟</view>
+  <view class="dw-unit dw-unit-s">秒</view>
+</view>

@@ -1,0 +1,11 @@
+/* LineChart: the canvas fills the width; the tooltip is a view laid over it (index.css .ctip). */
+:host{display:block;width:100%}
+.lc{position:relative;width:100%;overflow:hidden}
+.lc-cv{display:block;width:100%}
+.lc-empty{padding:24px 12px}
+.ctip{
+  position:absolute;left:0;top:0;background:var(--surface-2);color:var(--label);
+  border-radius:8px;padding:4px 10px;font-size:12px;font-weight:500;white-space:nowrap;
+  max-width:calc(100% - 8px);overflow:hidden;text-overflow:ellipsis;
+  pointer-events:none;box-shadow:0 6px 18px -4px rgba(0,0,0,.4);
+}

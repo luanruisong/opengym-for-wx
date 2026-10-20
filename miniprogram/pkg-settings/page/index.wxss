@@ -1,0 +1,8 @@
+/* Settings pages: what app.wxss does not already have */
+.acc-row{padding-bottom:14px}
+.acc-swatches{flex:1 0 100%;padding-left:41px;margin-top:12px;margin-left:0 !important}
+.acc-note{flex:1 0 100%;padding-left:41px;margin-top:8px}
+.help-p{line-height:1.5}
+.color-preview{height:64px;border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;letter-spacing:.04em;margin-bottom:14px;text-transform:uppercase}
+.color-lbl{margin:6px 2px 0}
+.color-slider{margin:6px 8px 10px}

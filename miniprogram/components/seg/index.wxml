@@ -1,0 +1,7 @@
+<view class="seg {{inline ? 'seg-inline' : ''}} {{cls}}">
+  <view class="seg-sel" style="{{selStyle}}"></view>
+  <view wx:for="{{items}}" wx:key="k" class="seg-b {{item.on ? 'on' : 'off'}}" data-k="{{item.k}}" bindtap="onTap" hover-class="hv">
+    <icon-x wx:if="{{item.icon}}" name="{{item.icon}}" size="16" />
+    <text wx:if="{{item.label}}">{{item.label}}</text>
+  </view>
+</view>

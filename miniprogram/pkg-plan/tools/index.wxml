@@ -1,0 +1,12 @@
+<view class="page sheet-page" style="{{theme}}">
+  <view class="muted small mb16">把你的训练日发给朋友，或把这一周打印到纸上。</view>
+  <view class="btn primary {{hasRoutines ? '' : 'disabled'}}" hover-class="hv" bindtap="onExport"><icon-x name="share" /><text>导出计划文件</text></view>
+  <view class="dim small tools-note">一个小文件，朋友可以导入到自己的 openGym。只有训练日，不含你的训练记录和体重。</view>
+  <view style="height:12px"></view>
+  <view class="btn tinted {{hasRoutines ? '' : 'disabled'}}" hover-class="hv" bindtap="onPrint"><icon-x name="note" /><text>打印 / 保存为 PDF</text></view>
+  <view class="dim small tools-note">干净的打印版，每个计划一页。动作绝不会被拆到两页。</view>
+  <view wx:if="{{!hasRoutines}}" class="dim small tools-empty">请先给训练日添加动作。空计划没什么可分享的。</view>
+  <view class="sec">收到朋友的计划了吗？</view>
+  <view class="btn ghost" hover-class="hv" bindtap="onImport"><icon-x name="download" /><text>导入计划文件</text></view>
+  <toast-x />
+</view>

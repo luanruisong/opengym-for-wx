@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "设置",
+  "usingComponents": {
+    "icon-x": "/components/icon/index",
+    "toast-x": "/components/toast/index",
+    "row": "/components/row/index",
+    "seg": "/components/seg/index",
+    "switch-x": "/components/switch-x/index",
+    "sheet": "/components/sheet/index"
+  }
+}
