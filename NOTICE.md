@@ -1,3 +1,9 @@
+> **本仓库（openGym 微信小程序版）的说明**：以下是上游 [openGym](https://github.com/DuarteSantos8/openGym) 的第三方声明，原样保留。
+> 其中适用于本小程序实际发布内容的有：「Body diagram geometry」（`miniprogram/data-ex/body-paths.js`，MuscleMap，MIT）、
+> 「Exercise text」（`miniprogram/data-ex/`、`data-instr-*`、`data-desc-en` 中的动作名称与说明，MIT）、
+> 「lean-qr」（`miniprogram/pkg-body/checkin/lean-qr.js`，MIT）。
+> 「Exercise media」所述的动作图片与动画**不包含**在本小程序中。文中提到的 `frontend/`、`catalogue/` 等路径指上游仓库。
+
 # Third-party notices
 
 openGym — Copyright (C) 2026 Duarte Santos.
