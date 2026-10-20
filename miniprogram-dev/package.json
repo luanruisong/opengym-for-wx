@@ -1,19 +1,13 @@
 {
   "name": "opengym-miniprogram-dev",
   "private": true,
-  "description": "Tests and build scripts for the openGym WeChat mini program in ../miniprogram (not shipped)",
+  "description": "Maintenance scripts for the openGym WeChat mini program in ../miniprogram (not shipped). No dependencies: plain Node 22.",
   "type": "module",
   "license": "AGPL-3.0-or-later",
   "scripts": {
-    "test": "vitest run",
-    "test:smoke": "vitest run --config tools/vitest.smoke.config.mjs",
-    "check": "node tools/check-imports.mjs && node tools/check-wxml.mjs && node tools/sync-shared.mjs --check && node tools/pkg-deps.mjs",
     "app-json": "node tools/gen-app-json.mjs",
     "sync-shared": "node tools/sync-shared.mjs",
     "prune-locale": "node tools/prune-locale.mjs",
-    "verify": "npm run app-json && npm run check && npm test && npm run test:smoke"
-  },
-  "devDependencies": {
-    "vitest": "4.1.11"
+    "check": "node tools/check-imports.mjs && node tools/check-wxml.mjs && node tools/sync-shared.mjs --check && node tools/pkg-deps.mjs"
   }
 }

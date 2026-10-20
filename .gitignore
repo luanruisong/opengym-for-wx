@@ -1,4 +1,4 @@
-# Dependencies (miniprogram-dev/node_modules: vitest for the tests)
+# Dependencies
 node_modules/
 
 # WeChat DevTools: per-developer local settings

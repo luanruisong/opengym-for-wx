@@ -3,8 +3,8 @@
 > **现状（迁移完成后）**：本仓库只剩小程序。移植时参考的原 React 前端 `frontend/`、后端 `api/` 等已从仓库删除，
 > 文中所有 `frontend/src/...` 路径都指上游仓库 [DuarteSantos8/openGym](https://github.com/DuarteSantos8/openGym)
 > 的提交 `e348fc17`（也可以在本仓库 git 历史里 `git show e348fc17:frontend/src/...` 查看）。
-> 目录：`miniprogram/` 只放会发布的代码；测试、脚本、`lib-shared/` 源码和本文档在 `miniprogram-dev/`，
-> 结构与 `miniprogram/` 一一对应（`miniprogram-dev/lib/x.test.js` 测 `miniprogram/lib/x.js`）。
+> 目录：`miniprogram/` 只放会发布的代码；维护脚本、`lib-shared/` 源码和本文档在 `miniprogram-dev/`。
+> **自动化测试已全部删除，改为人工测试**；下文提到的 vitest、`*.test.js`、冒烟测试等只是迁移过程的记录。
 > 下文中写「miniprogram/tools/…」「store/vitest.config.mjs」等的地方是迁移过程中的旧位置，以文末「验证命令」为准。
 
 本目录是 `frontend/`（React 19 + Vite 的 PWA）移植成的**原生微信小程序**。原前端代码仍保留在
@@ -228,12 +228,9 @@ duration-wheel（时长滚轮，picker-view）、empty（空状态）、sheet（
 # 集成后的验证命令（全部在仓库根目录下执行）
 
 ```bash
-cd miniprogram-dev && npm install   # 只需一次（.npmrc 里设了 legacy-peer-deps，绕开 npm 10 的 peer 依赖 bug）
-npm run verify        # 以下全部
+cd miniprogram-dev    # 纯 Node 22 脚本，无需 npm install
 npm run app-json      # 新增/删除页面后重新生成 miniprogram/app.json（按目录扫描）
 npm run check         # import 能解析、无跨分包引用、组件路径存在；WXML 检查；lib-shared 副本最新；主包里主包不用的 JS（应为 0）
-npm test              # 单元测试：lib 训练逻辑、store、页面纯逻辑（vitest.config.mjs）
-npm run test:smoke    # 所有页面/组件在 3 种数据状态下走完生命周期（tools/vitest.smoke.config.mjs）
 npm run sync-shared   # 改了 lib-shared/ 之后重新生成各分包里的副本
 npm run prune-locale  # 新增界面文案后，从 source/zh.full.js 重新裁剪 miniprogram/locales/zh.js
 node tools/gen-sounds.mjs   # 重新生成 miniprogram/assets/sounds/*.wav
@@ -275,3 +272,7 @@ node tools/gen-sounds.mjs   # 重新生成 miniprogram/assets/sounds/*.wav
 tools/、lib-shared/ 都在 miniprogram/ 里。因此把所有不发布的内容移到 `miniprogram-dev/`，`miniprogram/` 里只剩发布代码。
 同时删除了上游的后端、网页前端、MCP、部署（helm/kubernetes/docker）、CI（GitHub/GitLab/Gitea）、文档与目录数据源；
 依赖它们的测试（多语言包校验、与服务器同步规则的对照、catalogue 校验、DOM 版 applyAccent）一并删除。
+
+## 第四轮：删除自动化测试
+
+按决定改为人工测试：删除全部单元测试、页面冒烟测试及其 vitest 配置、wx 模拟和依赖；CI 流水线此前已删除。保留无依赖的维护脚本。

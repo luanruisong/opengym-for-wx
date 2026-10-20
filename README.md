@@ -23,7 +23,7 @@
 
 ```
 miniprogram/        小程序本体（project.config.json 的 miniprogramRoot），只放会发布的代码
-miniprogram-dev/    不发布的部分：单元测试、页面冒烟测试、构建/检查脚本、lib-shared 源码、架构文档
+miniprogram-dev/    不发布的部分：维护脚本、lib-shared 源码、架构文档
 project.config.json 微信开发者工具项目配置
 ```
 
@@ -31,12 +31,14 @@ project.config.json 微信开发者工具项目配置
 
 用微信开发者工具打开仓库根目录即可。
 
-测试与检查（需要 Node 22）：
+功能靠人工测试，仓库里没有自动化测试和 CI。维护脚本（Node 22，无需安装依赖）：
 
 ```bash
 cd miniprogram-dev
-npm install
-npm run verify      # 生成 app.json → 静态检查 → 单元测试 → 页面冒烟测试
+npm run app-json      # 新增/删除页面后重新生成 miniprogram/app.json
+npm run sync-shared   # 改了 lib-shared/ 之后重新生成各分包里的副本
+npm run prune-locale  # 新增界面文案后重新裁剪中文语言包
+npm run check         # 静态检查：import、跨分包引用、WXML、主包未使用的 JS
 ```
 
 架构、约定和各脚本的用途见 [miniprogram-dev/ARCHITECTURE.md](miniprogram-dev/ARCHITECTURE.md)。
