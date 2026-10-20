@@ -18,7 +18,7 @@
 import { exOr } from '../../lib/exercises.js'
 import { modeOf, workoutAt } from '../../lib/history.js'
 import { isSideSet, dropsOf } from '../../lib/workout-model.js'
-import { utf8Encode } from './zip.js'
+import { utf8Encode } from '../../lib/zip.js'
 
 /* ------------------------------------------------------------- the container -- */
 

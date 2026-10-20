@@ -5,7 +5,7 @@
 import { connectPage } from '../../utils/page.js'
 import { pageParams, releasePage } from '../../utils/nav.js'
 import { exOr } from '../../lib/exercises.js'
-import { exerciseHistory } from '../lib/exercise-history.js'
+import { exerciseHistory } from '../../lib/exercise-history.js'
 import { setLabel } from '../../lib/history.js'
 import { fmtDate, fmtNum, fmtVol } from '../../lib/format.js'
 import { speedUnitOf } from '../../lib/speed.js'

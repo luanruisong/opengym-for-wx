@@ -17,9 +17,9 @@
 // version cannot show (a kind or a field from a newer one) or one past the cap (a list merged
 // from two devices, an imported backup) stays on the record for the version or the removal that
 // can. The cap only decides what shows and whether Add still has room.
-import { normalizeMediaRef, workoutMediaOf, WORKOUT_MEDIA_MAX } from '../../miniprogram/lib/media-refs.js'
-import { sameWorkout } from '../../miniprogram/lib/workout-date.js'
-import { stampWorkout } from '../../miniprogram/lib/sync-merge.js'
+import { normalizeMediaRef, workoutMediaOf, WORKOUT_MEDIA_MAX } from './media-refs.js'
+import { sameWorkout } from './workout-date.js'
+import { stampWorkout } from './sync-merge.js'
 
 const recordOf = (state, w) => (Array.isArray(state?.workouts) ? state.workouts.find(x => x && sameWorkout(x, w)) : null) || null
 

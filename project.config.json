@@ -23,32 +23,8 @@
   "packOptions": {
     "ignore": [
       {
-        "type": "suffix",
-        "value": ".test.js"
-      },
-      {
-        "type": "suffix",
-        "value": ".md"
-      },
-      {
-        "type": "suffix",
-        "value": ".mjs"
-      },
-      {
-        "type": "suffix",
-        "value": ".test-util.js"
-      },
-      {
-        "type": "folder",
-        "value": "tools"
-      },
-      {
         "type": "folder",
         "value": "node_modules"
-      },
-      {
-        "type": "folder",
-        "value": "lib-shared"
       }
     ],
     "include": []

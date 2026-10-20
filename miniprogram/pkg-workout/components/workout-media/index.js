@@ -15,10 +15,10 @@ import { confirmSheet } from '../../../utils/sheets.js'
 import { t } from '../../../lib/i18n.js'
 import { fmtNum } from '../../../lib/format.js'
 import { workoutMediaOf, WORKOUT_MEDIA_MAX } from '../../../lib/media-refs.js'
-import { addWorkoutMedia, removeWorkoutMedia } from '../../lib/workout-media.js'
+import { addWorkoutMedia, removeWorkoutMedia } from '../../../lib/workout-media.js'
 import { sameWorkout } from '../../../lib/workout-date.js'
 import { mediaStore } from '../../../lib/media-store.js'
-import { ingestMediaFile, storeIngested } from '../../lib/media-ingest.js'
+import { ingestMediaFile, storeIngested } from '../../../lib/media-ingest.js'
 
 const toast = m => useUI.getState().toast(m)
 const recordOf = (S, w) => (w && (S.workouts || []).find(x => x && sameWorkout(x, w))) || null

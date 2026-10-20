@@ -1,4 +1,3 @@
-// GENERATED from lib-shared/media-ingest.js by tools/sync-shared.mjs. Edit lib-shared/media-ingest.js, then rerun.
 /* A picked file → what the state keeps (a MediaRef) and what the local store keeps (the files).
  *
  * MINI PROGRAM PORT. The web app decoded and re-drew every photo on a <canvas> and opened every
@@ -24,12 +23,12 @@
  *
  * Every wx call goes through `deps` (lazy defaults), so this imports and is tested in Node.
  */
-import { sniffKind, imageDims, inspectGif, cleanGif, inspectMp4, scrubMp4, inspectWebm } from '../../lib/media-sniff.js'
-import { normalizeMediaRef, MEDIA_MIMES } from '../../lib/media-refs.js'
-import { sha256Hex } from '../../lib/sha256.js'
+import { sniffKind, imageDims, inspectGif, cleanGif, inspectMp4, scrubMp4, inspectWebm } from './media-sniff.js'
+import { normalizeMediaRef, MEDIA_MIMES } from './media-refs.js'
+import { sha256Hex } from './sha256.js'
 import { MB, IMAGE_MAX_EDGE, POSTER_EDGE, MAX_PHOTO_MP, DEFAULT_LIMITS } from './media-limits.js'
-import { sha256OfFile, readHead, fileSize } from '../../lib/media-store-fs.js'
-import { mediaStore } from '../../lib/media-store.js'
+import { sha256OfFile, readHead, fileSize } from './media-store-fs.js'
+import { mediaStore } from './media-store.js'
 
 /** A refusal the editor turns into a sentence: code 'type' | 'too-large' (mb) | 'too-long'
  *  (sec) | 'photo-too-big' | 'unreadable'. */

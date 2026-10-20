@@ -1,6 +1,6 @@
 // How a pkg-library sheet page hands its answer back and leaves.
 //
-// The convention (ARCHITECTURE.md): call the callback first, then wx.navigateBack(). The callback
+// The convention for sheet pages: call the callback first, then wx.navigateBack(). The callback
 // may itself open another page — through store/actions.js afterSheet (it waits for this page to
 // leave the top first), or straight away (exConfigSheet from a picker's onPick). The back must
 // then not pop the page the callback just opened, nor run twice if the callback already went

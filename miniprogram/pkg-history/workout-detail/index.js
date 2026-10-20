@@ -25,14 +25,14 @@ import { glyphOf } from '../../lib/glyphs.js'
 import { sameWorkout } from '../../lib/workout-date.js'
 import { stampWorkout } from '../../lib/sync-merge.js'
 import { saveSessionAsRoutine } from '../../lib/session-routines.js'
-import { copyText } from '../lib/clipboard.js'
+import { copyText } from '../../lib/clipboard.js'
 import { workoutText } from '../lib/workout-text.js'
 import { workoutFit, fitFileName } from '../lib/fit-export.js'
 import { workoutMediaOf, WORKOUT_MEDIA_MAX } from '../../lib/media-refs.js'
-import { addWorkoutMedia, removeWorkoutMedia } from '../lib/workout-media.js'
-import { ingestMediaFile, storeIngested } from '../lib/media-ingest.js'
+import { addWorkoutMedia, removeWorkoutMedia } from '../../lib/workout-media.js'
+import { ingestMediaFile, storeIngested } from '../../lib/media-ingest.js'
 import { mediaStore } from '../../lib/media-store.js'
-import { fmtMB } from '../lib/media-limits.js'
+import { fmtMB } from '../../lib/media-limits.js'
 
 const toast = m => useUI.getState().toast(m)
 const update = mut => useStore.getState().update(mut)

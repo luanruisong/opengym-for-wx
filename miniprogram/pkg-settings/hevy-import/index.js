@@ -8,7 +8,7 @@ import { useUI } from '../../store/ui.js'
 import { t, tn } from '../../lib/i18n.js'
 import { fmtDate } from '../../lib/format.js'
 import { effortOf } from '../../lib/history.js'
-import { copyText } from '../lib/clipboard.js'
+import { copyText } from '../../lib/clipboard.js'
 import { HEVY_DEV_SETTINGS, HEVY_API } from '../lib/import-hevy.js'
 
 function hevyProgressLabel(p) {

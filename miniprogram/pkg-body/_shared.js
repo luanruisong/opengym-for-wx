@@ -6,8 +6,8 @@ import { useStore } from '../store/store.js'
 import { useUI } from '../store/ui.js'
 import { t } from '../lib/i18n.js'
 import { fmtDate, fmtNum } from '../lib/format.js'
-import { fmtMB } from './lib/media-limits.js'
-import { ingestMediaFile, storeIngested } from './lib/media-ingest.js'
+import { fmtMB } from '../lib/media-limits.js'
+import { ingestMediaFile, storeIngested } from '../lib/media-ingest.js'
 import { confirmSheet } from '../utils/sheets.js'
 
 export const S = () => useStore.getState().S

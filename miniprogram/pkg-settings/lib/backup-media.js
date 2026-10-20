@@ -22,12 +22,12 @@
  * picked file's contents as an ArrayBuffer/Uint8Array (fs.readFileSync(path)) or a string (a
  * .json read as 'utf8'); the zip entries in `files` carry `bytes` (Uint8Array) instead of `blob`.
  */
-import { zipStore, readZip, looksLikeZip, utf8Decode, toU8 } from './zip.js'
+import { zipStore, readZip, looksLikeZip, utf8Decode, toU8 } from '../../lib/zip.js'
 import { referencedFiles, normalizeMediaRef, workoutMediaOf, cleanUrl, MEDIA_MIMES } from '../../lib/media-refs.js'
 import { sniffKind } from '../../lib/media-sniff.js'
 import { sha256Hex } from '../../lib/sha256.js'
 import { mediaStore } from '../../lib/media-store.js'
-import { DEFAULT_LIMITS, MB } from './media-limits.js'
+import { DEFAULT_LIMITS, MB } from '../../lib/media-limits.js'
 import { t } from '../../lib/i18n-core.js'
 
 export const BACKUP_JSON = 'opengym-backup.json'

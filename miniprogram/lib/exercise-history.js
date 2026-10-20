@@ -1,8 +1,8 @@
-import { metricEntriesForExercise, metricRowsForEntry, bestWeightForEntry, completedRepsOf, modeOf, workoutAt } from '../../miniprogram/lib/history.js'
-import { completedVolumeOf } from '../../miniprogram/lib/workout-model.js'
-import { bestSetOf } from '../../miniprogram/lib/onerm.js'
-import { beatsWeight } from '../../miniprogram/lib/exercises.js'
-import { currentDbLoad, historyAs, volumeFactor, workoutAs } from '../../miniprogram/lib/dumbbells.js'
+import { metricEntriesForExercise, metricRowsForEntry, bestWeightForEntry, completedRepsOf, modeOf, workoutAt } from './history.js'
+import { completedVolumeOf } from './workout-model.js'
+import { bestSetOf } from './onerm.js'
+import { beatsWeight } from './exercises.js'
+import { currentDbLoad, historyAs, volumeFactor, workoutAs } from './dumbbells.js'
 
 // One exercise's past, read back for the history sheet (issue #43): a chart series and the
 // last few sessions, derived in a single pass over the log so the sheet can memoise the

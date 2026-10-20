@@ -22,8 +22,8 @@ import { t } from '../../lib/i18n.js'
 import { MUSCLES, MUSCLE_NAME, normalizeMuscleGroups, hasExplicitMuscleMetadata, inMuscleOrder } from '../../lib/muscles.js'
 import { mediaOf, normalizeMediaRef, cleanUrl, fmtClip } from '../../lib/media-refs.js'
 import { mediaStore } from '../../lib/media-store.js'
-import { fmtMB, MB } from '../lib/media-limits.js'
-import { ingestMediaFile, storeIngested } from '../lib/media-ingest.js'
+import { fmtMB, MB } from '../../lib/media-limits.js'
+import { ingestMediaFile, storeIngested } from '../../lib/media-ingest.js'
 import { backThen } from '../sheet-finish.js'
 
 const getS = () => useStore.getState().S

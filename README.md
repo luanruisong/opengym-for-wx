@@ -22,26 +22,25 @@
 ## 目录
 
 ```
-miniprogram/        小程序本体（project.config.json 的 miniprogramRoot），只放会发布的代码
-miniprogram-dev/    不发布的部分：维护脚本、lib-shared 源码、架构文档
-project.config.json 微信开发者工具项目配置
+miniprogram/        小程序本体（project.config.json 的 miniprogramRoot）
+project.config.json 微信开发者工具项目配置（AppID 等）
 ```
 
 ## 开发
 
-用微信开发者工具打开仓库根目录即可。
+用微信开发者工具打开仓库根目录即可。功能靠人工测试，仓库里没有自动化测试和 CI。
 
-功能靠人工测试，仓库里没有自动化测试和 CI。维护脚本（Node 22，无需安装依赖）：
+维护时需要知道的几条：
 
-```bash
-cd miniprogram-dev
-npm run app-json      # 新增/删除页面后重新生成 miniprogram/app.json
-npm run sync-shared   # 改了 lib-shared/ 之后重新生成各分包里的副本
-npm run prune-locale  # 新增界面文案后重新裁剪中文语言包
-npm run check         # 静态检查：import、跨分包引用、WXML、主包未使用的 JS
-```
-
-架构、约定和各脚本的用途见 [miniprogram-dev/ARCHITECTURE.md](miniprogram-dev/ARCHITECTURE.md)。
+- **分包**：4 个 tab 页（首页、计划、统计、动作库）在主包 `pages/`；其余页面在 `pkg-*` 分包；`data-*` 是只放数据的分包，
+  启动时由 `lib/boot-data.js` 用 `require.async` 加载（动作库、中文动作名、动作说明、人体图轮廓）。
+  新增或删除页面要手动更新 `miniprogram/app.json` 的 `pages` / `subPackages`。
+- **引用规则**：分包可以 import 主包（`lib/`、`store/`、`utils/`、`components/`），主包不能 import 分包，分包之间也不能互相 import。
+  只被一个分包用到的模块放在该分包的 `lib/` 里，主包控制在 1.5MB 以内（目前约 1.24MB）。
+- **弹层**：原版的底部弹层都改成了独立页面，打开函数集中在 `utils/sheets.js`；页面通过 `utils/nav.js#pageParams` 取参数、调用回调。
+- **状态**：`store/store.js`（持久化到 `wx.setStorageSync`）+ `store/ui.js`（toast、计时器）；页面用 `utils/page.js#connectPage` 绑定。
+- **文案**：只有中文。WXML 里直接写中文；JS 里用 `t('英文原文')`，译文在 `locales/zh.js`，新文案手动加进去。
+- **限制**：没有 DOM / window / localStorage / fetch / Intl；用 wx API 代替，日期数字用 `lib/format.js` 的中文格式化。
 
 ## 许可
 

@@ -15,7 +15,7 @@ import { mediaStore } from '../../lib/media-store.js'
 export const BATCH = 50
 
 // The first character of the name shown, in place of the catalogue picture this build does not
-// ship (ARCHITECTURE: no exercise media). Array.from keeps a CJK character or an emoji whole.
+// ship (this build has no exercise media). Array.from keeps a CJK character or an emoji whole.
 export function initialOf(name) {
   const s = String(name || '').trim()
   if (!s) return '?'
